@@ -46,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    //All (?) variable initializations
     Color currentColor = Colors.amber;
     TextEditingController teamNumberTextController = new TextEditingController();
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
@@ -75,19 +76,30 @@ class _MyHomePageState extends State<MyHomePage> {
         'Left 2b' , null, null, null, null, null, null, 'Right 2b' ,
         'Left 3b' , null, null, null, null, null, null, 'Right 3b' ,
     ];
+    List<String> placementName = [
+        '3a' , null, '1a' , null, null, '1b' , null, '3a' ,
+        '2a' , null, '2a' , null, null, '2b' , null, '2a' ,
+        '1a' , null, '3a' , null, null, '3b' , null, '1a' ,
+        null, null, null, '0a' , '0b' , null, null, null,
+        '1b' , null, null, null, null, null, null, '1b' ,
+        '2b' , null, null, null, null, null, null, '2b' ,
+        '3b' , null, null, null, null, null, null, '3b' ,
+    ];
 
     _MyHomePageState() {
         mainMap['team_number'] = '';
         mainMap['driver_color'] = currentColor.value.toString();
         mainMap['driver_alignment'] = driverAlignment;
-        mainMap['start_level'] = 0;
         mainMap['crosses_line'] = crossesLine;
         mainMap['autonomous_mode'] = autonomousMode;
         mainMap['cargo_placement_start'] = '';
         mainMap['cargo_placement_duration'] = '';
         mainMap['cargo_placement_place'] = '';
-        mainMap['hatch_placement'] = 'Hatch\n';
+        mainMap['hatch_placement_start'] = '';
+        mainMap['hatch_placement_duration'] = '';
+        mainMap['hatch_placement_place'] = '';
         mainMap['work_mode'] = workMode;
+        mainMap['start_level'] = 0;
         mainMap['end_level'] = 0;
         mainMap['climb_time'] = new Duration().toString();
         mainMap['robot_count'] = 0;
@@ -95,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainMap['notes'] = '';
 
         cargoPlacement.add(new List<String>());
+        hatchPlacement.add(new List<String>());
         print(widgetList);
     }
     
@@ -344,6 +357,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                     children: List.generate(56, (index) {
                                                                                         if (placement[index] != null) {
                                                                                             return RaisedButton(
+                                                                                                child: Text(placementName[index]),
                                                                                                 onPressed: () {
                                                                                                     cargoPlacement.last.add(placement[index]);
                                                                                                     cargoPlacement.add(new List<String>());
@@ -380,6 +394,84 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             (int.parse(cargoPlacement.last[1])).difference(DateTime.fromMillisecondsSinceEpoch
                                                             (int.parse(cargoPlacement.last[0]))).toString();
                                                         cargoPlacement.last[0] = Duration(milliseconds: int.parse(cargoPlacement.last[0])).toString();
+                                                    }
+                                                });
+                                            },
+                                        ),
+    
+                                        Text(
+                                            'Hatch time and placement:',
+                                            style: TextStyle(
+                                                fontSize: 28.0,
+                                            ),
+                                        ),
+    
+                                        RaisedButton(
+                                            child: Text(
+                                                hatchText,
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                ),
+                                            ),
+                                            onPressed: () {
+                                                setState(() {
+                                                    hatchText =
+                                                    hatchList[(hatchList.indexOf
+                                                        (hatchText) + 1) % 2];
+                                                    hatchPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
+                                                    print("added");
+                                                    if (hatchText == hatchList[0]) {
+                                                        showDialog(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                    return SimpleDialog(
+                                                                            title: new Text('Set Place'),
+                                                                            children: <Widget>[
+                                                                                SizedBox(
+                                                                                    height: 300.0,
+                                                                                    width: 300.0,
+                                                                                    child: GridView.count(
+                                                                                        crossAxisCount: 8,
+                                                                                        children: List.generate(56, (index) {
+                                                                                            if (placement[index] != null) {
+                                                                                                return RaisedButton(
+                                                                                                    child: Text(placementName[index]),
+                                                                                                    onPressed: () {
+                                                                                                        hatchPlacement.last.add(placement[index]);
+                                                                                                        hatchPlacement.add(new List<String>());
+                                                                                                        print(hatchPlacement); // Who needs optimization anyways?
+                                                                                                        mainMap['hatch_placement_start'] = '';
+                                                                                                        mainMap['hatch_placement_duration'] = '';
+                                                                                                        mainMap['hatch_placement_place'] = '';
+                                                                                                        hatchPlacement.sublist(0, hatchPlacement.length - 1).forEach((list) {
+                                                                                                            mainMap['hatch_placement_start'] = mainMap['hatch_placement_start']
+                                                                                                                    + '\n' + list[0];
+                                                                                                            mainMap['hatch_placement_duration'] = mainMap['hatch_placement_duration']
+                                                                                                                    + '\n' + list[1];
+                                                                                                            mainMap['hatch_placement_place'] = mainMap['hatch_placement_place']
+                                                                                                                    + '\n' + list[2];
+                                                                                                        });
+                                                                                                        print(mainMap.toString());
+                                                                                                        Navigator.pop(context);
+                                                                                                    },
+                                                                                                );
+                                                                                            } else {
+                                                                                                return SizedBox(
+                                                                                                    width: 1.0,
+                                                                                                    height: 1.0,
+                                                                                                );
+                                                                                            }
+                                                                                        }),
+                                                                                    ),
+                                                                                ),
+                                                                            ]
+                                                                    );
+                                                                }
+                                                        );
+                                                        hatchPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch
+                                                            (int.parse(hatchPlacement.last[1])).difference(DateTime.fromMillisecondsSinceEpoch
+                                                            (int.parse(hatchPlacement.last[0]))).toString();
+                                                        hatchPlacement.last[0] = Duration(milliseconds: int.parse(hatchPlacement.last[0])).toString();
                                                     }
                                                 });
                                             },
@@ -533,7 +625,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ];
                                     return widgetList[position];
                                 },
-                                itemCount: 25, //TODO: Change this all the time because making it variable
+                                itemCount: 27, //TODO: Change this all the time because making it variable
                                 // doesn't work
                                 separatorBuilder: (context, position) => SizedBox(height: 20.0),
                             ),
