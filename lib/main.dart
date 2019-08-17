@@ -1,11 +1,21 @@
 import 'dart:core';
+import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter_colorpicker/material_picker.dart';
+/*
+import 'package:googleapis/sheets/v4.dart';
+import 'package:googleapis_auth/auth.dart';*/
 
 /// Runs the [MyApp] class.
 void main() => runApp(MyApp());
+
+File historyFile;
+
+String fileContent;
+
+List<String> history = new List<String>();
 
 /// Initializes the map of [String] keys and [Object] objects.
 Map mainMap = new Map<String, Object>();
@@ -47,7 +57,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
     //All (?) variable initializations
-    Color currentColor = Colors.amber;
+    Color currentColor = Colors.red;
     TextEditingController teamNumberTextController = new TextEditingController();
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
     String driverAlignment = 'Left';
@@ -85,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         '2b' , null, null, null, null, null, null, '2b' ,
         '3b' , null, null, null, null, null, null, '3b' ,
     ];
+    
 
     _MyHomePageState() {
         mainMap['team_number'] = '';
@@ -108,20 +119,92 @@ class _MyHomePageState extends State<MyHomePage> {
 
         cargoPlacement.add(new List<String>());
         hatchPlacement.add(new List<String>());
-        print(widgetList);
+        
+        // Copied from stackoverflow, it doesn't work though
+        //--------------------------------------------------//
+        /*
+        final _key = {
+            "type": "service_account",
+            "project_id": //etc
+            // ...
+            // ...
+        };
+
+        print('getting oauth');
+        var auth;
+        auth.obtainAccessCredentialsViaServiceAccount(
+                auth.ServiceAccountCredentials.fromJson(_key),
+                scopes,
+                http.Client())
+                .then((auth.AccessCredentials cred) {
+            print('got oauth');
+    
+            auth.AuthClient client = auth.authenticatedClient(http.Client(), cred);
+            SheetsApi api = new SheetsApi(client);
+            ValueRange vr = new ValueRange.fromJson({
+                "values": [
+                    [ // fields A - J
+                        "15/02/2019", "via API 3", "5", "3", "3", "3", "3", "3", "3", "3"
+                    ]
+                ]
+            });
+            print('about to append');
+            api.spreadsheets.values
+                    .append(vr, '1cl...spreadsheet_key...W5E', 'A:J',
+                    valueInputOption: 'USER_ENTERED')
+                    .then((AppendValuesResponse r) {
+                print('append completed.');
+                client.close();
+            });
+            print('called append()');
+        });
+        print('ended?');
+        */
+        //------------------------------------//
     }
+
+    // Start of struggle
+    
+    Future get _localPath async {
+        final applicationDirectory = await getApplicationDocumentsDirectory();
+        return applicationDirectory.path;
+    }
+    
+    Future get _localFile async {
+        final path = await _localPath;
+        return File("$path/history.txt");
+    }
+    
+    Future _readFile() async {
+        try {
+            final file = await _localFile;
+            print(file);
+            fileContent = await file.readAsString();
+            history = fileContent.split("\t");
+            print(history);
+        }
+        catch (e) {
+            print(e);
+            return null;
+        }
+    }
+    
+    Future _writeFile(String text) async {
+        final file = await _localFile;
+        await file.writeAsString("$text");
+    }
+
+    // End of struggle
     
     @override
     void initState() {
+        _readFile();
     }
-    
+
     String mapToString(Map<String, Object> map) {
-        StringBuffer buffer = new StringBuffer();
-        map.forEach((String key, Object value) {
-            buffer.write(value.toString());
-            buffer.write(", ");
-        });
-        return buffer.toString();
+        List<Object> list = new List<Object>();
+        map.forEach((String key, Object value) => list.add(value));
+        return list.join(",");
     }
     
     @override
@@ -129,6 +212,31 @@ class _MyHomePageState extends State<MyHomePage> {
         return Scaffold(
             appBar: AppBar(
                 title: Text(widget.title),
+                actions: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.code),
+                        onPressed: () {
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                            builder: (context) => QRScreen()
+                                    )
+                            );
+                        },
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.save),
+                        onPressed: () {
+                            _writeFile(history.join("\t"));
+                        },
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                            history.add(mapToString(mainMap));
+                        },
+                    ),
+                ],
             ),
             body: Center(
                 child: Column(
@@ -142,11 +250,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 padding: EdgeInsets.all(16.0),
                                 itemBuilder: (context, position) {
                                     widgetList = [
-                                        QrImage(
+                                        /*QrImage(
                                             version: 10,
                                             data: mapToString(mainMap),
                                             size: MediaQuery.of(context).size.width,
-                                        ),
+                                        ),*/
                                         
                                         Container(
                                             child: stopwatchVisible ? RaisedButton(
@@ -202,28 +310,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     elevation: 3.0,
                                                     color: currentColor,
                                                     onPressed: () {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext context) {
-                                                                return AlertDialog(
-                                                                    titlePadding: const EdgeInsets.all(0.0),
-                                                                    contentPadding: const EdgeInsets.all(0.0),
-                                                                    content: SingleChildScrollView(
-                                                                        child: MaterialPicker(
-                                                                            onColorChanged: (Color color) {
-                                                                                mainMap['driver_color'] = color.toString();
-                                                                                print(mainMap.toString());
-                                                                                setState(() {
-                                                                                    currentColor = color;
-                                                                                    Navigator.of(context).pop();
-                                                                                });
-                                                                            },
-                                                                            pickerColor: currentColor,
-                                                                        ),
-                                                                    ),
-                                                                );
-                                                            },
-                                                        );
+                                                        setState(() {
+                                                            currentColor = Colors.red == currentColor ?
+                                                                    Colors.blue :
+                                                                    Colors.red ;
+                                                        });
                                                     },
                                                 ),
                                                 RaisedButton(
@@ -625,7 +716,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ];
                                     return widgetList[position];
                                 },
-                                itemCount: 27, //TODO: Change this all the time because making it variable
+                                //itemCount: 27, //TODO: Change this all the time because making it variable
+                                itemCount: 26, //Removed Qr code
                                 // doesn't work
                                 separatorBuilder: (context, position) => SizedBox(height: 20.0),
                             ),
@@ -635,5 +727,55 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
         );
     }
+}
+
+class QRScreen extends StatefulWidget {
+  @override
+  _QRScreen createState() => _QRScreen();
+}
+
+class _QRScreen extends State<QRScreen> {
+    String qrData = "";
+    int _index;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            title: Text("QR List"),
+            actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.remove),
+                    onPressed: () => history.removeAt(_index),
+                )
+            ],
+        ),
+        body: ListView.builder(
+            itemCount: history.length,
+            itemBuilder: (context, index) {
+                return index != 0 ?
+                new RaisedButton(
+                    child: Text(
+                        "Team " + history[index - 1].split(",")[0],
+                        style: TextStyle(
+                            fontSize: 28.0,
+                        ),
+                    ),
+                    onPressed: () {
+                        setState(() {
+                            _index = index - 1;
+                            qrData = history[index - 1];
+                        });
+                    },
+                ) :
+                QrImage(
+                version: 10,
+                data: qrData,
+                size: MediaQuery.of(context).size.width,
+                );
+            },
+        ),
+    );
+  }
+  
 }
 
