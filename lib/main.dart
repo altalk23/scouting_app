@@ -58,7 +58,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
     //All (?) variable initializations
     Color currentColor = Colors.red;
-    TextEditingController teamNumberTextController = new TextEditingController();
+    TextEditingController teamNumberTextController =
+    new TextEditingController();
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
     String driverAlignment = 'Left';
     bool crossesLine = false;
@@ -78,25 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
     List<String> hatchList = ['Take Hatch', 'Place Hatch'];
     String hatchText = 'Take Hatch';
     List<String> placement = [
-        'Left 3a' , null, 'Middle 1a' , null, null, 'Middle 1b' , null, 'Right 3a' ,
-        'Left 2a' , null, 'Middle 2a' , null, null, 'Middle 2b' , null, 'Right 2a' ,
-        'Left 1a' , null, 'Middle 3a' , null, null, 'Middle 3b' , null, 'Right 1a' ,
-        null, null, null, 'Middle 0a' , 'Middle 0b' , null, null, null,
-        'Left 1b' , null, null, null, null, null, null, 'Right 1b' ,
-        'Left 2b' , null, null, null, null, null, null, 'Right 2b' ,
-        'Left 3b' , null, null, null, null, null, null, 'Right 3b' ,
+        'Left 3a', null, 'Middle 1a', null, null, 'Middle 1b', null, 'Right 3a',
+        'Left 2a', null, 'Middle 2a', null, null, 'Middle 2b', null, 'Right 2a',
+        'Left 1a', null, 'Middle 3a', null, null, 'Middle 3b', null, 'Right 1a',
+        null, null, null, 'Middle 0a', 'Middle 0b', null, null, null,
+        'Left 1b', null, null, null, null, null, null, 'Right 1b',
+        'Left 2b', null, null, null, null, null, null, 'Right 2b',
+        'Left 3b', null, null, null, null, null, null, 'Right 3b',
     ];
     List<String> placementName = [
-        '3a' , null, '1a' , null, null, '1b' , null, '3a' ,
-        '2a' , null, '2a' , null, null, '2b' , null, '2a' ,
-        '1a' , null, '3a' , null, null, '3b' , null, '1a' ,
-        null, null, null, '0a' , '0b' , null, null, null,
-        '1b' , null, null, null, null, null, null, '1b' ,
-        '2b' , null, null, null, null, null, null, '2b' ,
-        '3b' , null, null, null, null, null, null, '3b' ,
+        '3a', null, '1a', null, null, '1b', null, '3a',
+        '2a', null, '2a', null, null, '2b', null, '2a',
+        '1a', null, '3a', null, null, '3b', null, '1a',
+        null, null, null, '0a', '0b', null, null, null,
+        '1b', null, null, null, null, null, null, '1b',
+        '2b', null, null, null, null, null, null, '2b',
+        '3b', null, null, null, null, null, null, '3b',
     ];
     
-
+    
     _MyHomePageState() {
         mainMap['team_number'] = '';
         mainMap['driver_color'] = currentColor.value.toString();
@@ -116,12 +117,11 @@ class _MyHomePageState extends State<MyHomePage> {
         mainMap['robot_count'] = 0;
         mainMap['defense_robot'] = '';
         mainMap['notes'] = '';
-
+        
         cargoPlacement.add(new List<String>());
         hatchPlacement.add(new List<String>());
         
         // Copied from stackoverflow, it doesn't work though
-        //--------------------------------------------------//
         /*
         final _key = {
             "type": "service_account",
@@ -160,9 +160,8 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         print('ended?');
         */
-        //------------------------------------//
     }
-
+    
     // Start of struggle
     
     Future get _localPath async {
@@ -193,18 +192,159 @@ class _MyHomePageState extends State<MyHomePage> {
         final file = await _localFile;
         await file.writeAsString("$text");
     }
-
+    
     // End of struggle
     
     @override
     void initState() {
         _readFile();
     }
-
+    
     String mapToString(Map<String, Object> map) {
         List<Object> list = new List<Object>();
         map.forEach((String key, Object value) => list.add(value));
         return list.join(",");
+    }
+    
+    void _cargoMenu() {
+        cargoText = cargoList[(cargoList.indexOf(cargoText) + 1) % 2];
+        cargoPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
+        print("added");
+        if (cargoText == cargoList[0]) {
+            showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                        return SimpleDialog(
+                                title: new Text('Set Place'),
+                                children: <Widget>[
+                                    SizedBox(
+                                        height: 300.0,
+                                        width: 300.0,
+                                        child: GridView.count(
+                                            crossAxisCount: 8,
+                                            children: List.generate(56, (index)
+                                            => _generateCargoButton(index)),
+                                        ),
+                                    ),
+                                ]
+                        );
+                    }
+            );
+            cargoPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(cargoPlacement.last[1]))
+                    .difference(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(cargoPlacement.last[0])))
+                    .toString();
+            cargoPlacement.last[0] = Duration(
+                    milliseconds: int.parse(cargoPlacement.last[0])
+            ).toString();
+        }
+    }
+    
+    void _hatchMenu() {
+        hatchText =
+        hatchList[(hatchList.indexOf(hatchText) + 1) % 2];
+        hatchPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
+        print("added");
+        if (hatchText == hatchList[0]) {
+            showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                        return SimpleDialog(
+                                title: new Text('Set Place'),
+                                children: <Widget>[
+                                    SizedBox(
+                                        height: 300.0,
+                                        width: 300.0,
+                                        child: GridView.count(
+                                            crossAxisCount: 8,
+                                            children: List.generate(56, (index)
+                                            => _generateHatchButton(index)),
+                                        ),
+                                    ),
+                                ]
+                        );
+                    }
+            );
+            hatchPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(hatchPlacement.last[1]))
+                    .difference(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(hatchPlacement.last[0])))
+                    .toString();
+            hatchPlacement.last[0] = Duration(
+                    milliseconds: int.parse(hatchPlacement.last[0])
+            ).toString();
+        }
+    }
+    
+    Widget _generateCargoButton(index) {
+        if (placement[index] != null) {
+            return RaisedButton(
+                child: Text(placementName[index]),
+                onPressed: () {
+                    cargoPlacement.last.add(placement[index]);
+                    cargoPlacement.add(new List<String>());
+                    print(cargoPlacement); // Who needs optimization anyways?
+                    mainMap['cargo_placement_start'] = '';
+                    mainMap['cargo_placement_duration'] = '';
+                    mainMap['cargo_placement_place'] = '';
+                    cargoPlacement.sublist(0, cargoPlacement.length - 1)
+                            .forEach((list) {
+                        mainMap['cargo_placement_start'] =
+                                mainMap['cargo_placement_start']
+                                        + '\n' + list[0];
+                        mainMap['cargo_placement_duration'] =
+                                mainMap['cargo_placement_duration']
+                                        + '\n' + list[1];
+                        mainMap['cargo_placement_place'] =
+                                mainMap['cargo_placement_place']
+                                        + '\n' + list[2];
+                    });
+                    print(mainMap.toString());
+                    Navigator.pop(context);
+                },
+            );
+        } else {
+            return SizedBox(
+                width: 1.0,
+                height: 1.0,
+            );
+        }
+    }
+    
+    Widget _generateHatchButton(index) {
+        if (placement[index] != null) {
+            return RaisedButton(
+                child: Text(placementName[index]),
+                onPressed: () {
+                    hatchPlacement.last.add(placement[index]);
+                    hatchPlacement.add(new List<String>());
+                    print(hatchPlacement); // Who needs optimization anyways?
+                    mainMap['hatch_placement_start'] = '';
+                    mainMap['hatch_placement_duration'] = '';
+                    mainMap['hatch_placement_place'] = '';
+                    hatchPlacement.sublist(0, hatchPlacement.length - 1)
+                            .forEach((list) {
+                        mainMap['hatch_placement_start'] =
+                                mainMap['hatch_placement_start']
+                                        + '\n' + list[0];
+                        mainMap['hatch_placement_duration'] =
+                                mainMap['hatch_placement_duration']
+                                        + '\n' + list[1];
+                        mainMap['hatch_placement_place'] =
+                                mainMap['hatch_placement_place']
+                                        + '\n' + list[2];
+                    });
+                    print(mainMap.toString());
+                    Navigator.pop(context);
+                },
+            );
+        } else {
+            return SizedBox(
+                width: 1.0,
+                height: 1.0,
+            );
+        }
     }
     
     @override
@@ -238,544 +378,419 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                 ],
             ),
-            body: Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+            body: ListView.separated(
+                padding: EdgeInsets.all(16.0),
+                itemBuilder: (context, position) {
+                    widgetList = [
                         Container(
-                            constraints: BoxConstraints(
-                                maxHeight: MediaQuery.of(context).size.height - 100,
-                            ),
-                            child: ListView.separated(
-                                padding: EdgeInsets.all(16.0),
-                                itemBuilder: (context, position) {
-                                    widgetList = [
-                                        /*QrImage(
-                                            version: 10,
-                                            data: mapToString(mainMap),
-                                            size: MediaQuery.of(context).size.width,
-                                        ),*/
-                                        
-                                        Container(
-                                            child: stopwatchVisible ? RaisedButton(
-                                                child: Text(
-                                                    "Start the timer",
-                                                    style: TextStyle(
-                                                        fontSize: 20.0,
-                                                    ),
-                                                ),
-                                                onPressed: () {
-                                                    stopwatch.start();
-                                                    setState(() {
-                                                      stopwatchVisible = false;
-                                                    });
-                                                },
-                                            ) : new Container(),
-                                        ),
-                                        // Team Number
-    
-                                        Text(
-                                            'Team Number:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        TextField(
-                                            controller: teamNumberTextController,
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                            ),
-                                            onChanged: (String str) {
-                                                setState(() {
-                                                    mainMap['team_number'] = teamNumberTextController.text;
-                                                });
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Driver Station
-    
-                                        Text(
-                                            'Driver Station:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                                RaisedButton(
-                                                    elevation: 3.0,
-                                                    color: currentColor,
-                                                    onPressed: () {
-                                                        setState(() {
-                                                            currentColor = Colors.red == currentColor ?
-                                                                    Colors.blue :
-                                                                    Colors.red ;
-                                                        });
-                                                    },
-                                                ),
-                                                RaisedButton(
-                                                    child: Text(
-                                                        driverAlignment,
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                        ),
-                                                    ),
-                                                    onPressed: () {
-                                                        setState(() {
-                                                            driverAlignment =
-                                                            alignmentList[(alignmentList.indexOf
-                                                                (driverAlignment) + 1) % 3];
-                                                        });
-                                                        mainMap['driver_alignment'] = driverAlignment;
-                                                        print(mainMap.toString());
-                                                    },
-                                                ),
-                                            ],
-                                        ),
-    
-                                        // HAB Start Level
-    
-                                        Text(
-                                            'HAB Start Level:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                mainMap['start_level'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    mainMap['start_level'] = (mainMap['start_level'] + 1) % 4;
-                                                });
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Crosses The Line?
-    
-                                        Row(
-                                            children: <Widget>[
-                                                Text(
-                                                    'Crosses The Line:',
-                                                    style: TextStyle(
-                                                        fontSize: 28.0,
-                                                    ),
-                                                ),
-    
-                                                Checkbox(
-                                                    value: crossesLine,
-                                                    onChanged: (bool isChanged) {
-                                                        setState(() {
-                                                            crossesLine = isChanged;
-                                                        });
-                                                    },
-                                                ),
-                                            ],
-                                        ),
-    
-                                        // Autonomous begins with
-    
-                                        Text(
-                                            'Autonomous begins with:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                autonomousMode,
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    autonomousMode =
-                                                    autonomousList[(autonomousList.indexOf
-                                                        (autonomousMode) + 1) % 3];
-                                                });
-                                                mainMap['autonomous_mode'] = autonomousMode;
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-                                        
-                                        // Cargo hatch thing
-    
-                                        Text(
-                                            'Cargo time and placement:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                cargoText,
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    cargoText =
-                                                    cargoList[(cargoList.indexOf
-                                                        (cargoText) + 1) % 2];
-                                                    cargoPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
-                                                    print("added");
-                                                    if (cargoText == cargoList[0]) {
-                                                        showDialog(
-                                                                context: context,
-                                                                builder: (BuildContext context) {
-                                                                    return SimpleDialog(
-                                                                        title: new Text('Set Place'),
-                                                                        children: <Widget>[
-                                                                            SizedBox(
-                                                                                height: 300.0,
-                                                                                width: 300.0,
-                                                                                child: GridView.count(
-                                                                                    crossAxisCount: 8,
-                                                                                    children: List.generate(56, (index) {
-                                                                                        if (placement[index] != null) {
-                                                                                            return RaisedButton(
-                                                                                                child: Text(placementName[index]),
-                                                                                                onPressed: () {
-                                                                                                    cargoPlacement.last.add(placement[index]);
-                                                                                                    cargoPlacement.add(new List<String>());
-                                                                                                    print(cargoPlacement); // Who needs optimization anyways?
-                                                                                                    mainMap['cargo_placement_start'] = '';
-                                                                                                    mainMap['cargo_placement_duration'] = '';
-                                                                                                    mainMap['cargo_placement_place'] = '';
-                                                                                                    cargoPlacement.sublist(0, cargoPlacement.length - 1).forEach((list) {
-                                                                                                        mainMap['cargo_placement_start'] = mainMap['cargo_placement_start']
-                                                                                                                + '\n' + list[0];
-                                                                                                        mainMap['cargo_placement_duration'] = mainMap['cargo_placement_duration']
-                                                                                                                + '\n' + list[1];
-                                                                                                        mainMap['cargo_placement_place'] = mainMap['cargo_placement_place']
-                                                                                                                + '\n' + list[2];
-                                                                                                    });
-                                                                                                    print(mainMap.toString());
-                                                                                                    Navigator.pop(context);
-                                                                                                },
-                                                                                            );
-                                                                                        } else {
-                                                                                            return SizedBox(
-                                                                                                width: 1.0,
-                                                                                                height: 1.0,
-                                                                                            );
-                                                                                        }
-                                                                                    }),
-                                                                                ),
-                                                                            ),
-                                                                        ]
-                                                                    );
-                                                                }
-                                                        );
-                                                        cargoPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch
-                                                            (int.parse(cargoPlacement.last[1])).difference(DateTime.fromMillisecondsSinceEpoch
-                                                            (int.parse(cargoPlacement.last[0]))).toString();
-                                                        cargoPlacement.last[0] = Duration(milliseconds: int.parse(cargoPlacement.last[0])).toString();
-                                                    }
-                                                });
-                                            },
-                                        ),
-    
-                                        Text(
-                                            'Hatch time and placement:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                hatchText,
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    hatchText =
-                                                    hatchList[(hatchList.indexOf
-                                                        (hatchText) + 1) % 2];
-                                                    hatchPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
-                                                    print("added");
-                                                    if (hatchText == hatchList[0]) {
-                                                        showDialog(
-                                                                context: context,
-                                                                builder: (BuildContext context) {
-                                                                    return SimpleDialog(
-                                                                            title: new Text('Set Place'),
-                                                                            children: <Widget>[
-                                                                                SizedBox(
-                                                                                    height: 300.0,
-                                                                                    width: 300.0,
-                                                                                    child: GridView.count(
-                                                                                        crossAxisCount: 8,
-                                                                                        children: List.generate(56, (index) {
-                                                                                            if (placement[index] != null) {
-                                                                                                return RaisedButton(
-                                                                                                    child: Text(placementName[index]),
-                                                                                                    onPressed: () {
-                                                                                                        hatchPlacement.last.add(placement[index]);
-                                                                                                        hatchPlacement.add(new List<String>());
-                                                                                                        print(hatchPlacement); // Who needs optimization anyways?
-                                                                                                        mainMap['hatch_placement_start'] = '';
-                                                                                                        mainMap['hatch_placement_duration'] = '';
-                                                                                                        mainMap['hatch_placement_place'] = '';
-                                                                                                        hatchPlacement.sublist(0, hatchPlacement.length - 1).forEach((list) {
-                                                                                                            mainMap['hatch_placement_start'] = mainMap['hatch_placement_start']
-                                                                                                                    + '\n' + list[0];
-                                                                                                            mainMap['hatch_placement_duration'] = mainMap['hatch_placement_duration']
-                                                                                                                    + '\n' + list[1];
-                                                                                                            mainMap['hatch_placement_place'] = mainMap['hatch_placement_place']
-                                                                                                                    + '\n' + list[2];
-                                                                                                        });
-                                                                                                        print(mainMap.toString());
-                                                                                                        Navigator.pop(context);
-                                                                                                    },
-                                                                                                );
-                                                                                            } else {
-                                                                                                return SizedBox(
-                                                                                                    width: 1.0,
-                                                                                                    height: 1.0,
-                                                                                                );
-                                                                                            }
-                                                                                        }),
-                                                                                    ),
-                                                                                ),
-                                                                            ]
-                                                                    );
-                                                                }
-                                                        );
-                                                        hatchPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch
-                                                            (int.parse(hatchPlacement.last[1])).difference(DateTime.fromMillisecondsSinceEpoch
-                                                            (int.parse(hatchPlacement.last[0]))).toString();
-                                                        hatchPlacement.last[0] = Duration(milliseconds: int.parse(hatchPlacement.last[0])).toString();
-                                                    }
-                                                });
-                                            },
-                                        ),
-    
-                                        // Teleop or autonomous
-    
-                                        Text(
-                                            'Teleop or autonomous:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                workMode,
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    workMode =
-                                                    workList[(workList.indexOf
-                                                        (workMode) + 1) % 3];
-                                                });
-                                                mainMap['work_mode'] = workMode;
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-                                        
-                                        // Hab end level
-    
-                                        Text(
-                                            'HAB End Level:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                mainMap['end_level'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    mainMap['end_level'] = (mainMap['end_level'] + 1) % 4;
-                                                });
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Hab Climb Time
-    
-                                        Text(
-                                            'HAB Climb Time:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                climbTime,
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    if (climbTime == 'Start the counter') {
-                                                        climbTime = 'End the counter';
-                                                        habStopwatch.start();
-                                                    } else {
-                                                        habStopwatch.stop();
-                                                        climbTime = habStopwatch.elapsed.toString();
-                                                        mainMap['climb_time'] = climbTime;
-                                                    }
-                                                });
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Together with robots
-    
-                                        Text(
-                                            'Together with robots:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        RaisedButton(
-                                            child: Text(
-                                                mainMap['robot_count'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 20.0,
-                                                ),
-                                            ),
-                                            onPressed: () {
-                                                setState(() {
-                                                    mainMap['robot_count'] = (mainMap['robot_count'] + 1) % 3;
-                                                });
-                                                print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Defense Robot
-    
-                                        Text(
-                                            'Defense Robot:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-                                        
-                                        TextField(
-                                           style: TextStyle(
-                                               fontSize: 16.0,
-                                           ),
-                                            onChanged: (value) {
-                                               mainMap['defense_robot'] = value;
-                                               print(mainMap.toString());
-                                            },
-                                        ),
-    
-                                        // Notes
-    
-                                        Text(
-                                            'Notes:',
-                                            style: TextStyle(
-                                                fontSize: 28.0,
-                                            ),
-                                        ),
-    
-                                        TextField(
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                            ),
-                                            onChanged: (value) {
-                                                mainMap['notes'] = value;
-                                                print(mainMap.toString());
-                                            },
-                                            keyboardType: TextInputType.multiline,
-                                            maxLines: null,
-                                        ),
-                                    ];
-                                    return widgetList[position];
+                            child: stopwatchVisible ? RaisedButton(
+                                child: Text(
+                                    "Start the timer",
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                    ),
+                                ),
+                                onPressed: () {
+                                    stopwatch.start();
+                                    setState(() {
+                                        stopwatchVisible = false;
+                                    });
                                 },
-                                //itemCount: 27, //TODO: Change this all the time because making it variable
-                                itemCount: 26, //Removed Qr code
-                                // doesn't work
-                                separatorBuilder: (context, position) => SizedBox(height: 20.0),
+                            ) : new Container(),
+                        ),
+                        // Team Number
+                        
+                        Text(
+                            'Team Number:',
+                            style: TextStyle(
+                                fontSize: 28.0,
                             ),
                         ),
-                    ],
-                ),
+                        
+                        TextField(
+                            controller: teamNumberTextController,
+                            style: TextStyle(
+                                fontSize: 20.0,
+                            ),
+                            onChanged: (String str) {
+                                setState(() {
+                                    mainMap['team_number'] =
+                                            teamNumberTextController.text;
+                                });
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Driver Station
+                        
+                        Text(
+                            'Driver Station:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                                RaisedButton(
+                                    elevation: 3.0,
+                                    color: currentColor,
+                                    onPressed: () {
+                                        setState(() {
+                                            currentColor =
+                                            Colors.red == currentColor ?
+                                            Colors.blue :
+                                            Colors.red;
+                                        });
+                                    },
+                                ),
+                                RaisedButton(
+                                    child: Text(
+                                        driverAlignment,
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                        ),
+                                    ),
+                                    onPressed: () {
+                                        setState(() {
+                                            driverAlignment =
+                                            alignmentList[(alignmentList.indexOf
+                                                (driverAlignment) + 1) % 3];
+                                        });
+                                        mainMap['driver_alignment'] =
+                                                driverAlignment;
+                                        print(mainMap.toString());
+                                    },
+                                ),
+                            ],
+                        ),
+                        
+                        // HAB Start Level
+                        
+                        Text(
+                            'HAB Start Level:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                mainMap['start_level'].toString(),
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    mainMap['start_level'] =
+                                            (mainMap['start_level'] + 1) % 4;
+                                });
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Crosses The Line?
+                        
+                        Row(
+                            children: <Widget>[
+                                Text(
+                                    'Crosses The Line:',
+                                    style: TextStyle(
+                                        fontSize: 28.0,
+                                    ),
+                                ),
+                                
+                                Checkbox(
+                                    value: crossesLine,
+                                    onChanged: (bool isChanged) {
+                                        setState(() {
+                                            crossesLine = isChanged;
+                                        });
+                                    },
+                                ),
+                            ],
+                        ),
+                        
+                        // Autonomous begins with
+                        
+                        Text(
+                            'Autonomous begins with:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                autonomousMode,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    autonomousMode =
+                                    autonomousList[(autonomousList.indexOf
+                                        (autonomousMode) + 1) % 3];
+                                });
+                                mainMap['autonomous_mode'] = autonomousMode;
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Cargo hatch thing
+                        
+                        Text(
+                            'Cargo time and placement:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                cargoText,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() => _cargoMenu);
+                            },
+                        ),
+                        
+                        Text(
+                            'Hatch time and placement:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                hatchText,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() => _hatchMenu);
+                            },
+                        ),
+                        
+                        // Teleop or autonomous
+                        
+                        Text(
+                            'Teleop or autonomous:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                workMode,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    workMode =
+                                    workList[(workList.indexOf
+                                        (workMode) + 1) % 3];
+                                });
+                                mainMap['work_mode'] = workMode;
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Hab end level
+                        
+                        Text(
+                            'HAB End Level:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                mainMap['end_level'].toString(),
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    mainMap['end_level'] =
+                                            (mainMap['end_level'] + 1) % 4;
+                                });
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Hab Climb Time
+                        
+                        Text(
+                            'HAB Climb Time:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                climbTime,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    if (climbTime == 'Start the counter') {
+                                        climbTime = 'End the counter';
+                                        habStopwatch.start();
+                                    } else {
+                                        habStopwatch.stop();
+                                        climbTime =
+                                                habStopwatch.elapsed.toString();
+                                        mainMap['climb_time'] = climbTime;
+                                    }
+                                });
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Together with robots
+                        
+                        Text(
+                            'Together with robots:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        RaisedButton(
+                            child: Text(
+                                mainMap['robot_count'].toString(),
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                ),
+                            ),
+                            onPressed: () {
+                                setState(() {
+                                    mainMap['robot_count'] =
+                                            (mainMap['robot_count'] + 1) % 3;
+                                });
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Defense Robot
+                        
+                        Text(
+                            'Defense Robot:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        TextField(
+                            style: TextStyle(
+                                fontSize: 16.0,
+                            ),
+                            onChanged: (value) {
+                                mainMap['defense_robot'] = value;
+                                print(mainMap.toString());
+                            },
+                        ),
+                        
+                        // Notes
+                        
+                        Text(
+                            'Notes:',
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
+                        ),
+                        
+                        TextField(
+                            style: TextStyle(
+                                fontSize: 16.0,
+                            ),
+                            onChanged: (value) {
+                                mainMap['notes'] = value;
+                                print(mainMap.toString());
+                            },
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                        ),
+                    ];
+                    return widgetList[position];
+                },
+                //itemCount: 27,
+                // TODO: Change this all the time because making it variable
+                itemCount: 26,
+                separatorBuilder: (context, position) => SizedBox(height: 20.0),
             ),
         );
     }
 }
 
 class QRScreen extends StatefulWidget {
-  @override
-  _QRScreen createState() => _QRScreen();
+    @override
+    _QRScreen createState() => _QRScreen();
 }
 
 class _QRScreen extends State<QRScreen> {
     String qrData = "";
     int _index;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: Text("QR List"),
-            actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () => history.removeAt(_index),
-                )
-            ],
-        ),
-        body: ListView.builder(
-            itemCount: history.length,
-            itemBuilder: (context, index) {
-                return index != 0 ?
-                new RaisedButton(
-                    child: Text(
-                        "Team " + history[index - 1].split(",")[0],
-                        style: TextStyle(
-                            fontSize: 28.0,
+    
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(
+                title: Text("QR List"),
+                actions: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () => history.removeAt(_index),
+                    )
+                ],
+            ),
+            body: ListView.builder(
+                itemCount: history.length,
+                itemBuilder: (context, index) {
+                    return index != 0 ?
+                    new RaisedButton(
+                        child: Text(
+                            "Team " + history[index - 1].split(",")[0],
+                            style: TextStyle(
+                                fontSize: 28.0,
+                            ),
                         ),
-                    ),
-                    onPressed: () {
-                        setState(() {
-                            _index = index - 1;
-                            qrData = history[index - 1];
-                        });
-                    },
-                ) :
-                QrImage(
-                version: 10,
-                data: qrData,
-                size: MediaQuery.of(context).size.width,
-                );
-            },
-        ),
-    );
-  }
-  
+                        onPressed: () {
+                            setState(() {
+                                _index = index - 1;
+                                qrData = history[index - 1];
+                            });
+                        },
+                    ) :
+                    QrImage(
+                        version: 10,
+                        data: qrData,
+                        size: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                    );
+                },
+            ),
+        );
+    }
+    
 }
 
