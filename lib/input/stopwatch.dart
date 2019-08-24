@@ -6,10 +6,10 @@ import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
 class StopwatchButton extends StatelessWidget {
-    StopwatchButton({this.onPressed});
-    final VoidCallback onPressed;
+    StopwatchButton({this.choiceList, this.onPressed});
     
-    LoopList choiceList = new LoopList(['Start the timer', 'End the timer']);
+    final VoidCallback onPressed;
+    final LoopList choiceList;
     
     @override
     Widget build(BuildContext context) {
@@ -23,10 +23,5 @@ class StopwatchButton extends StatelessWidget {
             ),
             onPressed: onPressed,
         );
-    }
-    
-    @override
-    State<StatefulWidget> createState() {
-        return null;
     }
 }
