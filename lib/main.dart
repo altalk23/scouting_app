@@ -1,10 +1,12 @@
 import 'dart:io';
 
-
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:scouting_app/input/stopwatch.dart';
+
 import 'package:scouting_app/widget/custom_button.dart';
+import 'package:scouting_app/widget/custom_label.dart';
 /*
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth.dart';*/
@@ -57,6 +59,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    Stopwatch stopwatch = new Stopwatch();
+    
+    
     //All (?) variable initializations
     Color currentColor = Colors.red;
     TextEditingController teamNumberTextController =
@@ -67,7 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
     List<String> autonomousList = ['Hatch', 'Cargo', 'Nothing'];
     String autonomousMode = 'Hatch';
     List<Widget> widgetList;
-    Stopwatch stopwatch = new Stopwatch();
     bool stopwatchVisible = true;
     List<String> workList = ['Teleop', 'Autonomous', 'Mixed'];
     String workMode = 'Teleop';
@@ -198,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     @override
     void initState() {
+        super.initState();
         _readFile();
     }
     
@@ -216,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     builder: (BuildContext context) {
                         return SimpleDialog(
-                                title: new Text('Set Place'),
+                                title: new CustomLabel('Set Place'),
                                 children: <Widget>[
                                     SizedBox(
                                         height: 300.0,
@@ -252,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     builder: (BuildContext context) {
                         return SimpleDialog(
-                                title: new Text('Set Place'),
+                                title: new CustomLabel('Set Place'),
                                 children: <Widget>[
                                     SizedBox(
                                         height: 300.0,
@@ -281,7 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget _generateCargoButton(index) {
         if (placement[index] != null) {
             return CustomButton(
-                child: Text(placementName[index]),
+                child: CustomLabel(placementName[index]),
                 onPressed: () {
                     cargoPlacement.last.add(placement[index]);
                     cargoPlacement.add(new List<String>());
@@ -316,7 +321,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget _generateHatchButton(index) {
         if (placement[index] != null) {
             return CustomButton(
-                child: Text(placementName[index]),
+                child: CustomLabel(placementName[index]),
                 onPressed: () {
                     hatchPlacement.last.add(placement[index]);
                     hatchPlacement.add(new List<String>());
@@ -352,7 +357,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text(widget.title),
+                title: CustomLabel(widget.title),
                 actions: <Widget>[
                     IconButton(
                         icon: Icon(Icons.code),
@@ -383,25 +388,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(16.0),
                 itemBuilder: (context, position) {
                     widgetList = [
-                        Container(
-                            child: stopwatchVisible ? CustomButton(
-                                child: Text(
-                                    "Start the timer",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                    ),
-                                ),
-                                onPressed: () {
-                                    stopwatch.start();
-                                    setState(() {
-                                        stopwatchVisible = false;
-                                    });
-                                },
-                            ) : new Container(),
+                        StopwatchButton(
+                            onPressed: () {
+                                stopwatch.start();
+                                setState(() {
+                                
+                                });
+                            },
                         ),
+                        
                         // Team Number
                         
-                        Text(
+                        CustomLabel(
                             'Team Number:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -424,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Driver Station
                         
-                        Text(
+                        CustomLabel(
                             'Driver Station:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -446,7 +444,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     },
                                 ),
                                 CustomButton(
-                                    child: Text(
+                                    child: CustomLabel(
                                         driverAlignment,
                                         style: TextStyle(
                                             fontSize: 20.0,
@@ -468,7 +466,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // HAB Start Level
                         
-                        Text(
+                        CustomLabel(
                             'HAB Start Level:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -476,7 +474,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 mainMap['start_level'].toString(),
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -495,7 +493,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         Row(
                             children: <Widget>[
-                                Text(
+                                CustomLabel(
                                     'Crosses The Line:',
                                     style: TextStyle(
                                         fontSize: 28.0,
@@ -515,7 +513,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Autonomous begins with
                         
-                        Text(
+                        CustomLabel(
                             'Autonomous begins with:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -523,7 +521,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 autonomousMode,
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -542,7 +540,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Cargo hatch thing
                         
-                        Text(
+                        CustomLabel(
                             'Cargo time and placement:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -550,7 +548,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 cargoText,
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -561,7 +559,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                         ),
                         
-                        Text(
+                        CustomLabel(
                             'Hatch time and placement:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -569,7 +567,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 hatchText,
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -582,7 +580,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Teleop or autonomous
                         
-                        Text(
+                        CustomLabel(
                             'Teleop or autonomous:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -590,7 +588,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 workMode,
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -609,7 +607,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Hab end level
                         
-                        Text(
+                        CustomLabel(
                             'HAB End Level:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -617,7 +615,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 mainMap['end_level'].toString(),
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -634,7 +632,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Hab Climb Time
                         
-                        Text(
+                        CustomLabel(
                             'HAB Climb Time:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -642,7 +640,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 climbTime,
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -666,7 +664,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Together with robots
                         
-                        Text(
+                        CustomLabel(
                             'Together with robots:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -674,7 +672,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         
                         CustomButton(
-                            child: Text(
+                            child: CustomLabel(
                                 mainMap['robot_count'].toString(),
                                 style: TextStyle(
                                     fontSize: 20.0,
@@ -691,7 +689,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Defense Robot
                         
-                        Text(
+                        CustomLabel(
                             'Defense Robot:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -710,7 +708,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Notes
                         
-                        Text(
+                        CustomLabel(
                             'Notes:',
                             style: TextStyle(
                                 fontSize: 28.0,
@@ -753,7 +751,7 @@ class _QRScreen extends State<QRScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text("QR List"),
+                title: CustomLabel("QR List"),
                 actions: <Widget>[
                     IconButton(
                         icon: Icon(Icons.remove),
@@ -766,7 +764,7 @@ class _QRScreen extends State<QRScreen> {
                 itemBuilder: (context, index) {
                     return index != 0 ?
                     new CustomButton(
-                        child: Text(
+                        child: CustomLabel(
                             "Team " + history[index - 1].split(",")[0],
                             style: TextStyle(
                                 fontSize: 28.0,
