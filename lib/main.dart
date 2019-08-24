@@ -386,14 +386,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(16.0),
                 itemBuilder: (context, position) {
                     widgetList = [
-                        // Crosses The Line?
-                        
-                        
-                        
-                        // Autonomous begins with
-                        
-                        
-                        
                         // Cargo hatch thing
                         
                         CustomLabel(
@@ -431,30 +423,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             onPressed: () {
                                 setState(() => _hatchMenu);
-                            },
-                        ),
-                        // Together with robots
-                        
-                        CustomLabel(
-                            'Together with robots:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
-                        
-                        CustomButton(
-                            child: CustomLabel(
-                                mainMap['robot_count'].toString(),
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    mainMap['robot_count'] =
-                                            (mainMap['robot_count'] + 1) % 3;
-                                });
-                                print(mainMap.toString());
                             },
                         ),
                         

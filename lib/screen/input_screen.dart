@@ -3,9 +3,11 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:scouting_app/input/autonomous_starts_with.dart';
 import 'package:scouting_app/input/crossing_line.dart';
+import 'package:scouting_app/input/defense_notes.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
+import 'package:scouting_app/input/notes.dart';
 import 'package:scouting_app/input/robot_type_and_count.dart';
 
 import 'package:scouting_app/input/stopwatch.dart';
@@ -55,6 +57,8 @@ class _InputScreen extends State<InputScreen> {
         labelList['crossing_line'] = new LoopList(['Does it cross the line']);
         labelList['autonomous'] = new LoopList(['Autonomous starts with']);
         labelList['autonomous_starts'] = new LoopList(['Cargo', 'Hatch', 'Mixed']);
+        labelList['defense_notes'] = new LoopList(['Defense notes']);
+        labelList['notes'] = new LoopList(['Notes']);
         
         // All map initializations
         mainMap['team_number'] = '';
@@ -66,13 +70,16 @@ class _InputScreen extends State<InputScreen> {
         mainMap['robot_type'] = labelList['robot_type'][0];
         mainMap['robot_count'] = labelList['robot_count'][0];
         mainMap['crossing_line'] = crossesLine;
+        mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
+        mainMap['defense_notes'] = '';
+        mainMap['notes'] = '';
     }
     
     @override
     Widget build(BuildContext context) {
         // TODO: implement build
         return Scaffold(
-            body: Column(
+            body: ListView(
                 children: <Widget>[
                     //--------------------------------------------------------//
                     StopwatchButton(
@@ -162,6 +169,7 @@ class _InputScreen extends State<InputScreen> {
                         onTypePressed: () {
                             setState(() {
                                 labelList['robot_type'].loop();
+                                mainMap['robot_type'] = labelList['robot_type'][0];
                                 print(mainMap.toString());
                                 isAutonomous = labelList['robot_type'].start != 0;
                             });
@@ -170,6 +178,7 @@ class _InputScreen extends State<InputScreen> {
                         onCountPressed: () {
                             setState(() {
                                 labelList['robot_count'].loop();
+                                mainMap['robot_count'] = labelList['robot_count'][0];
                                 print(mainMap.toString());
                             });
                         },
@@ -181,6 +190,7 @@ class _InputScreen extends State<InputScreen> {
                         onChanged: (bool value) {
                             setState(() {
                                 crossesLine = value;
+                                mainMap['crossing_line'] = crossesLine;
                                 labelList['crossing_line'].loop();
                                 print(mainMap.toString());
                             });
@@ -194,10 +204,27 @@ class _InputScreen extends State<InputScreen> {
                         onPressed: () {
                             setState(() {
                                 labelList['autonomous_starts'].loop();
+                                mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
                                 print(mainMap.toString());
                             });
                         },
-                    )
+                    ),
+                    //--------------------------------------------------------//
+                    DefenseNotes(
+                        label: labelList['defense_notes'][0],
+                        onChanged: (String string) {
+                            mainMap['defense_notes'] = string;
+                            print(mainMap.toString());
+                        },
+                    ),
+                    //--------------------------------------------------------//
+                    Notes(
+                        label: labelList['notes'][0],
+                        onChanged: (String string) {
+                            mainMap['notes'] = string;
+                            print(mainMap.toString());
+                        },
+                    ),
                 ],
             ),
         );
