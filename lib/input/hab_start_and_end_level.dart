@@ -5,9 +5,9 @@ import 'package:scouting_app/widget/custom_label.dart';
 
 class HabStartEndLevel extends StatelessWidget {
     HabStartEndLevel({this.label, this.startList, this.endList, this.onStartPressed, this.onEndPressed});
-    String label;
-    LoopList startList, endList;
-    VoidCallback onStartPressed, onEndPressed;
+    final String label;
+    final LoopList startList, endList;
+    final VoidCallback onStartPressed, onEndPressed;
     
     @override
     Widget build(BuildContext context) {

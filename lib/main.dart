@@ -386,14 +386,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(16.0),
                 itemBuilder: (context, position) {
                     widgetList = [
-                        // Team Number
-                        
-                        
-                        // Driver Station
-                        
-                        
-                        
-                        // HAB Start Level
                         // Crosses The Line?
                         
                         Row(
@@ -537,35 +529,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Hab Climb Time
                         
-                        CustomLabel(
-                            'HAB Climb Time:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
                         
-                        CustomButton(
-                            child: CustomLabel(
-                                climbTime,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    if (climbTime == 'Start the counter') {
-                                        climbTime = 'End the counter';
-                                        habStopwatch.start();
-                                    } else {
-                                        habStopwatch.stop();
-                                        climbTime =
-                                                habStopwatch.elapsed.toString();
-                                        mainMap['climb_time'] = climbTime;
-                                    }
-                                });
-                                print(mainMap.toString());
-                            },
-                        ),
                         
                         // Together with robots
                         

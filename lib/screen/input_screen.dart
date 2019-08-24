@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:scouting_app/input/driver_station.dart';
+import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
 
 import 'package:scouting_app/input/stopwatch.dart';
@@ -24,6 +25,9 @@ class _InputScreen extends State<InputScreen> {
     // Main stopwatch used for tracking time
     Stopwatch stopwatch = new Stopwatch();
     
+    // Hab climb stopwatch
+    Stopwatch climbStopwatch = new Stopwatch();
+    
     _InputScreen() {
         // All text initializations
         labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
@@ -34,13 +38,16 @@ class _InputScreen extends State<InputScreen> {
         labelList['hab_level'] = new LoopList(['Hab start and end level']);
         labelList['hab_start_level'] = new LoopList(['0', '1', '2', '3']);
         labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
-
+        labelList['hab_climb'] = new LoopList(['Hab climb time']);
+        labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
+        
         // All map initializations
         mainMap['team_number'] = '';
         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
         mainMap['driver_station_color'] = labelList['driver_station_color'][0];
         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
+        mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
     }
     
     @override
@@ -112,6 +119,24 @@ class _InputScreen extends State<InputScreen> {
                         },
                     ),
                     //--------------------------------------------------------//
+                    HabClimbTime(
+                        label: labelList['hab_climb'][0],
+                        counterList: labelList['hab_climb_time'],
+                        onPressed: (labelList['hab_climb_time'].start != 2) ? () {
+                            if (labelList['hab_climb_time'].start == 0) {
+                                climbStopwatch.start();
+                            }
+                            else if (labelList['hab_climb_time'].start == 1) {
+                                climbStopwatch.stop();
+                                mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
+                                labelList['hab_climb_time'][1] = mainMap['hab_climb_time'];
+                            }
+                            setState(() {
+                                labelList['hab_climb_time'].loop();
+                                print(mainMap.toString());
+                            });
+                        } : null,
+                    ),
                 ],
             ),
         );
