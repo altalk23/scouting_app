@@ -477,31 +477,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Teleop or autonomous
                         
-                        CustomLabel(
-                            'Teleop or autonomous:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
-                        
-                        CustomButton(
-                            child: CustomLabel(
-                                workMode,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    workMode =
-                                    workList[(workList.indexOf
-                                        (workMode) + 1) % 3];
-                                });
-                                mainMap['work_mode'] = workMode;
-                                print(mainMap.toString());
-                            },
-                        ),
-                        
                         // Hab end level
                         
                         CustomLabel(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
+import 'package:scouting_app/input/robot_type.dart';
 
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
@@ -40,6 +41,8 @@ class _InputScreen extends State<InputScreen> {
         labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
         labelList['hab_climb'] = new LoopList(['Hab climb time']);
         labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
+        labelList['robot_type'] = new LoopList(['Robot type']);
+        labelList['robot_type_list'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
         
         // All map initializations
         mainMap['team_number'] = '';
@@ -48,6 +51,7 @@ class _InputScreen extends State<InputScreen> {
         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
         mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
+        mainMap['robot_type'] = labelList['robot_type_list'][0];
     }
     
     @override
@@ -137,6 +141,16 @@ class _InputScreen extends State<InputScreen> {
                             });
                         } : null,
                     ),
+                    RobotType(
+                        label: labelList['robot_type'][0],
+                        typeList: labelList['robot_type_list'],
+                        onPressed: () {
+                            setState(() {
+                                labelList['robot_type_list'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                    )
                 ],
             ),
         );
