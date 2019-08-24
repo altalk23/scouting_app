@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:scouting_app/screen/input_screen.dart';
 
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 primarySwatch: Colors.blue,
             ),
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            home: InputScreen(),
+            //home: MyHomePage(title: 'Flutter Demo Home Page'),
         );
     }
 }
@@ -59,7 +61,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
     
-    
+    Stopwatch stopwatch;
     //All (?) variable initializations
     Color currentColor = Colors.red;
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
@@ -392,30 +394,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         
                         // HAB Start Level
-                        
-                        CustomLabel(
-                            'HAB Start Level:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
-                        
-                        CustomButton(
-                            child: CustomLabel(
-                                mainMap['start_level'].toString(),
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    mainMap['start_level'] =
-                                            (mainMap['start_level'] + 1) % 4;
-                                });
-                                print(mainMap.toString());
-                            },
-                        ),
-                        
                         // Crosses The Line?
                         
                         Row(
