@@ -21,7 +21,6 @@ String fileContent;
 List<String> history = new List<String>();
 
 /// Initializes the map of [String] keys and [Object] objects.
-Map mainMap = new Map<String, Object>();
 
 /// Builds the main state, which contains [MyHomePage] state.
 class MyApp extends StatelessWidget {
@@ -59,13 +58,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-    Stopwatch stopwatch = new Stopwatch();
     
     
     //All (?) variable initializations
     Color currentColor = Colors.red;
-    TextEditingController teamNumberTextController =
-    new TextEditingController();
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
     String driverAlignment = 'Left';
     bool crossesLine = false;
@@ -388,37 +384,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(16.0),
                 itemBuilder: (context, position) {
                     widgetList = [
-                        StopwatchButton(
-                            onPressed: () {
-                                stopwatch.start();
-                                setState(() {
-                                
-                                });
-                            },
-                        ),
-                        
                         // Team Number
                         
-                        CustomLabel(
-                            'Team Number:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
-                        
-                        TextField(
-                            controller: teamNumberTextController,
-                            style: TextStyle(
-                                fontSize: 20.0,
-                            ),
-                            onChanged: (String str) {
-                                setState(() {
-                                    mainMap['team_number'] =
-                                            teamNumberTextController.text;
-                                });
-                                print(mainMap.toString());
-                            },
-                        ),
                         
                         // Driver Station
                         
