@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
-import 'package:scouting_app/input/robot_type.dart';
+import 'package:scouting_app/input/robot_type_and_count.dart';
 
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
@@ -41,9 +41,10 @@ class _InputScreen extends State<InputScreen> {
         labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
         labelList['hab_climb'] = new LoopList(['Hab climb time']);
         labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
-        labelList['robot_type'] = new LoopList(['Robot type']);
-        labelList['robot_type_list'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
-        
+        labelList['robot'] = new LoopList(['Robot type and count']);
+        labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
+        labelList['robot_count'] = new LoopList(['1', '2', '3']);
+
         // All map initializations
         mainMap['team_number'] = '';
         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
@@ -51,7 +52,9 @@ class _InputScreen extends State<InputScreen> {
         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
         mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
-        mainMap['robot_type'] = labelList['robot_type_list'][0];
+        mainMap['robot_type'] = labelList['robot_type'][0];
+        mainMap['robot_count'] = labelList['robot_count'][0];
+        
     }
     
     @override
@@ -105,24 +108,6 @@ class _InputScreen extends State<InputScreen> {
                         },
                     ),
                     //--------------------------------------------------------//
-                    HabStartEndLevel(
-                        label: labelList['hab_level'][0],
-                        startList: labelList['hab_start_level'],
-                        endList: labelList['hab_end_level'],
-                        onStartPressed: () {
-                            setState(() {
-                                labelList['hab_start_level'].loop();
-                                print(mainMap.toString());
-                            });
-                        },
-                        onEndPressed: () {
-                            setState(() {
-                                labelList['hab_end_level'].loop();
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
                     HabClimbTime(
                         label: labelList['hab_climb'][0],
                         counterList: labelList['hab_climb_time'],
@@ -141,16 +126,43 @@ class _InputScreen extends State<InputScreen> {
                             });
                         } : null,
                     ),
-                    RobotType(
-                        label: labelList['robot_type'][0],
-                        typeList: labelList['robot_type_list'],
-                        onPressed: () {
+                    //--------------------------------------------------------//
+                    HabStartEndLevel(
+                        label: labelList['hab_level'][0],
+                        startList: labelList['hab_start_level'],
+                        endList: labelList['hab_end_level'],
+                        onStartPressed: () {
                             setState(() {
-                                labelList['robot_type_list'].loop();
+                                labelList['hab_start_level'].loop();
                                 print(mainMap.toString());
                             });
                         },
-                    )
+                        onEndPressed: () {
+                            setState(() {
+                                labelList['hab_end_level'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                    ),
+                    //--------------------------------------------------------//
+                    RobotTypeCount(
+                        label: labelList['robot'][0],
+                        typeList: labelList['robot_type'],
+                        onTypePressed: () {
+                            setState(() {
+                                labelList['robot_type'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                        countList: labelList['robot_count'],
+                        onCountPressed: () {
+                            setState(() {
+                                labelList['robot_count'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                    ),
+                    //--------------------------------------------------------//
                 ],
             ),
         );

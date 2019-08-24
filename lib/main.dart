@@ -474,38 +474,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 setState(() => _hatchMenu);
                             },
                         ),
-                        
-                        // Teleop or autonomous
-                        
-                        // Hab end level
-                        
-                        CustomLabel(
-                            'HAB End Level:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
-                        
-                        CustomButton(
-                            child: CustomLabel(
-                                mainMap['end_level'].toString(),
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    mainMap['end_level'] =
-                                            (mainMap['end_level'] + 1) % 4;
-                                });
-                                print(mainMap.toString());
-                            },
-                        ),
-                        
-                        // Hab Climb Time
-                        
-                        
-                        
                         // Together with robots
                         
                         CustomLabel(
