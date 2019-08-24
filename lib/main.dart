@@ -392,30 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Autonomous begins with
                         
-                        CustomLabel(
-                            'Autonomous begins with:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
                         
-                        CustomButton(
-                            child: CustomLabel(
-                                autonomousMode,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
-                            ),
-                            onPressed: () {
-                                setState(() {
-                                    autonomousMode =
-                                    autonomousList[(autonomousList.indexOf
-                                        (autonomousMode) + 1) % 3];
-                                });
-                                mainMap['autonomous_mode'] = autonomousMode;
-                                print(mainMap.toString());
-                            },
-                        ),
                         
                         // Cargo hatch thing
                         

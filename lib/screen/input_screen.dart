@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:scouting_app/input/autonomous_starts_with.dart';
 import 'package:scouting_app/input/crossing_line.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
@@ -33,6 +34,9 @@ class _InputScreen extends State<InputScreen> {
     // Does it crosses the line
     bool crossesLine = false;
     
+    // Is it autonomous
+    bool isAutonomous = false;
+    
     _InputScreen() {
         // All text initializations
         labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
@@ -49,6 +53,8 @@ class _InputScreen extends State<InputScreen> {
         labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
         labelList['robot_count'] = new LoopList(['1', '2', '3']);
         labelList['crossing_line'] = new LoopList(['Does it cross the line']);
+        labelList['autonomous'] = new LoopList(['Autonomous starts with']);
+        labelList['autonomous_starts'] = new LoopList(['Cargo', 'Hatch', 'Mixed']);
         
         // All map initializations
         mainMap['team_number'] = '';
@@ -157,6 +163,7 @@ class _InputScreen extends State<InputScreen> {
                             setState(() {
                                 labelList['robot_type'].loop();
                                 print(mainMap.toString());
+                                isAutonomous = labelList['robot_type'].start != 0;
                             });
                         },
                         countList: labelList['robot_count'],
@@ -180,6 +187,17 @@ class _InputScreen extends State<InputScreen> {
                         },
                     ),
                     //--------------------------------------------------------//
+                    AutonomousStarts(
+                        label: labelList['autonomous'][0],
+                        autonomousList: labelList['autonomous_starts'],
+                        isAutonomous: isAutonomous,
+                        onPressed: () {
+                            setState(() {
+                                labelList['autonomous_starts'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                    )
                 ],
             ),
         );
