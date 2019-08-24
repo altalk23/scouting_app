@@ -1,8 +1,10 @@
 import 'dart:io';
 
+
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:scouting_app/widget/custom_button.dart';
 /*
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth.dart';*/
@@ -278,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     Widget _generateCargoButton(index) {
         if (placement[index] != null) {
-            return RaisedButton(
+            return CustomButton(
                 child: Text(placementName[index]),
                 onPressed: () {
                     cargoPlacement.last.add(placement[index]);
@@ -313,7 +315,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     Widget _generateHatchButton(index) {
         if (placement[index] != null) {
-            return RaisedButton(
+            return CustomButton(
                 child: Text(placementName[index]),
                 onPressed: () {
                     hatchPlacement.last.add(placement[index]);
@@ -382,7 +384,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, position) {
                     widgetList = [
                         Container(
-                            child: stopwatchVisible ? RaisedButton(
+                            child: stopwatchVisible ? CustomButton(
                                 child: Text(
                                     "Start the timer",
                                     style: TextStyle(
@@ -432,8 +434,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                                RaisedButton(
-                                    elevation: 3.0,
+                                CustomButton(
                                     color: currentColor,
                                     onPressed: () {
                                         setState(() {
@@ -444,7 +445,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         });
                                     },
                                 ),
-                                RaisedButton(
+                                CustomButton(
                                     child: Text(
                                         driverAlignment,
                                         style: TextStyle(
@@ -474,7 +475,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 mainMap['start_level'].toString(),
                                 style: TextStyle(
@@ -521,7 +522,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 autonomousMode,
                                 style: TextStyle(
@@ -548,7 +549,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 cargoText,
                                 style: TextStyle(
@@ -567,7 +568,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 hatchText,
                                 style: TextStyle(
@@ -588,7 +589,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 workMode,
                                 style: TextStyle(
@@ -615,7 +616,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 mainMap['end_level'].toString(),
                                 style: TextStyle(
@@ -640,7 +641,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 climbTime,
                                 style: TextStyle(
@@ -672,7 +673,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                         ),
                         
-                        RaisedButton(
+                        CustomButton(
                             child: Text(
                                 mainMap['robot_count'].toString(),
                                 style: TextStyle(
@@ -764,7 +765,7 @@ class _QRScreen extends State<QRScreen> {
                 itemCount: history.length,
                 itemBuilder: (context, index) {
                     return index != 0 ?
-                    new RaisedButton(
+                    new CustomButton(
                         child: Text(
                             "Team " + history[index - 1].split(",")[0],
                             style: TextStyle(
