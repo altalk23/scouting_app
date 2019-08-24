@@ -24,7 +24,7 @@ class TeamNumber extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20.0,
                     ),
-                    onChanged: onChanged;
+                    onChanged: onChanged,
                 ),
             ],
         );

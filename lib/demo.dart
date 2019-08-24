@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:scouting_app/loop_list.dart';
 
 void main() {

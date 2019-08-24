@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:scouting_app/input/stopwatch.dart';
 
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
@@ -21,6 +20,7 @@ String fileContent;
 List<String> history = new List<String>();
 
 /// Initializes the map of [String] keys and [Object] objects.
+Map mainMap = new Map<String, Object>();
 
 /// Builds the main state, which contains [MyHomePage] state.
 class MyApp extends StatelessWidget {
@@ -389,47 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         
                         // Driver Station
                         
-                        CustomLabel(
-                            'Driver Station:',
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
-                        ),
                         
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                                CustomButton(
-                                    color: currentColor,
-                                    onPressed: () {
-                                        setState(() {
-                                            currentColor =
-                                            Colors.red == currentColor ?
-                                            Colors.blue :
-                                            Colors.red;
-                                        });
-                                    },
-                                ),
-                                CustomButton(
-                                    child: CustomLabel(
-                                        driverAlignment,
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                        ),
-                                    ),
-                                    onPressed: () {
-                                        setState(() {
-                                            driverAlignment =
-                                            alignmentList[(alignmentList.indexOf
-                                                (driverAlignment) + 1) % 3];
-                                        });
-                                        mainMap['driver_alignment'] =
-                                                driverAlignment;
-                                        print(mainMap.toString());
-                                    },
-                                ),
-                            ],
-                        ),
                         
                         // HAB Start Level
                         
