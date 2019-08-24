@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:scouting_app/input/crossing_line.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
@@ -29,6 +30,9 @@ class _InputScreen extends State<InputScreen> {
     // Hab climb stopwatch
     Stopwatch climbStopwatch = new Stopwatch();
     
+    // Does it crosses the line
+    bool crossesLine = false;
+    
     _InputScreen() {
         // All text initializations
         labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
@@ -44,7 +48,8 @@ class _InputScreen extends State<InputScreen> {
         labelList['robot'] = new LoopList(['Robot type and count']);
         labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
         labelList['robot_count'] = new LoopList(['1', '2', '3']);
-
+        labelList['crossing_line'] = new LoopList(['Does it cross the line']);
+        
         // All map initializations
         mainMap['team_number'] = '';
         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
@@ -54,7 +59,7 @@ class _InputScreen extends State<InputScreen> {
         mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
         mainMap['robot_type'] = labelList['robot_type'][0];
         mainMap['robot_count'] = labelList['robot_count'][0];
-        
+        mainMap['crossing_line'] = crossesLine;
     }
     
     @override
@@ -158,6 +163,18 @@ class _InputScreen extends State<InputScreen> {
                         onCountPressed: () {
                             setState(() {
                                 labelList['robot_count'].loop();
+                                print(mainMap.toString());
+                            });
+                        },
+                    ),
+                    //--------------------------------------------------------//
+                    CrossingLine(
+                        label: labelList['crossing_line'][0],
+                        value: crossesLine,
+                        onChanged: (bool value) {
+                            setState(() {
+                                crossesLine = value;
+                                labelList['crossing_line'].loop();
                                 print(mainMap.toString());
                             });
                         },

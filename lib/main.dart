@@ -388,25 +388,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     widgetList = [
                         // Crosses The Line?
                         
-                        Row(
-                            children: <Widget>[
-                                CustomLabel(
-                                    'Crosses The Line:',
-                                    style: TextStyle(
-                                        fontSize: 28.0,
-                                    ),
-                                ),
-                                
-                                Checkbox(
-                                    value: crossesLine,
-                                    onChanged: (bool isChanged) {
-                                        setState(() {
-                                            crossesLine = isChanged;
-                                        });
-                                    },
-                                ),
-                            ],
-                        ),
+                        
                         
                         // Autonomous begins with
                         
