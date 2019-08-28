@@ -16,7 +16,6 @@ void main() => runApp(MyApp());
 
 File historyFile;
 
-String fileContent;
 
 List<String> history = new List<String>();
 
@@ -82,24 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     
     _MyHomePageState() {
-        mainMap['team_number'] = '';
-        mainMap['driver_color'] = currentColor.value.toString();
-        mainMap['driver_alignment'] = driverAlignment;
-        mainMap['crosses_line'] = crossesLine;
-        mainMap['autonomous_mode'] = autonomousMode;
-        mainMap['cargo_placement_start'] = '';
-        mainMap['cargo_placement_duration'] = '';
-        mainMap['cargo_placement_place'] = '';
-        mainMap['hatch_placement_start'] = '';
-        mainMap['hatch_placement_duration'] = '';
-        mainMap['hatch_placement_place'] = '';
-        mainMap['work_mode'] = workMode;
-        mainMap['start_level'] = 0;
-        mainMap['end_level'] = 0;
-        mainMap['climb_time'] = new Duration().toString();
-        mainMap['robot_count'] = 0;
-        mainMap['defense_robot'] = '';
-        mainMap['notes'] = '';
+        
         
         hatchPlacement.add(new List<String>());
         
@@ -144,50 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
         */
     }
     
-    // Start of struggle
     
-    Future get _localPath async {
-        final applicationDirectory = await getApplicationDocumentsDirectory();
-        return applicationDirectory.path;
-    }
     
-    Future get _localFile async {
-        final path = await _localPath;
-        return File("$path/history.txt");
-    }
     
-    Future _readFile() async {
-        try {
-            final file = await _localFile;
-            print(file);
-            fileContent = await file.readAsString();
-            history = fileContent.split("\t");
-            print(history);
-        }
-        catch (e) {
-            print(e);
-            return null;
-        }
-    }
-    
-    Future _writeFile(String text) async {
-        final file = await _localFile;
-        await file.writeAsString("$text");
-    }
-    
-    // End of struggle
-    
-    @override
-    void initState() {
-        super.initState();
-        _readFile();
-    }
-    
-    String mapToString(Map<String, Object> map) {
-        List<Object> list = new List<Object>();
-        map.forEach((String key, Object value) => list.add(value));
-        return list.join(",");
-    }
     
     
     @override

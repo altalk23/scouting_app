@@ -1,6 +1,8 @@
 import 'dart:core';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:scouting_app/input/autonomous_starts_with.dart';
 import 'package:scouting_app/input/cargo.dart';
@@ -15,6 +17,8 @@ import 'package:scouting_app/input/robot_type_and_count.dart';
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
 import 'package:scouting_app/loop_list.dart';
+import 'package:scouting_app/screen/qr_screen.dart';
+import 'package:scouting_app/widget/custom_label.dart';
 
 
 class InputScreen extends StatefulWidget {
@@ -41,7 +45,14 @@ class _InputScreen extends State<InputScreen> {
     // Is it autonomous
     bool isAutonomous = false;
     
+    // All map history
+    List<String> history = new List<String>();
+    
     _InputScreen() {
+        _initialization();
+    }
+    
+    void _initialization() {
         // All text initializations
         labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
         labelList['team_number'] = new LoopList(['Team number']);
@@ -85,12 +96,73 @@ class _InputScreen extends State<InputScreen> {
         mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
         mainMap['defense_notes'] = '';
         mainMap['notes'] = '';
+        
+        print("i,nsa");
+        print(mainMap);
+    }
+    
+    String fileContent;
+    
+    // Start of struggle
+    
+    Future get _localPath async {
+        final applicationDirectory = await getApplicationDocumentsDirectory();
+        return applicationDirectory.path;
+    }
+    
+    Future get _localFile async {
+        final path = await _localPath;
+        return File("$path/history.txt");
+    }
+    
+    Future _readFile() async {
+        try {
+            final file = await _localFile;
+            fileContent = await file.readAsString();
+            history = fileContent.split("\t");
+        }
+        catch (e) {
+            print(e);
+            return null;
+        }
+    }
+    
+    Future _writeFile(String text) async {
+        final file = await _localFile;
+        await file.writeAsString("$text");
+    }
+    
+    // End of struggle
+    
+    @override
+    void initState() {
+        super.initState();
+        _readFile();
     }
     
     @override
     Widget build(BuildContext context) {
         // TODO: implement build
         return Scaffold(
+            appBar: AppBar(
+                title: CustomLabel('placeholder'),
+                actions: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.code),
+                        onPressed: () =>
+                                Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                                builder: (context) => QRScreen()
+                                        )
+                                ),
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.print),
+                        onPressed: () => print(history),
+                    )
+                ],
+            ),
             body: ListView(
                 children: <Widget>[
                     //--------------------------------------------------------//
@@ -102,7 +174,16 @@ class _InputScreen extends State<InputScreen> {
                             }
                             else {
                                 stopwatch.stop();
-                                // TODO: Add resetting the screen
+                                
+                                // Map to string
+                                List<Object> list = new List<Object>();
+                                mainMap.forEach((String key, Object value) => list.add(value));
+                                
+                                // Add map to history
+                                history.add(list.join(","));
+                                
+                                // Write to file
+                                _writeFile(history.join("\t"));
                             }
                             setState(() {
                                 labelList['stopwatch'].loop();

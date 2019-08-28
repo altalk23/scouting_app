@@ -131,7 +131,7 @@ class _Cargo extends State<Cargo> {
                             fontSize: 20.0,
                         ),
                     ),
-                    onPressed:() {
+                    onPressed: () {
                         setState(() {
                             _cargoMenu();
                         });
