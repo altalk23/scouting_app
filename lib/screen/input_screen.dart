@@ -70,6 +70,9 @@ class _InputScreen extends State<InputScreen> {
         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
         mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
+        mainMap['cargo_placement_start'] = '';
+        mainMap['cargo_placement_duration'] = '';
+        mainMap['cargo_placement_place'] = '';
         mainMap['robot_type'] = labelList['robot_type'][0];
         mainMap['robot_count'] = labelList['robot_count'][0];
         mainMap['crossing_line'] = crossesLine;
@@ -171,6 +174,7 @@ class _InputScreen extends State<InputScreen> {
                         label: labelList['cargo'][0],
                         textList: labelList['cargo_state'],
                         stopwatch: stopwatch,
+                        map: mainMap,
                     ),
                     //--------------------------------------------------------//
                     RobotTypeCount(

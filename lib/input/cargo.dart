@@ -23,64 +23,66 @@ List<String> placementName = [
 ];
 
 class Cargo extends StatefulWidget {
-    Cargo({this.onPressed, this.label, this.textList, this.stopwatch});
+    Cargo({this.onPressed, this.label, this.textList, this.stopwatch, this.map, this.dialogLabel});
     
     final VoidCallback onPressed;
     final String label;
+    final String dialogLabel;
     final LoopList textList;
     final Stopwatch stopwatch;
+    final Map map;
     
     @override
     State createState() {
-        return new _Cargo(this.onPressed, this.label, this.textList, this.stopwatch);
+        return new _Cargo(this.onPressed, this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     }
 }
 
 class _Cargo extends State<Cargo> {
     final VoidCallback onPressed;
     final String label;
+    final String dialogLabel;
     final LoopList textList;
     final Stopwatch stopwatch;
-
-    _Cargo(this.onPressed, this.label, this.textList, this.stopwatch);
+    final Map map;
+    
+    _Cargo(this.onPressed, this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     
     
-    List<List<String>> cargoPlacement = new List<List<String>>();
+    List<String> cargoData = new List<String>();
     
     
     Widget _buttonPressed(index) {
         return CustomButton(
             child: CustomLabel(placementName[index]),
             onPressed: () {
-                cargoPlacement.last.add(placement[index]);
-                cargoPlacement.add(new List<String>());
-                print(cargoPlacement); // Who needs optimization anyways?
-                mainMap['cargo_placement_start'] = '';
-                mainMap['cargo_placement_duration'] = '';
-                mainMap['cargo_placement_place'] = '';
-                cargoPlacement.sublist(0, cargoPlacement.length - 1)
-                        .forEach((list) {
-                    mainMap['cargo_placement_start'] =
-                            mainMap['cargo_placement_start']
-                                    + '\n' + list[0];
-                    mainMap['cargo_placement_duration'] =
-                            mainMap['cargo_placement_duration']
-                                    + '\n' + list[1];
-                    mainMap['cargo_placement_place'] =
-                            mainMap['cargo_placement_place']
-                                    + '\n' + list[2];
-                });
-                print(mainMap.toString());
+                cargoData.add(placement[index]);
+                map['cargo_placement_start'] += '\n' + cargoData[0];
+                map['cargo_placement_duration'] += '\n' + cargoData[1];
+                map['cargo_placement_place'] += '\n' + cargoData[2];
+                cargoData = new List<String>();
+                print(map.toString());
                 Navigator.pop(context);
             },
         );
     }
     
     void _cargoMenu() {
+        print("asdas");
         textList.loop();
-        cargoPlacement.last.add(stopwatch.elapsed.inMilliseconds.toString());
-        print("added");
+        cargoData.add(stopwatch.elapsed.inMilliseconds.toString());
+        print(cargoData);
         if (textList.start == 0) {
+            cargoData[1] = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(cargoData[1]))
+                    .difference(DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(cargoData[0])))
+                    .toString();
+            cargoData[0] = Duration(
+                    milliseconds: int.parse(cargoData[0])
+            ).toString();
+            print(cargoData);
+            
             showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -109,14 +111,6 @@ class _Cargo extends State<Cargo> {
                         );
                     }
             );
-            cargoPlacement.last[1] = DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoPlacement.last[1]))
-                    .difference(DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoPlacement.last[0])))
-                    .toString();
-            cargoPlacement.last[0] = Duration(
-                    milliseconds: int.parse(cargoPlacement.last[0])
-            ).toString();
         }
     }
     
@@ -140,7 +134,10 @@ class _Cargo extends State<Cargo> {
                         ),
                     ),
                     onPressed: () {
-                        setState(() => _cargoMenu);
+                        print("aaaaa");
+                        setState(() {
+                            _cargoMenu();
+                        });
                     },
                 ),
             ],

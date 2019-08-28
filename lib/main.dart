@@ -101,7 +101,6 @@ class _MyHomePageState extends State<MyHomePage> {
         mainMap['defense_robot'] = '';
         mainMap['notes'] = '';
         
-        cargoPlacement.add(new List<String>());
         hatchPlacement.add(new List<String>());
         
         // Copied from stackoverflow, it doesn't work though
@@ -230,11 +229,12 @@ class _MyHomePageState extends State<MyHomePage> {
     
     
     Widget _generateHatchButton(index) {
-        if (placement[index] != null) {
+        List<Object> temp;
+        if (temp[index] != null) {
             return CustomButton(
-                child: CustomLabel(placementName[index]),
+                child: CustomLabel(temp[index]),
                 onPressed: () {
-                    hatchPlacement.last.add(placement[index]);
+                    hatchPlacement.last.add(temp[index]);
                     hatchPlacement.add(new List<String>());
                     print(hatchPlacement); // Who needs optimization anyways?
                     mainMap['hatch_placement_start'] = '';
