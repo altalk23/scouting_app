@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:scouting_app/input/autonomous_starts_with.dart';
+import 'package:scouting_app/input/cargo.dart';
 import 'package:scouting_app/input/crossing_line.dart';
 import 'package:scouting_app/input/defense_notes.dart';
 import 'package:scouting_app/input/driver_station.dart';
@@ -51,6 +52,8 @@ class _InputScreen extends State<InputScreen> {
         labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
         labelList['hab_climb'] = new LoopList(['Hab climb time']);
         labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
+        labelList['cargo'] = new LoopList(['Cargo placement']);
+        labelList['cargo_state'] = new LoopList(['Take cargo', 'Place cargo']);
         labelList['robot'] = new LoopList(['Robot type and count']);
         labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
         labelList['robot_count'] = new LoopList(['1', '2', '3']);
@@ -161,6 +164,13 @@ class _InputScreen extends State<InputScreen> {
                                 print(mainMap.toString());
                             });
                         },
+                    ),
+                    //--------------------------------------------------------//
+                    Cargo(
+                        onPressed: () {},
+                        label: labelList['cargo'][0],
+                        textList: labelList['cargo_state'],
+                        stopwatch: stopwatch,
                     ),
                     //--------------------------------------------------------//
                     RobotTypeCount(
