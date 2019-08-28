@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
@@ -24,7 +25,7 @@ class _QRScreen extends State<QRScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: CustomLabel("QR List"),
+                title: CustomLabel(AppLocalization.title),
                 actions: <Widget>[
                     IconButton(
                         icon: Icon(Icons.remove),
@@ -39,18 +40,19 @@ class _QRScreen extends State<QRScreen> {
             body: ListView.builder(
                 itemCount: history.length + 1,
                 itemBuilder: (context, index) {
-                    return index != 0 ?
+                    index--;
+                    return index >= 0 ?
                     new CustomButton(
                         child: CustomLabel(
-                            "Team " + history[index - 1].split(",")[0],
+                            "Team " + history[index].split(",")[0],
                             style: TextStyle(
                                 fontSize: 28.0,
                             ),
                         ),
                         onPressed: () {
                             setState(() {
-                                _index = index - 1;
-                                qrData = history[index - 1];
+                                _index = index;
+                                qrData = history[index];
                             });
                         },
                     ) :

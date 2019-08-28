@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:scouting_app/screen/input_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
+import 'package:scouting_app/screen/input_screen.dart';
+import 'package:scouting_app/localization.dart';
 /*
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth.dart';*/
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return MaterialApp(
-            title: 'Flutter Demo',
             theme: ThemeData(
                 primarySwatch: Colors.blue,
             ),
@@ -61,6 +59,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
     
     Stopwatch stopwatch;
+    
     //All (?) variable initializations
     Color currentColor = Colors.red;
     List<String> alignmentList = ['Left', 'Mid', 'Right'];
@@ -79,10 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String hatchText = 'Take Hatch';
     
     
-    
     _MyHomePageState() {
-        
-        
         hatchPlacement.add(new List<String>());
         
         // Copied from stackoverflow, it doesn't work though
@@ -127,17 +123,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     
     
-    
-    
-    
-    
     @override
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
                 title: CustomLabel(widget.title),
                 actions: <Widget>[
-                
                 ],
             ),
             body: ListView.separated(

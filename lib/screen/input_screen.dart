@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:scouting_app/input/autonomous_starts_with.dart';
@@ -16,6 +17,7 @@ import 'package:scouting_app/input/notes.dart';
 import 'package:scouting_app/input/robot_type_and_count.dart';
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
+import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/screen/qr_screen.dart';
 import 'package:scouting_app/widget/custom_label.dart';
@@ -48,13 +50,16 @@ class _InputScreen extends State<InputScreen> {
     // All map history
     List<String> history = new List<String>();
     
+    // Localization
+    AppLocalization locale = new AppLocalization('en');
+    
     _InputScreen() {
         _initialization();
     }
     
     void _initialization() {
         // All text initializations
-        labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
+        labelList['stopwatch'] = new LoopList([]);
         labelList['team_number'] = new LoopList(['Team number']);
         labelList['driver_station'] = new LoopList(['Driver alignment']);
         labelList['driver_station_alignment'] = new LoopList(['Left', 'Middle', 'Right']);
@@ -153,9 +158,10 @@ class _InputScreen extends State<InputScreen> {
                                 Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                                builder: (context) => QRScreen(
-                                                    history: history,
-                                                )
+                                                builder: (context) =>
+                                                        QRScreen(
+                                                            history: history,
+                                                        )
                                         )
                                 ),
                     ),
@@ -186,17 +192,23 @@ class _InputScreen extends State<InputScreen> {
                             }
                             else {
                                 stopwatch.stop();
-                                
-                                // Map to string
-                                List<Object> list = new List<Object>();
-                                mainMap.forEach((String key, Object value) => list.add(value));
-                                print(list);
-                                
-                                // Add map to history
-                                history.add(list.join(","));
-                                
-                                // Write to file
-                                _writeFile(history.join("\t"));
+                                if (mainMap['team_number'] != '') {
+                                    // Map to string
+                                    List<Object> list = new List<Object>();
+                                    mainMap.forEach((String key, Object value) => list.add(value));
+                                    print(list);
+                                    
+                                    // Add map to history
+                                    history.add(list.join(","));
+                                    
+                                    // Write to file
+                                    _writeFile(history.join("\t"));
+                                }
+                                else {
+                                    Fluttertoast.showToast(
+                                            msg: 'Please enter the team number'
+                                    );
+                                }
                             }
                             setState(() {
                                 labelList['stopwatch'].loop();
