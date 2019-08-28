@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+
 import 'package:scouting_app/input/autonomous_starts_with.dart';
 import 'package:scouting_app/input/cargo.dart';
 import 'package:scouting_app/input/crossing_line.dart';
@@ -8,9 +9,9 @@ import 'package:scouting_app/input/defense_notes.dart';
 import 'package:scouting_app/input/driver_station.dart';
 import 'package:scouting_app/input/hab_climb_time.dart';
 import 'package:scouting_app/input/hab_start_and_end_level.dart';
+import 'package:scouting_app/input/hatch.dart';
 import 'package:scouting_app/input/notes.dart';
 import 'package:scouting_app/input/robot_type_and_count.dart';
-
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
 import 'package:scouting_app/loop_list.dart';
@@ -52,8 +53,10 @@ class _InputScreen extends State<InputScreen> {
         labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
         labelList['hab_climb'] = new LoopList(['Hab climb time']);
         labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
-        labelList['cargo'] = new LoopList(['Cargo placement']);
+        labelList['cargo'] = new LoopList(['Cargo placement', 'Set place']);
         labelList['cargo_state'] = new LoopList(['Take cargo', 'Place cargo']);
+        labelList['hatch'] = new LoopList(['Hatch placement', 'Set place']);
+        labelList['hatch_state'] = new LoopList(['Take hatch', 'Place hatch']);
         labelList['robot'] = new LoopList(['Robot type and count']);
         labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
         labelList['robot_count'] = new LoopList(['1', '2', '3']);
@@ -73,6 +76,9 @@ class _InputScreen extends State<InputScreen> {
         mainMap['cargo_placement_start'] = '';
         mainMap['cargo_placement_duration'] = '';
         mainMap['cargo_placement_place'] = '';
+        mainMap['hatch_placement_start'] = '';
+        mainMap['hatch_placement_duration'] = '';
+        mainMap['hatch_placement_place'] = '';
         mainMap['robot_type'] = labelList['robot_type'][0];
         mainMap['robot_count'] = labelList['robot_count'][0];
         mainMap['crossing_line'] = crossesLine;
@@ -170,9 +176,17 @@ class _InputScreen extends State<InputScreen> {
                     ),
                     //--------------------------------------------------------//
                     Cargo(
-                        onPressed: () {},
                         label: labelList['cargo'][0],
+                        dialogLabel: labelList['cargo'][1],
                         textList: labelList['cargo_state'],
+                        stopwatch: stopwatch,
+                        map: mainMap,
+                    ),
+                    //--------------------------------------------------------//
+                    Hatch(
+                        label: labelList['hatch'][0],
+                        dialogLabel: labelList['hatch'][1],
+                        textList: labelList['hatch_state'],
                         stopwatch: stopwatch,
                         map: mainMap,
                     ),

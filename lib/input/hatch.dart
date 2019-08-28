@@ -22,8 +22,8 @@ List<String> placementName = [
     '3b', null, null, null, null, null, null, '3b',
 ];
 
-class Cargo extends StatefulWidget {
-    Cargo({this.label, this.textList, this.stopwatch, this.map, this.dialogLabel});
+class Hatch extends StatefulWidget {
+    Hatch({this.label, this.textList, this.stopwatch, this.map, this.dialogLabel});
     
     final String label;
     final String dialogLabel;
@@ -33,53 +33,52 @@ class Cargo extends StatefulWidget {
     
     @override
     State createState() {
-        return new _Cargo(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
+        return new _Hatch(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     }
 }
 
-class _Cargo extends State<Cargo> {
+class _Hatch extends State<Hatch> {
     final String label;
     final String dialogLabel;
     final LoopList textList;
     final Stopwatch stopwatch;
     final Map map;
     
-    _Cargo(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
+    _Hatch(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     
     
-    List<String> cargoData = new List<String>();
+    List<String> hatchData = new List<String>();
     
     
     Widget _buttonPressed(index) {
         return CustomButton(
             child: CustomLabel(placementName[index]),
             onPressed: () {
-                cargoData.add(placement[index]);
-                map['cargo_placement_start'] += '\n' + cargoData[0];
-                map['cargo_placement_duration'] += '\n' + cargoData[1];
-                map['cargo_placement_place'] += '\n' + cargoData[2];
-                cargoData = new List<String>();
+                hatchData.add(placement[index]);
+                map['hatch_placement_start'] += '\n' + hatchData[0];
+                map['hatch_placement_duration'] += '\n' + hatchData[1];
+                map['hatch_placement_place'] += '\n' + hatchData[2];
+                hatchData = new List<String>();
                 print(map.toString());
                 Navigator.pop(context);
             },
         );
     }
     
-    void _cargoMenu() {
-        print("asdas");
+    void _hatchMenu() {
         textList.loop();
-        cargoData.add(stopwatch.elapsed.inMilliseconds.toString());
-        print(cargoData);
+        hatchData.add(stopwatch.elapsed.inMilliseconds.toString());
+        print(hatchData);
         if (textList.start == 0) {
-            cargoData[1] = DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoData[1]))
+            hatchData[1] = DateTime.fromMillisecondsSinceEpoch(
+                    int.parse(hatchData[1]))
                     .difference(DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoData[0])))
+                    int.parse(hatchData[0])))
                     .toString();
-            cargoData[0] = Duration(
-                    milliseconds: int.parse(cargoData[0])
+            hatchData[0] = Duration(
+                    milliseconds: int.parse(hatchData[0])
             ).toString();
-            print(cargoData);
+            print(hatchData);
             
             showDialog(
                     context: context,
@@ -131,9 +130,9 @@ class _Cargo extends State<Cargo> {
                             fontSize: 20.0,
                         ),
                     ),
-                    onPressed:() {
+                    onPressed: () {
                         setState(() {
-                            _cargoMenu();
+                            _hatchMenu();
                         });
                     },
                 ),
