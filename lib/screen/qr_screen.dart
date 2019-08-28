@@ -4,13 +4,21 @@ import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
 class QRScreen extends StatefulWidget {
+    
+    final List<String> history;
+    
+    const QRScreen({Key key, this.history}) : super(key: key);
+    
     @override
-    _QRScreen createState() => _QRScreen();
+    _QRScreen createState() => _QRScreen(this.history);
 }
 
 class _QRScreen extends State<QRScreen> {
     String qrData = "";
     int _index;
+    final List<String> history;
+    
+    _QRScreen(this.history);
     
     @override
     Widget build(BuildContext context) {
@@ -20,12 +28,16 @@ class _QRScreen extends State<QRScreen> {
                 actions: <Widget>[
                     IconButton(
                         icon: Icon(Icons.remove),
-                        onPressed: () => history.removeAt(_index),
+                        onPressed: () {
+                            setState(() {
+                                history.removeAt(_index);
+                            });
+                        }
                     )
                 ],
             ),
             body: ListView.builder(
-                itemCount: history.length,
+                itemCount: history.length + 1,
                 itemBuilder: (context, index) {
                     return index != 0 ?
                     new CustomButton(

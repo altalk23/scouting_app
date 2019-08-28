@@ -137,29 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: AppBar(
                 title: CustomLabel(widget.title),
                 actions: <Widget>[
-                    IconButton(
-                        icon: Icon(Icons.code),
-                        onPressed: () {
-                            Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                            builder: (context) => QRScreen()
-                                    )
-                            );
-                        },
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.save),
-                        onPressed: () {
-                            _writeFile(history.join("\t"));
-                        },
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                            history.add(mapToString(mainMap));
-                        },
-                    ),
+                
                 ],
             ),
             body: ListView.separated(

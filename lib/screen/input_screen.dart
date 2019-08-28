@@ -153,13 +153,25 @@ class _InputScreen extends State<InputScreen> {
                                 Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                                builder: (context) => QRScreen()
+                                                builder: (context) => QRScreen(
+                                                    history: history,
+                                                )
                                         )
                                 ),
                     ),
                     IconButton(
                         icon: Icon(Icons.print),
-                        onPressed: () => print(history),
+                        onPressed: () {
+                            print(history.join("---"));
+                            print(history.length);
+                        },
+                    ),
+                    IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                            _writeFile('');
+                            history = new List<String>();
+                        },
                     )
                 ],
             ),
@@ -178,6 +190,7 @@ class _InputScreen extends State<InputScreen> {
                                 // Map to string
                                 List<Object> list = new List<Object>();
                                 mainMap.forEach((String key, Object value) => list.add(value));
+                                print(list);
                                 
                                 // Add map to history
                                 history.add(list.join(","));
@@ -245,12 +258,14 @@ class _InputScreen extends State<InputScreen> {
                         onStartPressed: () {
                             setState(() {
                                 labelList['hab_start_level'].loop();
+                                mainMap['hab_start_level'] = labelList['hab_start_level'][0];
                                 print(mainMap.toString());
                             });
                         },
                         onEndPressed: () {
                             setState(() {
                                 labelList['hab_end_level'].loop();
+                                mainMap['hab_end_level'] = labelList['hab_end_level'][0];
                                 print(mainMap.toString());
                             });
                         },
