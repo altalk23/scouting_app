@@ -122,7 +122,9 @@ class _Hatch extends State<Hatch> {
                     label,
                     fontSize: Constant.mediumFont,
                 ),
-                
+                SizedBox(
+                    height: Constant.padding,
+                ),
                 CustomButton(
                     child: CustomLabel(
                         textList[0],

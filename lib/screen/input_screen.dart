@@ -21,6 +21,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/screen/qr_screen.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 
 class InputScreen extends StatefulWidget {
     @override
@@ -77,6 +79,7 @@ class _InputScreen extends State<InputScreen> {
         labelList['autonomous_starts'] = new LoopList(['Cargo', 'Hatch', 'Mixed']);
         labelList['defense_notes'] = new LoopList(['Defense notes']);
         labelList['notes'] = new LoopList(['Notes']);
+        labelList['title'] = new LoopList(['Input Screen']);
         
         // All map initializations
         mainMap['team_number'] = '';
@@ -148,20 +151,25 @@ class _InputScreen extends State<InputScreen> {
             appBar: GradientAppBar(
                 backgroundColorStart: HSVColor.fromAHSV(1, 313, 0.40, 0.10).toColor(),
                 backgroundColorEnd: HSVColor.fromAHSV(1, 313, 0.25, 0.20).toColor(),
-                title: CustomLabel('placeholder'),
+                title: CustomLabel(
+                    labelList['title'][0],
+                    fontSize: Constant.smallFont,
+                ),
                 actions: <Widget>[
                     IconButton(
                         icon: Icon(Icons.code),
-                        onPressed: () =>
-                                Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                                builder: (context) =>
-                                                        QRScreen(
-                                                            history: history,
-                                                        )
-                                        )
+                        onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) {
+                                        return QRScreen(
+                                            history: history,
+                                        );
+                                    },
                                 ),
+                            );
+                        },
                     ),
                     IconButton(
                         icon: Icon(Icons.print),
@@ -191,7 +199,7 @@ class _InputScreen extends State<InputScreen> {
                     children: <Widget>[
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: StopwatchButton(
                                 choiceList: labelList['stopwatch'],
                                 onPressed: () {
@@ -220,7 +228,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: TeamNumber(
                                 label: labelList['team_number'][0],
                                 onChanged: (String string) {
@@ -231,7 +239,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: DriverStation(
                                 label: labelList['driver_station'][0],
                                 colorList: labelList['driver_station_color'],
@@ -254,7 +262,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: HabClimbTime(
                                 label: labelList['hab_climb'][0],
                                 counterList: labelList['hab_climb_time'],
@@ -276,7 +284,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: HabStartEndLevel(
                                 label: labelList['hab_level'][0],
                                 startList: labelList['hab_start_level'],
@@ -299,7 +307,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: Cargo(
                                 label: labelList['cargo'][0],
                                 dialogLabel: labelList['cargo'][1],
@@ -310,7 +318,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: Hatch(
                                 label: labelList['hatch'][0],
                                 dialogLabel: labelList['hatch'][1],
@@ -321,7 +329,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: RobotTypeCount(
                                 label: labelList['robot'][0],
                                 typeList: labelList['robot_type'],
@@ -345,13 +353,13 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: CrossingLine(
                                 label: labelList['crossing_line'][0],
                                 value: crossesLine,
-                                onChanged: (bool value) {
+                                onChanged: () {
                                     setState(() {
-                                        crossesLine = value;
+                                        crossesLine = !crossesLine;
                                         mainMap['crossing_line'] = crossesLine;
                                         labelList['crossing_line'].loop();
                                         print(mainMap.toString());
@@ -361,7 +369,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: AutonomousStarts(
                                 label: labelList['autonomous'][0],
                                 autonomousList: labelList['autonomous_starts'],
@@ -377,7 +385,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: DefenseNotes(
                                 label: labelList['defense_notes'][0],
                                 onChanged: (String string) {
@@ -388,7 +396,7 @@ class _InputScreen extends State<InputScreen> {
                         ),
                         //--------------------------------------------------------//
                         Padding(
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(Constant.largePadding),
                             child: Notes(
                                 label: labelList['notes'][0],
                                 onChanged: (String string) {

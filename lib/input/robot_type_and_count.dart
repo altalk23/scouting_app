@@ -21,6 +21,9 @@ class RobotTypeCount extends StatelessWidget {
                     label,
                     fontSize: Constant.mediumFont,
                 ),
+                SizedBox(
+                    height: Constant.padding,
+                ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[

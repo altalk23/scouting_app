@@ -21,7 +21,9 @@ class HabClimbTime extends StatelessWidget {
                     label,
                     fontSize: Constant.mediumFont,
                 ),
-    
+                SizedBox(
+                    height: Constant.padding,
+                ),
                 CustomButton(
                     child: CustomLabel(
                         counterList[0],

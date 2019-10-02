@@ -123,7 +123,9 @@ class _Cargo extends State<Cargo> {
                     label,
                     fontSize: Constant.mediumFont,
                 ),
-                
+                SizedBox(
+                    height: Constant.padding,
+                ),
                 CustomButton(
                     child: CustomLabel(
                         textList[0],
