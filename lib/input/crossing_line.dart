@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class CrossingLine extends StatelessWidget {
     CrossingLine({this.label, this.value, this.onChanged});
     final String label;
@@ -14,9 +16,7 @@ class CrossingLine extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
         
                 Checkbox(

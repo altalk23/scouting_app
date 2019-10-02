@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:scouting_app/input/autonomous_starts_with.dart';
@@ -144,7 +145,9 @@ class _InputScreen extends State<InputScreen> {
     Widget build(BuildContext context) {
         // TODO: implement build
         return Scaffold(
-            appBar: AppBar(
+            appBar: GradientAppBar(
+                backgroundColorStart: HSVColor.fromAHSV(1, 313, 0.40, 0.10).toColor(),
+                backgroundColorEnd: HSVColor.fromAHSV(1, 313, 0.25, 0.20).toColor(),
                 title: CustomLabel('placeholder'),
                 actions: <Widget>[
                     IconButton(
@@ -153,9 +156,10 @@ class _InputScreen extends State<InputScreen> {
                                 Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                                builder: (context) => QRScreen(
-                                                    history: history,
-                                                )
+                                                builder: (context) =>
+                                                        QRScreen(
+                                                            history: history,
+                                                        )
                                         )
                                 ),
                     ),
@@ -175,181 +179,226 @@ class _InputScreen extends State<InputScreen> {
                     )
                 ],
             ),
-            body: ListView(
-                children: <Widget>[
-                    //--------------------------------------------------------//
-                    StopwatchButton(
-                        choiceList: labelList['stopwatch'],
-                        onPressed: () {
-                            if (labelList['stopwatch'].start == 0) {
-                                stopwatch.start();
-                            }
-                            else {
-                                stopwatch.stop();
-                                
-                                // Map to string
-                                List<Object> list = new List<Object>();
-                                mainMap.forEach((String key, Object value) => list.add(value));
-                                print(list);
-                                
-                                // Add map to history
-                                history.add(list.join(","));
-                                
-                                // Write to file
-                                _writeFile(history.join("\t"));
-                            }
-                            setState(() {
-                                labelList['stopwatch'].loop();
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    TeamNumber(
-                        label: labelList['team_number'][0],
-                        onChanged: (String string) {
-                            mainMap['team_number'] = string;
-                            print(mainMap.toString());
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    DriverStation(
-                        label: labelList['driver_station'][0],
-                        colorList: labelList['driver_station_color'],
-                        alignmentList: labelList['driver_station_alignment'],
-                        onColorPressed: () {
-                            setState(() {
-                                labelList['driver_station_color'].loop();
-                                mainMap['driver_station_color'] = labelList['driver_station_color'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                        onAlignmentPressed: () {
-                            setState(() {
-                                labelList['driver_station_alignment'].loop();
-                                mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    HabClimbTime(
-                        label: labelList['hab_climb'][0],
-                        counterList: labelList['hab_climb_time'],
-                        onPressed: (labelList['hab_climb_time'].start != 2) ? () {
-                            if (labelList['hab_climb_time'].start == 0) {
-                                climbStopwatch.start();
-                            }
-                            else if (labelList['hab_climb_time'].start == 1) {
-                                climbStopwatch.stop();
-                                mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
-                                labelList['hab_climb_time'][1] = mainMap['hab_climb_time'];
-                            }
-                            setState(() {
-                                labelList['hab_climb_time'].loop();
-                                print(mainMap.toString());
-                            });
-                        } : null,
-                    ),
-                    //--------------------------------------------------------//
-                    HabStartEndLevel(
-                        label: labelList['hab_level'][0],
-                        startList: labelList['hab_start_level'],
-                        endList: labelList['hab_end_level'],
-                        onStartPressed: () {
-                            setState(() {
-                                labelList['hab_start_level'].loop();
-                                mainMap['hab_start_level'] = labelList['hab_start_level'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                        onEndPressed: () {
-                            setState(() {
-                                labelList['hab_end_level'].loop();
-                                mainMap['hab_end_level'] = labelList['hab_end_level'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    Cargo(
-                        label: labelList['cargo'][0],
-                        dialogLabel: labelList['cargo'][1],
-                        textList: labelList['cargo_state'],
-                        stopwatch: stopwatch,
-                        map: mainMap,
-                    ),
-                    //--------------------------------------------------------//
-                    Hatch(
-                        label: labelList['hatch'][0],
-                        dialogLabel: labelList['hatch'][1],
-                        textList: labelList['hatch_state'],
-                        stopwatch: stopwatch,
-                        map: mainMap,
-                    ),
-                    //--------------------------------------------------------//
-                    RobotTypeCount(
-                        label: labelList['robot'][0],
-                        typeList: labelList['robot_type'],
-                        onTypePressed: () {
-                            setState(() {
-                                labelList['robot_type'].loop();
-                                mainMap['robot_type'] = labelList['robot_type'][0];
-                                print(mainMap.toString());
-                                isAutonomous = labelList['robot_type'].start != 0;
-                            });
-                        },
-                        countList: labelList['robot_count'],
-                        onCountPressed: () {
-                            setState(() {
-                                labelList['robot_count'].loop();
-                                mainMap['robot_count'] = labelList['robot_count'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    CrossingLine(
-                        label: labelList['crossing_line'][0],
-                        value: crossesLine,
-                        onChanged: (bool value) {
-                            setState(() {
-                                crossesLine = value;
-                                mainMap['crossing_line'] = crossesLine;
-                                labelList['crossing_line'].loop();
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    AutonomousStarts(
-                        label: labelList['autonomous'][0],
-                        autonomousList: labelList['autonomous_starts'],
-                        isAutonomous: isAutonomous,
-                        onPressed: () {
-                            setState(() {
-                                labelList['autonomous_starts'].loop();
-                                mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
-                                print(mainMap.toString());
-                            });
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    DefenseNotes(
-                        label: labelList['defense_notes'][0],
-                        onChanged: (String string) {
-                            mainMap['defense_notes'] = string;
-                            print(mainMap.toString());
-                        },
-                    ),
-                    //--------------------------------------------------------//
-                    Notes(
-                        label: labelList['notes'][0],
-                        onChanged: (String string) {
-                            mainMap['notes'] = string;
-                            print(mainMap.toString());
-                        },
-                    ),
-                ],
+            body: Container(
+                decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                colors: [HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(), HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor()]
+                        )
+                ),
+                child: ListView(
+                    children: <Widget>[
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: StopwatchButton(
+                                choiceList: labelList['stopwatch'],
+                                onPressed: () {
+                                    if (labelList['stopwatch'].start == 0) {
+                                        stopwatch.start();
+                                    }
+                                    else {
+                                        stopwatch.stop();
+                                        
+                                        // Map to string
+                                        List<Object> list = new List<Object>();
+                                        mainMap.forEach((String key, Object value) => list.add(value));
+                                        print(list);
+                                        
+                                        // Add map to history
+                                        history.add(list.join(","));
+                                        
+                                        // Write to file
+                                        _writeFile(history.join("\t"));
+                                    }
+                                    setState(() {
+                                        labelList['stopwatch'].loop();
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: TeamNumber(
+                                label: labelList['team_number'][0],
+                                onChanged: (String string) {
+                                    mainMap['team_number'] = string;
+                                    print(mainMap.toString());
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: DriverStation(
+                                label: labelList['driver_station'][0],
+                                colorList: labelList['driver_station_color'],
+                                alignmentList: labelList['driver_station_alignment'],
+                                onColorPressed: () {
+                                    setState(() {
+                                        labelList['driver_station_color'].loop();
+                                        mainMap['driver_station_color'] = labelList['driver_station_color'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                                onAlignmentPressed: () {
+                                    setState(() {
+                                        labelList['driver_station_alignment'].loop();
+                                        mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: HabClimbTime(
+                                label: labelList['hab_climb'][0],
+                                counterList: labelList['hab_climb_time'],
+                                onPressed: (labelList['hab_climb_time'].start != 2) ? () {
+                                    if (labelList['hab_climb_time'].start == 0) {
+                                        climbStopwatch.start();
+                                    }
+                                    else if (labelList['hab_climb_time'].start == 1) {
+                                        climbStopwatch.stop();
+                                        mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
+                                        labelList['hab_climb_time'][1] = mainMap['hab_climb_time'];
+                                    }
+                                    setState(() {
+                                        labelList['hab_climb_time'].loop();
+                                        print(mainMap.toString());
+                                    });
+                                } : null,
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: HabStartEndLevel(
+                                label: labelList['hab_level'][0],
+                                startList: labelList['hab_start_level'],
+                                endList: labelList['hab_end_level'],
+                                onStartPressed: () {
+                                    setState(() {
+                                        labelList['hab_start_level'].loop();
+                                        mainMap['hab_start_level'] = labelList['hab_start_level'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                                onEndPressed: () {
+                                    setState(() {
+                                        labelList['hab_end_level'].loop();
+                                        mainMap['hab_end_level'] = labelList['hab_end_level'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Cargo(
+                                label: labelList['cargo'][0],
+                                dialogLabel: labelList['cargo'][1],
+                                textList: labelList['cargo_state'],
+                                stopwatch: stopwatch,
+                                map: mainMap,
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Hatch(
+                                label: labelList['hatch'][0],
+                                dialogLabel: labelList['hatch'][1],
+                                textList: labelList['hatch_state'],
+                                stopwatch: stopwatch,
+                                map: mainMap,
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: RobotTypeCount(
+                                label: labelList['robot'][0],
+                                typeList: labelList['robot_type'],
+                                onTypePressed: () {
+                                    setState(() {
+                                        labelList['robot_type'].loop();
+                                        mainMap['robot_type'] = labelList['robot_type'][0];
+                                        print(mainMap.toString());
+                                        isAutonomous = labelList['robot_type'].start != 0;
+                                    });
+                                },
+                                countList: labelList['robot_count'],
+                                onCountPressed: () {
+                                    setState(() {
+                                        labelList['robot_count'].loop();
+                                        mainMap['robot_count'] = labelList['robot_count'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: CrossingLine(
+                                label: labelList['crossing_line'][0],
+                                value: crossesLine,
+                                onChanged: (bool value) {
+                                    setState(() {
+                                        crossesLine = value;
+                                        mainMap['crossing_line'] = crossesLine;
+                                        labelList['crossing_line'].loop();
+                                        print(mainMap.toString());
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: AutonomousStarts(
+                                label: labelList['autonomous'][0],
+                                autonomousList: labelList['autonomous_starts'],
+                                isAutonomous: isAutonomous,
+                                onPressed: () {
+                                    setState(() {
+                                        labelList['autonomous_starts'].loop();
+                                        mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
+                                        print(mainMap.toString());
+                                    });
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: DefenseNotes(
+                                label: labelList['defense_notes'][0],
+                                onChanged: (String string) {
+                                    mainMap['defense_notes'] = string;
+                                    print(mainMap.toString());
+                                },
+                            ),
+                        ),
+                        //--------------------------------------------------------//
+                        Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Notes(
+                                label: labelList['notes'][0],
+                                onChanged: (String string) {
+                                    mainMap['notes'] = string;
+                                    print(mainMap.toString());
+                                },
+                            ),
+                        ),
+                    ],
+                ),
             ),
         );
     }

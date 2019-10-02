@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
@@ -23,7 +24,9 @@ class _QRScreen extends State<QRScreen> {
     @override
     Widget build(BuildContext context) {
         return Scaffold(
-            appBar: AppBar(
+            appBar: GradientAppBar(
+                /*backgroundColorStart: ,
+                backgroundColorEnd: ,*/
                 title: CustomLabel("QR List"),
                 actions: <Widget>[
                     IconButton(
@@ -43,9 +46,7 @@ class _QRScreen extends State<QRScreen> {
                     new CustomButton(
                         child: CustomLabel(
                             "Team " + history[index - 1].split(",")[0],
-                            style: TextStyle(
-                                fontSize: 28.0,
-                            ),
+                            fontSize: 28.0,
                         ),
                         onPressed: () {
                             setState(() {

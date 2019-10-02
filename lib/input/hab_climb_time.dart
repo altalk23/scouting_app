@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class HabClimbTime extends StatelessWidget {
     
     HabClimbTime({this.label, this.counterList, this.onPressed});
@@ -17,17 +19,13 @@ class HabClimbTime extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
     
                 CustomButton(
                     child: CustomLabel(
                         counterList[0],
-                        style: TextStyle(
-                            fontSize: 20.0,
-                        ),
+                        fontSize: Constant.smallFont,
                     ),
                     onPressed: onPressed,
                 ),

@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 List<String> placement = [
     'Left 3a', null, 'Middle 1a', null, null, 'Middle 1b', null, 'Right 3a',
     'Left 2a', null, 'Middle 2a', null, null, 'Middle 2b', null, 'Right 2a',
@@ -119,17 +121,13 @@ class _Cargo extends State<Cargo> {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
                 
                 CustomButton(
                     child: CustomLabel(
                         textList[0],
-                        style: TextStyle(
-                            fontSize: 20.0,
-                        ),
+                        fontSize: Constant.smallFont,
                     ),
                     onPressed: () {
                         setState(() {

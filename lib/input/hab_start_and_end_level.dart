@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class HabStartEndLevel extends StatelessWidget {
     HabStartEndLevel({this.label, this.startList, this.endList, this.onStartPressed, this.onEndPressed});
     final String label;
@@ -16,9 +18,7 @@ class HabStartEndLevel extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -26,18 +26,14 @@ class HabStartEndLevel extends StatelessWidget {
                         CustomButton(
                             child: CustomLabel(
                                 startList[0],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
+                                fontSize: Constant.smallFont,
                             ),
                             onPressed: onStartPressed,
                         ),
                         CustomButton(
                             child: CustomLabel(
                                 endList[0],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
+                                fontSize: Constant.smallFont,
                             ),
                             onPressed: onEndPressed,
                         ),

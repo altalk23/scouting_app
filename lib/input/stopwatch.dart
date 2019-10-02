@@ -5,6 +5,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class StopwatchButton extends StatelessWidget {
     StopwatchButton({this.choiceList, this.onPressed});
     
@@ -17,9 +19,7 @@ class StopwatchButton extends StatelessWidget {
         return CustomButton(
             child: CustomLabel(
                 choiceList[0],
-                style: TextStyle(
-                    fontSize: 20.0,
-                ),
+                fontSize: Constant.largeFont,
             ),
             onPressed: onPressed,
         );

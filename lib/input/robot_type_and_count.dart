@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class RobotTypeCount extends StatelessWidget {
     RobotTypeCount({this.label, this.typeList, this.onTypePressed, this.countList, this.onCountPressed});
     
@@ -17,9 +19,7 @@ class RobotTypeCount extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -27,18 +27,14 @@ class RobotTypeCount extends StatelessWidget {
                         CustomButton(
                             child: CustomLabel(
                                 typeList[0],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
+                                fontSize: Constant.smallFont,
                             ),
                             onPressed: onTypePressed,
                         ),
                         CustomButton(
                             child: CustomLabel(
                                 countList[0],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
+                                fontSize: Constant.smallFont,
                             ),
                             onPressed: onCountPressed,
                         ),

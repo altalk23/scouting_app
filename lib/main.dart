@@ -29,128 +29,20 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
-                primarySwatch: Colors.blue,
+                fontFamily: 'Nunito',
             ),
             home: InputScreen(),
+            /*home: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [HSVColor.fromAHSV(1, 313, 0.63, 0.91).toColor(), HSVColor.fromAHSV(1, 313, 0.31, 0.91).toColor()]
+                    )
+                ),
+                child: InputScreen(),
+            )*/
             //home: MyHomePage(title: 'Flutter Demo Home Page'),
         );
     }
 }
-
-/// Creates the class [ItemData].
-///
-/// Contains the parameters [text] and [mapKey].
-class ItemData {
-    ItemData({this.text, this.mapKey});
-    
-    final String text;
-    final String mapKey;
-    
-}
-
-
-class MyHomePage extends StatefulWidget {
-    MyHomePage({Key key, this.title}) : super(key: key);
-    
-    final String title;
-    
-    @override
-    _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-    
-    Stopwatch stopwatch;
-    //All (?) variable initializations
-    Color currentColor = Colors.red;
-    List<String> alignmentList = ['Left', 'Mid', 'Right'];
-    String driverAlignment = 'Left';
-    bool crossesLine = false;
-    List<String> autonomousList = ['Hatch', 'Cargo', 'Nothing'];
-    String autonomousMode = 'Hatch';
-    List<Widget> widgetList;
-    bool stopwatchVisible = true;
-    List<String> workList = ['Teleop', 'Autonomous', 'Mixed'];
-    String workMode = 'Teleop';
-    Stopwatch habStopwatch = new Stopwatch();
-    String climbTime = 'Start the counter';
-    List<List<String>> hatchPlacement = new List<List<String>>();
-    List<String> hatchList = ['Take Hatch', 'Place Hatch'];
-    String hatchText = 'Take Hatch';
-    
-    
-    
-    _MyHomePageState() {
-        
-        
-        hatchPlacement.add(new List<String>());
-        
-        // Copied from stackoverflow, it doesn't work though
-        /*
-        final _key = {
-            "type": "service_account",
-            "project_id": //etc
-            // ...
-            // ...
-        };
-
-        print('getting oauth');
-        var auth;
-        auth.obtainAccessCredentialsViaServiceAccount(
-                auth.ServiceAccountCredentials.fromJson(_key),
-                scopes,
-                http.Client())
-                .then((auth.AccessCredentials cred) {
-            print('got oauth');
-    
-            auth.AuthClient client = auth.authenticatedClient(http.Client(), cred);
-            SheetsApi api = new SheetsApi(client);
-            ValueRange vr = new ValueRange.fromJson({
-                "values": [
-                    [ // fields A - J
-                        "15/02/2019", "via API 3", "5", "3", "3", "3", "3", "3", "3", "3"
-                    ]
-                ]
-            });
-            print('about to append');
-            api.spreadsheets.values
-                    .append(vr, '1cl...spreadsheet_key...W5E', 'A:J',
-                    valueInputOption: 'USER_ENTERED')
-                    .then((AppendValuesResponse r) {
-                print('append completed.');
-                client.close();
-            });
-            print('called append()');
-        });
-        print('ended?');
-        */
-    }
-    
-    
-    
-    
-    
-    
-    @override
-    Widget build(BuildContext context) {
-        return Scaffold(
-            appBar: AppBar(
-                title: CustomLabel(widget.title),
-                actions: <Widget>[
-                
-                ],
-            ),
-            body: ListView.separated(
-                padding: EdgeInsets.all(16.0),
-                itemBuilder: (context, position) {
-                
-                },
-                //itemCount: 27,
-                // TODO: Change this all the time because making it variable
-                itemCount: 26,
-                separatorBuilder: (context, position) => SizedBox(height: 20.0),
-            ),
-        );
-    }
-}
-

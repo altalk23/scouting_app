@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class DriverStation extends StatelessWidget {
     DriverStation({this.onColorPressed, this.onAlignmentPressed, this.colorList, this.alignmentList, this.label});
     final VoidCallback onColorPressed, onAlignmentPressed;
@@ -15,9 +17,7 @@ class DriverStation extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
     
                 Row(
@@ -30,9 +30,7 @@ class DriverStation extends StatelessWidget {
                         CustomButton(
                             child: CustomLabel(
                                 alignmentList[0],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                ),
+                                fontSize: Constant.smallFont,
                             ),
                             onPressed: onAlignmentPressed,
                         ),

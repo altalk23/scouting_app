@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class Notes extends StatelessWidget {
     Notes({this.label, this.onChanged});
     
@@ -15,16 +17,14 @@ class Notes extends StatelessWidget {
                 
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
                 
                 TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: Constant.smallFont,
                     ),
                     onChanged: onChanged,
                 ),

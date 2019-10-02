@@ -3,6 +3,8 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 
+import '../constant.dart';
+
 class AutonomousStarts extends StatelessWidget {
     AutonomousStarts({this.label, this.autonomousList, this.onPressed, this.isAutonomous});
     
@@ -17,16 +19,12 @@ class AutonomousStarts extends StatelessWidget {
             children: <Widget>[
                 CustomLabel(
                     label,
-                    style: TextStyle(
-                        fontSize: 28.0,
-                    ),
+                    fontSize: Constant.mediumFont,
                 ),
                 CustomButton(
                     child: CustomLabel(
                         autonomousList[0],
-                        style: TextStyle(
-                            fontSize: 20.0,
-                        ),
+                        fontSize: Constant.smallFont,
                     ),
                     onPressed: onPressed
                 ),
