@@ -32,17 +32,6 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Nunito',
             ),
             home: InputScreen(),
-            /*home: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [HSVColor.fromAHSV(1, 313, 0.63, 0.91).toColor(), HSVColor.fromAHSV(1, 313, 0.31, 0.91).toColor()]
-                    )
-                ),
-                child: InputScreen(),
-            )*/
-            //home: MyHomePage(title: 'Flutter Demo Home Page'),
         );
     }
 }

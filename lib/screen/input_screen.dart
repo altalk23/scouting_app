@@ -50,6 +50,11 @@ class _InputScreen extends State<InputScreen> {
     
     // All map history
     List<String> history = new List<String>();
+
+    // Controllers
+    TextEditingController teamNumber = new TextEditingController();
+    TextEditingController notes = new TextEditingController();
+    TextEditingController defense = new TextEditingController();
     
     _InputScreen() {
         _initialization();
@@ -81,6 +86,10 @@ class _InputScreen extends State<InputScreen> {
         labelList['notes'] = new LoopList(['Notes']);
         labelList['title'] = new LoopList(['Input Screen']);
         
+        _reset();
+    }
+    
+    void _reset() {
         // All map initializations
         mainMap['team_number'] = '';
         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
@@ -100,9 +109,10 @@ class _InputScreen extends State<InputScreen> {
         mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
         mainMap['defense_notes'] = '';
         mainMap['notes'] = '';
-        
-        print("i,nsa");
-        print(mainMap);
+
+        labelList.forEach((key, value) {
+            labelList[key].start = 0;
+        });
     }
     
     String fileContent;
@@ -153,7 +163,7 @@ class _InputScreen extends State<InputScreen> {
                 backgroundColorEnd: HSVColor.fromAHSV(1, 313, 0.25, 0.20).toColor(),
                 title: CustomLabel(
                     labelList['title'][0],
-                    fontSize: Constant.smallFont,
+                    fontSize: Constant.titleFont,
                 ),
                 actions: <Widget>[
                     IconButton(
@@ -174,8 +184,9 @@ class _InputScreen extends State<InputScreen> {
                     IconButton(
                         icon: Icon(Icons.print),
                         onPressed: () {
-                            print(history.join("---"));
-                            print(history.length);
+                            mainMap.forEach((key, value) {
+                                print(key + ":\n" + value.toString() + "\n\n");
+                            });
                         },
                     ),
                     IconButton(
@@ -189,11 +200,14 @@ class _InputScreen extends State<InputScreen> {
             ),
             body: Container(
                 decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                                begin: Alignment.bottomLeft,
-                                end: Alignment.topRight,
-                                colors: [HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(), HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor()]
-                        )
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                            HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(),
+                            HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor(),
+                        ],
+                    ),
                 ),
                 child: ListView(
                     children: <Widget>[
@@ -208,19 +222,16 @@ class _InputScreen extends State<InputScreen> {
                                     }
                                     else {
                                         stopwatch.stop();
-                                        
-                                        // Map to string
                                         List<Object> list = new List<Object>();
                                         mainMap.forEach((String key, Object value) => list.add(value));
-                                        print(list);
-                                        
-                                        // Add map to history
                                         history.add(list.join(","));
-                                        
-                                        // Write to file
                                         _writeFile(history.join("\t"));
                                     }
                                     setState(() {
+                                        _reset();
+                                        teamNumber.text = "";
+                                        defense.text = "";
+                                        notes.text = "";
                                         labelList['stopwatch'].loop();
                                     });
                                 },
@@ -230,10 +241,10 @@ class _InputScreen extends State<InputScreen> {
                         Padding(
                             padding: const EdgeInsets.all(Constant.largePadding),
                             child: TeamNumber(
+                                controller: teamNumber,
                                 label: labelList['team_number'][0],
                                 onChanged: (String string) {
                                     mainMap['team_number'] = string;
-                                    print(mainMap.toString());
                                 },
                             ),
                         ),
@@ -248,14 +259,12 @@ class _InputScreen extends State<InputScreen> {
                                     setState(() {
                                         labelList['driver_station_color'].loop();
                                         mainMap['driver_station_color'] = labelList['driver_station_color'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                                 onAlignmentPressed: () {
                                     setState(() {
                                         labelList['driver_station_alignment'].loop();
                                         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                             ),
@@ -277,7 +286,6 @@ class _InputScreen extends State<InputScreen> {
                                     }
                                     setState(() {
                                         labelList['hab_climb_time'].loop();
-                                        print(mainMap.toString());
                                     });
                                 } : null,
                             ),
@@ -293,14 +301,12 @@ class _InputScreen extends State<InputScreen> {
                                     setState(() {
                                         labelList['hab_start_level'].loop();
                                         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                                 onEndPressed: () {
                                     setState(() {
                                         labelList['hab_end_level'].loop();
                                         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                             ),
@@ -337,7 +343,6 @@ class _InputScreen extends State<InputScreen> {
                                     setState(() {
                                         labelList['robot_type'].loop();
                                         mainMap['robot_type'] = labelList['robot_type'][0];
-                                        print(mainMap.toString());
                                         isAutonomous = labelList['robot_type'].start != 0;
                                     });
                                 },
@@ -346,7 +351,6 @@ class _InputScreen extends State<InputScreen> {
                                     setState(() {
                                         labelList['robot_count'].loop();
                                         mainMap['robot_count'] = labelList['robot_count'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                             ),
@@ -362,7 +366,6 @@ class _InputScreen extends State<InputScreen> {
                                         crossesLine = !crossesLine;
                                         mainMap['crossing_line'] = crossesLine;
                                         labelList['crossing_line'].loop();
-                                        print(mainMap.toString());
                                     });
                                 },
                             ),
@@ -378,7 +381,6 @@ class _InputScreen extends State<InputScreen> {
                                     setState(() {
                                         labelList['autonomous_starts'].loop();
                                         mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
-                                        print(mainMap.toString());
                                     });
                                 },
                             ),
@@ -387,10 +389,10 @@ class _InputScreen extends State<InputScreen> {
                         Padding(
                             padding: const EdgeInsets.all(Constant.largePadding),
                             child: DefenseNotes(
+                                controller: defense,
                                 label: labelList['defense_notes'][0],
                                 onChanged: (String string) {
                                     mainMap['defense_notes'] = string;
-                                    print(mainMap.toString());
                                 },
                             ),
                         ),
@@ -398,10 +400,10 @@ class _InputScreen extends State<InputScreen> {
                         Padding(
                             padding: const EdgeInsets.all(Constant.largePadding),
                             child: Notes(
+                                controller: notes,
                                 label: labelList['notes'][0],
                                 onChanged: (String string) {
                                     mainMap['notes'] = string;
-                                    print(mainMap.toString());
                                 },
                             ),
                         ),

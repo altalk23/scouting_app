@@ -53,24 +53,24 @@ class _Hatch extends State<Hatch> {
     
     
     Widget _buttonPressed(index) {
-        return CustomButton(
-            child: CustomLabel(placementName[index]),
-            onPressed: () {
-                hatchData.add(placement[index]);
-                map['hatch_placement_start'] += '\n' + hatchData[0];
-                map['hatch_placement_duration'] += '\n' + hatchData[1];
-                map['hatch_placement_place'] += '\n' + hatchData[2];
-                hatchData = new List<String>();
-                print(map.toString());
-                Navigator.pop(context);
-            },
+        return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: CustomButton(
+                onPressed: () {
+                    hatchData.add(placement[index]);
+                    map['hatch_placement_start'] += '\n' + hatchData[0];
+                    map['hatch_placement_duration'] += '\n' + hatchData[1];
+                    map['hatch_placement_place'] += '\n' + hatchData[2];
+                    hatchData = new List<String>();
+                    Navigator.pop(context);
+                },
+            ),
         );
     }
     
     void _hatchMenu() {
         textList.loop();
         hatchData.add(stopwatch.elapsed.inMilliseconds.toString());
-        print(hatchData);
         if (textList.start == 0) {
             hatchData[1] = DateTime.fromMillisecondsSinceEpoch(
                     int.parse(hatchData[1]))
@@ -80,32 +80,48 @@ class _Hatch extends State<Hatch> {
             hatchData[0] = Duration(
                     milliseconds: int.parse(hatchData[0])
             ).toString();
-            print(hatchData);
-            
+
             showDialog(
                     context: context,
                     builder: (BuildContext context) {
                         return SimpleDialog(
-                                title: new CustomLabel(dialogLabel),
+                                backgroundColor: Color(0x00000000),
+                                title: new CustomLabel(
+                                    dialogLabel,
+                                    fontSize: Constant.mediumFont,
+                                ),
                                 children: <Widget>[
-                                    SizedBox(
-                                        height: 300.0,
-                                        width: 300.0,
-                                        child: GridView.count(
-                                            crossAxisCount: 8,
-                                            children: List.generate(56, (index) {
-                                                if (placement[index] != null) {
-                                                    return _buttonPressed(index);
-                                                }
-                                                else {
-                                                    return SizedBox(
-                                                        width: 1.0,
-                                                        height: 1.0,
-                                                    );
-                                                }
-                                            }),
+                                    Container(
+                                        padding: const EdgeInsets.all(Constant.padding),
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomLeft,
+                                                end: Alignment.topRight,
+                                                colors: [
+                                                    HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(),
+                                                    HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor(),
+                                                ],
+                                            ),
                                         ),
-                                    ),
+                                        child: SizedBox(
+                                            width: 400,
+                                            height: 375,
+                                            child: GridView.count(
+                                                crossAxisCount: 8,
+                                                children: List.generate(56, (index) {
+                                                    if (placement[index] != null) {
+                                                        return _buttonPressed(index);
+                                                    }
+                                                    else {
+                                                        return SizedBox(
+                                                            width: 1.0,
+                                                            height: 1.0,
+                                                        );
+                                                    }
+                                                }),
+                                            ),
+                                        ),
+                                    )
                                 ]
                         );
                     }

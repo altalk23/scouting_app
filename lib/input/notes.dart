@@ -4,10 +4,11 @@ import 'package:scouting_app/widget/custom_label.dart';
 import '../constant.dart';
 
 class Notes extends StatelessWidget {
-    Notes({this.label, this.onChanged});
+    Notes({this.label, this.onChanged, this.controller});
     
     final String label;
     final ValueChanged<String> onChanged;
+    final TextEditingController controller;
     
     
     @override
@@ -27,6 +28,7 @@ class Notes extends StatelessWidget {
                         fontSize: Constant.smallFont,
                     ),
                     onChanged: onChanged,
+                    controller: controller,
                 ),
             ],
         );

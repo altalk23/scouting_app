@@ -13,7 +13,6 @@ class CrossingLine extends StatelessWidget {
     
     @override
     Widget build(BuildContext context) {
-        print("sdafsa"+value.toString());
         return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

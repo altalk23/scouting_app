@@ -4,12 +4,12 @@ import 'package:scouting_app/widget/custom_label.dart';
 import '../constant.dart';
 
 class TeamNumber extends StatelessWidget {
-    TeamNumber({this.label, this.onChanged});
+    TeamNumber({this.label, this.onChanged, this.controller});
     
     final String label;
     final ValueChanged<String> onChanged;
-    
-    
+    final TextEditingController controller;
+
     @override
     Widget build(BuildContext context) {
         return Column(
@@ -26,6 +26,7 @@ class TeamNumber extends StatelessWidget {
                         fontSize: Constant.smallFont,
                     ),
                     onChanged: onChanged,
+                    controller: controller,
                 ),
             ],
         );
