@@ -22,11 +22,9 @@ class QRScreen extends StatefulWidget {
 class _QRScreen extends State<QRScreen> {
     String qrData = "";
     int _index;
-    List<String> history;
+    List<String> history = new List<String>();
     
-    _QRScreen() {
-        _readFile();
-    }
+    _QRScreen();
     
     String fileContent;
     
@@ -42,12 +40,14 @@ class _QRScreen extends State<QRScreen> {
         return File("$path/history.txt");
     }
     
-    Future _readFile() async {
+    Future<List<String>> _readFile() async {
         try {
             final file = await _localFile;
             fileContent = await file.readAsString();
             history = fileContent.split("\t");
             if (history.length > 0) qrData = history[0];
+            return history;
+            print(history.length);
         }
         catch (e) {
             print(e);
@@ -64,6 +64,7 @@ class _QRScreen extends State<QRScreen> {
     
     @override
     Widget build(BuildContext context) {
+        print(history.length);
         return CustomScaffold(
             title: "QR List",
             actions: <Widget>[
@@ -71,8 +72,10 @@ class _QRScreen extends State<QRScreen> {
                     icon: Icon(Icons.remove),
                     onPressed: () {
                         setState(() {
-                            history.removeAt(_index);
-                            if (history.length > 0) qrData = history[_index-1];
+                            if (history.length > 0 && _index != null) {
+                                history.removeAt(_index);
+                                qrData = history[_index-1 > 0 ? _index-1 : 0];
+                            }
                         });
                         _index = null;
                         _writeFile(history.join("\t"));
@@ -83,6 +86,7 @@ class _QRScreen extends State<QRScreen> {
                     onPressed: () {
                         history.forEach((value) {
                             print(value);
+                            print("\n\n");
                         });
                     },
                 ),

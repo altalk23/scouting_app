@@ -145,7 +145,7 @@ class _InputScreen extends State<InputScreen> {
                         _writeFile('');
                         history = new List<String>();
                     },
-                )
+                ),
             ],
             title: labelList['title'][0],
             child: ListView(
