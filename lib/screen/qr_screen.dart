@@ -12,12 +12,11 @@ import '../constant.dart';
 
 class QRScreen extends StatefulWidget {
     
-    final List<String> history;
     
-    const QRScreen({Key key, this.history}) : super(key: key);
+    const QRScreen({Key key}) : super(key: key);
     
     @override
-    _QRScreen createState() => _QRScreen(this.history);
+    _QRScreen createState() => _QRScreen();
 }
 
 class _QRScreen extends State<QRScreen> {
@@ -25,51 +24,55 @@ class _QRScreen extends State<QRScreen> {
     int _index;
     List<String> history;
     
-    _QRScreen(this.history);
-
+    _QRScreen() {
+        _readFile();
+    }
+    
     String fileContent;
-
+    
     // Start of struggle
-
+    
     Future get _localPath async {
         final applicationDirectory = await getApplicationDocumentsDirectory();
         return applicationDirectory.path;
     }
-
+    
     Future get _localFile async {
         final path = await _localPath;
         return File("$path/history.txt");
     }
-
+    
     Future _readFile() async {
         try {
             final file = await _localFile;
             fileContent = await file.readAsString();
             history = fileContent.split("\t");
+            if (history.length > 0) qrData = history[0];
         }
         catch (e) {
             print(e);
             return null;
         }
     }
-
+    
     Future _writeFile(String text) async {
         final file = await _localFile;
         await file.writeAsString("$text");
     }
-
+    
     // End of struggle
-
+    
     @override
     Widget build(BuildContext context) {
         return CustomScaffold(
-            title:"QR List",
+            title: "QR List",
             actions: <Widget>[
                 IconButton(
                     icon: Icon(Icons.remove),
                     onPressed: () {
                         setState(() {
                             history.removeAt(_index);
+                            if (history.length > 0) qrData = history[_index-1];
                         });
                         _index = null;
                         _writeFile(history.join("\t"));
@@ -105,10 +108,7 @@ class _QRScreen extends State<QRScreen> {
                         QrImage(
                             version: 10,
                             data: qrData,
-                            size: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
+                            size: MediaQuery.of(context).size.width,
                             foregroundColor: Color(0xEE111111),
                         ),
                     );

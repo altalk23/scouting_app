@@ -2,7 +2,6 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:scouting_app/input/autonomous_starts_with.dart';
@@ -17,9 +16,9 @@ import 'package:scouting_app/input/notes.dart';
 import 'package:scouting_app/input/robot_type_and_count.dart';
 import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
+import 'package:scouting_app/languagelooplist.dart';
 import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/screen/qr_screen.dart';
-import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
 
 import '../constant.dart';
@@ -57,41 +56,12 @@ class _InputScreen extends State<InputScreen> {
     TextEditingController notes = new TextEditingController();
     TextEditingController defense = new TextEditingController();
     
-    _InputScreen() {
-        _initialization();
-    }
-    
-    void _initialization() {
-        // All text initializations
-        labelList['stopwatch'] = new LoopList(['Start the timer', 'End the timer']);
-        labelList['team_number'] = new LoopList(['Team number']);
-        labelList['driver_station'] = new LoopList(['Driver alignment']);
-        labelList['driver_station_alignment'] = new LoopList(['Left', 'Middle', 'Right']);
-        labelList['driver_station_color'] = new LoopList([Colors.red, Colors.blue]);
-        labelList['hab_level'] = new LoopList(['Hab start and end level']);
-        labelList['hab_start_level'] = new LoopList(['0', '1', '2', '3']);
-        labelList['hab_end_level'] = new LoopList(['0', '1', '2', '3']);
-        labelList['hab_climb'] = new LoopList(['Hab climb time']);
-        labelList['hab_climb_time'] = new LoopList(['Start the counter', 'End the counter', '%counter']);
-        labelList['cargo'] = new LoopList(['Cargo placement', 'Set place']);
-        labelList['cargo_state'] = new LoopList(['Take cargo', 'Place cargo']);
-        labelList['hatch'] = new LoopList(['Hatch placement', 'Set place']);
-        labelList['hatch_state'] = new LoopList(['Take hatch', 'Place hatch']);
-        labelList['robot'] = new LoopList(['Robot type and count']);
-        labelList['robot_type'] = new LoopList(['Teleop', 'Autonomous', 'Mixed']);
-        labelList['robot_count'] = new LoopList(['1', '2', '3']);
-        labelList['crossing_line'] = new LoopList(['Does it cross the line']);
-        labelList['autonomous'] = new LoopList(['Autonomous starts with']);
-        labelList['autonomous_starts'] = new LoopList(['Cargo', 'Hatch', 'Mixed']);
-        labelList['defense_notes'] = new LoopList(['Defense notes']);
-        labelList['notes'] = new LoopList(['Notes']);
-        labelList['title'] = new LoopList(['Input Screen']);
-        
-        _reset();
-    }
+    _InputScreen();
     
     void _reset() {
-        // All map initializations
+        labelList.forEach((key, value) {
+            if (key != 'stopwatch') labelList[key].start = 0;
+        });
         mainMap['team_number'] = '';
         mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
         mainMap['driver_station_color'] = labelList['driver_station_color'][0];
@@ -110,10 +80,9 @@ class _InputScreen extends State<InputScreen> {
         mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
         mainMap['defense_notes'] = '';
         mainMap['notes'] = '';
-        
-        labelList.forEach((key, value) {
-            labelList[key].start = 0;
-        });
+        teamNumber.text = "";
+        defense.text = "";
+        notes.text = "";
     }
     
     String fileContent;
@@ -153,6 +122,8 @@ class _InputScreen extends State<InputScreen> {
     void initState() {
         super.initState();
         _readFile();
+        labelList = getInput("tr");
+        _reset();
     }
     
     @override
@@ -160,21 +131,6 @@ class _InputScreen extends State<InputScreen> {
         // TODO: implement build
         return CustomScaffold(
             actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.code),
-                    onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) {
-                                    return QRScreen(
-                                        history: history,
-                                    );
-                                },
-                            ),
-                        );
-                    },
-                ),
                 IconButton(
                     icon: Icon(Icons.print),
                     onPressed: () {
@@ -211,11 +167,8 @@ class _InputScreen extends State<InputScreen> {
                                     _writeFile(history.join("\t"));
                                 }
                                 setState(() {
-                                    _reset();
-                                    teamNumber.text = "";
-                                    defense.text = "";
-                                    notes.text = "";
                                     labelList['stopwatch'].loop();
+                                    _reset();
                                 });
                             },
                         ),
