@@ -43,7 +43,7 @@ class _MainScreen extends State<MainScreen> {
                         padding: const EdgeInsets.all(Constant.largePadding),
                         child: CustomButton(
                             child: CustomLabel(
-                                "Input Screen",
+                                "QR Screen",
                                 fontSize: Constant.largeFont,
                             ),
                             onPressed: () {

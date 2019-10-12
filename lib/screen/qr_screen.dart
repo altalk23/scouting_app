@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:scouting_app/widget/custom_button.dart';
@@ -31,8 +30,6 @@ class _QRScreen extends State<QRScreen> {
         history = _readFile();
     }
     
-    // Start of struggle
-    
     Future get _localPath async {
         final applicationDirectory = await getApplicationDocumentsDirectory();
         return applicationDirectory.path;
@@ -47,7 +44,8 @@ class _QRScreen extends State<QRScreen> {
         try {
             final file = await _localFile;
             fileContent = await file.readAsString();
-            List<String> data = fileContent.split("\t");
+            List<String> data = new List<String>();
+            if (fileContent != "") data = fileContent.split("\t");
             if (data.length > 0) qrData = data[0];
             return data;
         }
@@ -61,8 +59,6 @@ class _QRScreen extends State<QRScreen> {
         final file = await _localFile;
         await file.writeAsString("$text");
     }
-    
-    // End of struggle
     
     Widget projectWidget() {
         return FutureBuilder(
@@ -87,7 +83,7 @@ class _QRScreen extends State<QRScreen> {
                                         });
                                     },
                                 ) :
-                                QrImage(
+                                projectData.data.length != 0 ? QrImage(
                                     version: 10,
                                     data: qrData,
                                     size: MediaQuery
@@ -95,7 +91,7 @@ class _QRScreen extends State<QRScreen> {
                                             .size
                                             .width,
                                     foregroundColor: Color(0xEE111111),
-                                ),
+                                ) : Container(),
                             );
                         },
                     );
