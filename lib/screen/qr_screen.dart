@@ -22,11 +22,14 @@ class QRScreen extends StatefulWidget {
 class _QRScreen extends State<QRScreen> {
     String qrData = "";
     int _index;
-    List<String> history = new List<String>();
-    
-    _QRScreen();
-    
+    Future<List<String>> history;
     String fileContent;
+    
+    @override
+    void initState() {
+        super.initState();
+        history = _readFile();
+    }
     
     // Start of struggle
     
@@ -44,10 +47,9 @@ class _QRScreen extends State<QRScreen> {
         try {
             final file = await _localFile;
             fileContent = await file.readAsString();
-            history = fileContent.split("\t");
-            if (history.length > 0) qrData = history[0];
-            return history;
-            print(history.length);
+            List<String> data = fileContent.split("\t");
+            if (data.length > 0) qrData = data[0];
+            return data;
         }
         catch (e) {
             print(e);
@@ -62,62 +64,102 @@ class _QRScreen extends State<QRScreen> {
     
     // End of struggle
     
-    @override
-    Widget build(BuildContext context) {
-        print(history.length);
-        return CustomScaffold(
-            title: "QR List",
-            actions: <Widget>[
-                IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                        setState(() {
-                            if (history.length > 0 && _index != null) {
-                                history.removeAt(_index);
-                                qrData = history[_index-1 > 0 ? _index-1 : 0];
-                            }
-                        });
-                        _index = null;
-                        _writeFile(history.join("\t"));
-                    },
-                ),
-                IconButton(
-                    icon: Icon(Icons.print),
-                    onPressed: () {
-                        history.forEach((value) {
-                            print(value);
-                            print("\n\n");
-                        });
-                    },
-                ),
-            ],
-            child: ListView.builder(
-                itemCount: history.length + 1,
-                itemBuilder: (context, index) {
-                    return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: Constant.padding),
-                        child: index != 0 ?
-                        new CustomButton(
-                            child: CustomLabel(
-                                "Team " + history[index - 1].split(",")[0],
-                                fontSize: Constant.mediumFont,
-                            ),
+    Widget projectWidget() {
+        return FutureBuilder(
+            future: history,
+            builder: (context, projectData) {
+                if (projectData.hasData) {
+                    return ListView.builder(
+                        itemCount: projectData.data.length + 1,
+                        itemBuilder: (context, index) {
+                            return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: Constant.padding),
+                                child: index != 0 ?
+                                new CustomButton(
+                                    child: CustomLabel(
+                                        "Team " + projectData.data[index - 1].split(",")[0],
+                                        fontSize: Constant.mediumFont,
+                                    ),
+                                    onPressed: () {
+                                        setState(() {
+                                            _index = index - 1;
+                                            qrData = projectData.data[index - 1];
+                                        });
+                                    },
+                                ) :
+                                QrImage(
+                                    version: 10,
+                                    data: qrData,
+                                    size: MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width,
+                                    foregroundColor: Color(0xEE111111),
+                                ),
+                            );
+                        },
+                    );
+                }
+                else {
+                    return Container();
+                }
+            },
+        );
+    }
+    
+    List<Widget> appBarWidget() {
+        return [
+            FutureBuilder(
+                future: history,
+                builder: (context, projectData) {
+                    if (projectData.hasData) {
+                        return IconButton(
+                            icon: Icon(Icons.remove),
                             onPressed: () {
                                 setState(() {
-                                    _index = index - 1;
-                                    qrData = history[index - 1];
+                                    if (projectData.data.length > 0 && _index != null) {
+                                        projectData.data.removeAt(_index);
+                                        qrData = projectData.data[_index - 1 > 0 ? _index - 1 : 0];
+                                    }
                                 });
+                                _index = null;
+                                _writeFile(projectData.data.join("\t"));
                             },
-                        ) :
-                        QrImage(
-                            version: 10,
-                            data: qrData,
-                            size: MediaQuery.of(context).size.width,
-                            foregroundColor: Color(0xEE111111),
-                        ),
-                    );
+                        );
+                    }
+                    else {
+                        return Container();
+                    }
                 },
             ),
+            FutureBuilder(
+                future: history,
+                builder: (context, projectData) {
+                    if (projectData.hasData) {
+                        return IconButton(
+                            icon: Icon(Icons.print),
+                            onPressed: () {
+                                projectData.data.forEach((value) {
+                                    print(value);
+                                    print("\n\n");
+                                });
+                            },
+                        );
+                    }
+                    else {
+                        return Container();
+                    }
+                },
+            ),
+        ];
+    }
+    
+    @override
+    Widget build(BuildContext context) {
+        return CustomScaffold(
+            title: "QR List",
+            actions: appBarWidget(),
+            child: projectWidget(),
         );
     }
     
