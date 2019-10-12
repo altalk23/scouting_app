@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/widget/custom_checkbox.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 class CrossingLine extends StatelessWidget {
     CrossingLine({this.label, this.value, this.onChanged});
+    
     final String label;
     final bool value;
     final VoidCallback onChanged;

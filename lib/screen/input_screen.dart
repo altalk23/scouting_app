@@ -1,9 +1,7 @@
 import 'dart:core';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:scouting_app/input/autonomous_starts_with.dart';
 import 'package:scouting_app/input/cargo.dart';
 import 'package:scouting_app/input/crossing_line.dart';

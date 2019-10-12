@@ -1,13 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:scouting_app/constant.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
 
-import '../constant.dart';
 
 class QRScreen extends StatefulWidget {
     

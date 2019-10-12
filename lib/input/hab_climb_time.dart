@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 class HabClimbTime extends StatelessWidget {
     

@@ -6,9 +6,11 @@ class LoopList<E> extends ListBase<E> {
     final List<E> list;
     int length;
     int _start;
+    
     int get start {
         return _start;
     }
+    
     set start(int next) {
         _start = next;
     }
@@ -28,7 +30,7 @@ class LoopList<E> extends ListBase<E> {
     void loop({int count = 1}) {
         _start = (_start + count) % length;
     }
-
+    
     @override
     String toString() {
         return list.toString();

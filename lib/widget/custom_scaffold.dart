@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:scouting_app/constant.dart';
+import 'package:scouting_app/widget/custom_label.dart';
 
-import '../constant.dart';
-import 'custom_label.dart';
 
 class CustomScaffold extends StatelessWidget {
     

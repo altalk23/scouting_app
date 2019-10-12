@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 class DefenseNotes extends StatelessWidget {
     DefenseNotes({this.label, this.onChanged, this.controller});
@@ -9,8 +8,8 @@ class DefenseNotes extends StatelessWidget {
     final String label;
     final ValueChanged<String> onChanged;
     final TextEditingController controller;
-
-
+    
+    
     @override
     Widget build(BuildContext context) {
         return Column(

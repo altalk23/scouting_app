@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 class AutonomousStarts extends StatelessWidget {
     AutonomousStarts({this.label, this.autonomousList, this.onPressed, this.isAutonomous});
@@ -22,11 +21,11 @@ class AutonomousStarts extends StatelessWidget {
                     fontSize: Constant.mediumFont,
                 ),
                 CustomButton(
-                    child: CustomLabel(
-                        autonomousList[0],
-                        fontSize: Constant.smallFont,
-                    ),
-                    onPressed: onPressed
+                        child: CustomLabel(
+                            autonomousList[0],
+                            fontSize: Constant.smallFont,
+                        ),
+                        onPressed: onPressed
                 ),
             ],
         ) : Container();

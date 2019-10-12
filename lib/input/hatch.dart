@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 List<String> placement = [
     'Left 3a', null, 'Middle 1a', null, null, 'Middle 1b', null, 'Right 3a',

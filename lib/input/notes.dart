@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/widget/custom_label.dart';
-
-import '../constant.dart';
+import 'package:scouting_app/constant.dart';
 
 class Notes extends StatelessWidget {
     Notes({this.label, this.onChanged, this.controller});

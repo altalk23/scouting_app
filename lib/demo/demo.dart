@@ -1,6 +1,4 @@
-import 'package:scouting_app/demo2.dart';
-import 'package:scouting_app/demo3.dart';
-import 'package:scouting_app/loop_list.dart';
+import 'package:scouting_app/demo/demo3.dart';
 
 void main() {
     /*Stopwatch stopwatch = new Stopwatch();
@@ -21,7 +19,6 @@ void main() {
     print(loopList[0]);
     print(loopList[1]);
     print(loopList.length);*/
-    Text list1 = new Text(new List<List<String>>());
     List<List<String>> list2 = new List<List<String>>();
     
     print(list2);

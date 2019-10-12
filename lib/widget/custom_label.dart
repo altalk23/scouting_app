@@ -9,13 +9,12 @@ class CustomLabel extends StatelessWidget {
     
     @override
     Widget build(BuildContext context) {
-        // TODO: implement label
         return Text(
             data,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: fontSize,
-                
+            
             ),
         );
     }

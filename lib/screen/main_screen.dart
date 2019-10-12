@@ -3,9 +3,8 @@ import 'package:scouting_app/screen/qr_screen.dart';
 import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
-
-import '../constant.dart';
-import 'input_screen.dart';
+import 'package:scouting_app/constant.dart';
+import 'package:scouting_app/screen/input_screen.dart';
 
 class MainScreen extends StatefulWidget {
     @override
