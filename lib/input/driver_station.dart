@@ -5,7 +5,11 @@ import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/constant.dart';
 
 class DriverStation extends StatelessWidget {
-    DriverStation({this.onColorPressed, this.onAlignmentPressed, this.colorList, this.alignmentList, this.label});
+    DriverStation({this.onColorPressed,
+        this.onAlignmentPressed,
+        this.colorList,
+        this.alignmentList,
+        this.label});
     
     final VoidCallback onColorPressed, onAlignmentPressed;
     final LoopList colorList, alignmentList;
@@ -41,5 +45,4 @@ class DriverStation extends StatelessWidget {
             ],
         );
     }
-    
 }

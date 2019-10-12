@@ -19,7 +19,6 @@ import 'package:scouting_app/loop_list.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
 import 'package:scouting_app/constant.dart';
 
-
 class InputScreen extends StatefulWidget {
     @override
     _InputScreen createState() => _InputScreen();
@@ -44,7 +43,8 @@ class _InputScreen extends State<InputScreen> {
             if (key != 'stopwatch') labelList[key].start = 0;
         });
         mainMap['team_number'] = '';
-        mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
+        mainMap['driver_station_alignment'] =
+        labelList['driver_station_alignment'][0];
         mainMap['driver_station_color'] = labelList['driver_station_color'][0];
         mainMap['hab_start_level'] = labelList['hab_start_level'][0];
         mainMap['hab_end_level'] = labelList['hab_end_level'][0];
@@ -85,8 +85,7 @@ class _InputScreen extends State<InputScreen> {
             List<String> data = new List<String>();
             if (fileContent != "") data = fileContent.split("\t");
             return data;
-        }
-        catch (e) {
+        } catch (e) {
             print(e);
             return null;
         }
@@ -143,11 +142,11 @@ class _InputScreen extends State<InputScreen> {
                                         onPressed: () {
                                             if (labelList['stopwatch'].start == 0) {
                                                 stopwatch.start();
-                                            }
-                                            else {
+                                            } else {
                                                 stopwatch.stop();
                                                 List<Object> list = new List<Object>();
-                                                mainMap.forEach((String key, Object value) => list.add(value));
+                                                mainMap.forEach(
+                                                                (String key, Object value) => list.add(value));
                                                 projectData.data.add(list.join(","));
                                                 _writeFile(projectData.data.join("\t"));
                                             }
@@ -179,13 +178,15 @@ class _InputScreen extends State<InputScreen> {
                                         onColorPressed: () {
                                             setState(() {
                                                 labelList['driver_station_color'].loop();
-                                                mainMap['driver_station_color'] = labelList['driver_station_color'][0];
+                                                mainMap['driver_station_color'] =
+                                                labelList['driver_station_color'][0];
                                             });
                                         },
                                         onAlignmentPressed: () {
                                             setState(() {
                                                 labelList['driver_station_alignment'].loop();
-                                                mainMap['driver_station_alignment'] = labelList['driver_station_alignment'][0];
+                                                mainMap['driver_station_alignment'] =
+                                                labelList['driver_station_alignment'][0];
                                             });
                                         },
                                     ),
@@ -196,19 +197,22 @@ class _InputScreen extends State<InputScreen> {
                                     child: HabClimbTime(
                                         label: labelList['hab_climb'][0],
                                         counterList: labelList['hab_climb_time'],
-                                        onPressed: (labelList['hab_climb_time'].start != 2) ? () {
+                                        onPressed: (labelList['hab_climb_time'].start != 2)
+                                                ? () {
                                             if (labelList['hab_climb_time'].start == 0) {
                                                 climbStopwatch.start();
-                                            }
-                                            else if (labelList['hab_climb_time'].start == 1) {
+                                            } else if (labelList['hab_climb_time'].start == 1) {
                                                 climbStopwatch.stop();
-                                                mainMap['hab_climb_time'] = climbStopwatch.elapsed.toString();
-                                                labelList['hab_climb_time'][1] = mainMap['hab_climb_time'];
+                                                mainMap['hab_climb_time'] =
+                                                        climbStopwatch.elapsed.toString();
+                                                labelList['hab_climb_time'][1] =
+                                                mainMap['hab_climb_time'];
                                             }
                                             setState(() {
                                                 labelList['hab_climb_time'].loop();
                                             });
-                                        } : null,
+                                        }
+                                                : null,
                                     ),
                                 ),
                                 //--------------------------------------------------------//
@@ -221,13 +225,15 @@ class _InputScreen extends State<InputScreen> {
                                         onStartPressed: () {
                                             setState(() {
                                                 labelList['hab_start_level'].loop();
-                                                mainMap['hab_start_level'] = labelList['hab_start_level'][0];
+                                                mainMap['hab_start_level'] =
+                                                labelList['hab_start_level'][0];
                                             });
                                         },
                                         onEndPressed: () {
                                             setState(() {
                                                 labelList['hab_end_level'].loop();
-                                                mainMap['hab_end_level'] = labelList['hab_end_level'][0];
+                                                mainMap['hab_end_level'] =
+                                                labelList['hab_end_level'][0];
                                             });
                                         },
                                     ),
@@ -301,7 +307,8 @@ class _InputScreen extends State<InputScreen> {
                                         onPressed: () {
                                             setState(() {
                                                 labelList['autonomous_starts'].loop();
-                                                mainMap['autonomous_starts'] = labelList['autonomous_starts'][0];
+                                                mainMap['autonomous_starts'] =
+                                                labelList['autonomous_starts'][0];
                                             });
                                         },
                                     ),
@@ -330,8 +337,7 @@ class _InputScreen extends State<InputScreen> {
                                 ),
                             ],
                         );
-                    }
-                    else
+                    } else
                         return Container();
                 },
             ),

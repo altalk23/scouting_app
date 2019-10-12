@@ -13,12 +13,10 @@ class TeamNumber extends StatelessWidget {
     Widget build(BuildContext context) {
         return Column(
             children: <Widget>[
-                
                 CustomLabel(
                     label,
                     fontSize: Constant.mediumFont,
                 ),
-                
                 TextField(
                     keyboardType: TextInputType.number,
                     style: TextStyle(

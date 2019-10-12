@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'dart:core';
 
 class LoopList<E> extends ListBase<E> {
-    
     final List<E> list;
     int length;
     int _start;

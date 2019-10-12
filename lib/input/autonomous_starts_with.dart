@@ -14,7 +14,8 @@ class AutonomousStarts extends StatelessWidget {
     
     @override
     Widget build(BuildContext context) {
-        return isAutonomous ? Column(
+        return isAutonomous
+                ? Column(
             children: <Widget>[
                 CustomLabel(
                     label,
@@ -25,9 +26,9 @@ class AutonomousStarts extends StatelessWidget {
                             autonomousList[0],
                             fontSize: Constant.smallFont,
                         ),
-                        onPressed: onPressed
-                ),
+                        onPressed: onPressed),
             ],
-        ) : Container();
+        )
+                : Container();
     }
 }

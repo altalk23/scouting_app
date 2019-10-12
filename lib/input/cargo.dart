@@ -5,22 +5,120 @@ import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/constant.dart';
 
 List<String> placement = [
-    'Left 3a', null, 'Middle 1a', null, null, 'Middle 1b', null, 'Right 3a',
-    'Left 2a', null, 'Middle 2a', null, null, 'Middle 2b', null, 'Right 2a',
-    'Left 1a', null, 'Middle 3a', null, null, 'Middle 3b', null, 'Right 1a',
-    null, null, null, 'Middle 0a', 'Middle 0b', null, null, null,
-    'Left 1b', null, null, null, null, null, null, 'Right 1b',
-    'Left 2b', null, null, null, null, null, null, 'Right 2b',
-    'Left 3b', null, null, null, null, null, null, 'Right 3b',
+    'Left 3a',
+    null,
+    'Middle 1a',
+    null,
+    null,
+    'Middle 1b',
+    null,
+    'Right 3a',
+    'Left 2a',
+    null,
+    'Middle 2a',
+    null,
+    null,
+    'Middle 2b',
+    null,
+    'Right 2a',
+    'Left 1a',
+    null,
+    'Middle 3a',
+    null,
+    null,
+    'Middle 3b',
+    null,
+    'Right 1a',
+    null,
+    null,
+    null,
+    'Middle 0a',
+    'Middle 0b',
+    null,
+    null,
+    null,
+    'Left 1b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    'Right 1b',
+    'Left 2b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    'Right 2b',
+    'Left 3b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    'Right 3b',
 ];
 List<String> placementName = [
-    '3a', null, '1a', null, null, '1b', null, '3a',
-    '2a', null, '2a', null, null, '2b', null, '2a',
-    '1a', null, '3a', null, null, '3b', null, '1a',
-    null, null, null, '0a', '0b', null, null, null,
-    '1b', null, null, null, null, null, null, '1b',
-    '2b', null, null, null, null, null, null, '2b',
-    '3b', null, null, null, null, null, null, '3b',
+    '3a',
+    null,
+    '1a',
+    null,
+    null,
+    '1b',
+    null,
+    '3a',
+    '2a',
+    null,
+    '2a',
+    null,
+    null,
+    '2b',
+    null,
+    '2a',
+    '1a',
+    null,
+    '3a',
+    null,
+    null,
+    '3b',
+    null,
+    '1a',
+    null,
+    null,
+    null,
+    '0a',
+    '0b',
+    null,
+    null,
+    null,
+    '1b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    '1b',
+    '2b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    '2b',
+    '3b',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    '3b',
 ];
 
 class Cargo extends StatefulWidget {
@@ -34,7 +132,8 @@ class Cargo extends StatefulWidget {
     
     @override
     State createState() {
-        return new _Cargo(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
+        return new _Cargo(
+                this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     }
 }
 
@@ -47,9 +146,7 @@ class _Cargo extends State<Cargo> {
     
     _Cargo(this.label, this.textList, this.stopwatch, this.map, this.dialogLabel);
     
-    
     List<String> cargoData = new List<String>();
-    
     
     Widget _buttonPressed(index) {
         return Padding(
@@ -71,14 +168,12 @@ class _Cargo extends State<Cargo> {
         textList.loop();
         cargoData.add(stopwatch.elapsed.inMilliseconds.toString());
         if (textList.start == 0) {
-            cargoData[1] = DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoData[1]))
-                    .difference(DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(cargoData[0])))
-                    .toString();
-            cargoData[0] = Duration(
-                    milliseconds: int.parse(cargoData[0])
-            ).toString();
+            cargoData[1] =
+                    DateTime.fromMillisecondsSinceEpoch(int.parse(cargoData[1]))
+                            .difference(
+                            DateTime.fromMillisecondsSinceEpoch(int.parse(cargoData[0])))
+                            .toString();
+            cargoData[0] = Duration(milliseconds: int.parse(cargoData[0])).toString();
             
             showDialog(
                     context: context,
@@ -110,8 +205,7 @@ class _Cargo extends State<Cargo> {
                                                 children: List.generate(56, (index) {
                                                     if (placement[index] != null) {
                                                         return _buttonPressed(index);
-                                                    }
-                                                    else {
+                                                    } else {
                                                         return SizedBox(
                                                             width: 1.0,
                                                             height: 1.0,
@@ -121,10 +215,8 @@ class _Cargo extends State<Cargo> {
                                             ),
                                         ),
                                     )
-                                ]
-                        );
-                    }
-            );
+                                ]);
+                    });
         }
     }
     

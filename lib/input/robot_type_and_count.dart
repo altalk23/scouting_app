@@ -5,12 +5,15 @@ import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/constant.dart';
 
 class RobotTypeCount extends StatelessWidget {
-    RobotTypeCount({this.label, this.typeList, this.onTypePressed, this.countList, this.onCountPressed});
+    RobotTypeCount({this.label,
+        this.typeList,
+        this.onTypePressed,
+        this.countList,
+        this.onCountPressed});
     
     final String label;
     final LoopList typeList, countList;
     final VoidCallback onTypePressed, onCountPressed;
-    
     
     @override
     Widget build(BuildContext context) {

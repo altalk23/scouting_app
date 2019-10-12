@@ -7,10 +7,7 @@ import 'package:scouting_app/widget/custom_button.dart';
 import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
 
-
 class QRScreen extends StatefulWidget {
-    
-    
     const QRScreen({Key key}) : super(key: key);
     
     @override
@@ -47,8 +44,7 @@ class _QRScreen extends State<QRScreen> {
             if (fileContent != "") data = fileContent.split("\t");
             if (data.length > 0) qrData = data[0];
             return data;
-        }
-        catch (e) {
+        } catch (e) {
             print(e);
             return null;
         }
@@ -69,8 +65,8 @@ class _QRScreen extends State<QRScreen> {
                         itemBuilder: (context, index) {
                             return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: Constant.padding),
-                                child: index != 0 ?
-                                new CustomButton(
+                                child: index != 0
+                                        ? new CustomButton(
                                     child: CustomLabel(
                                         "Team " + projectData.data[index - 1].split(",")[0],
                                         fontSize: Constant.mediumFont,
@@ -81,8 +77,9 @@ class _QRScreen extends State<QRScreen> {
                                             qrData = projectData.data[index - 1];
                                         });
                                     },
-                                ) :
-                                projectData.data.length != 0 ? QrImage(
+                                )
+                                        : projectData.data.length != 0
+                                        ? QrImage(
                                     version: 10,
                                     data: qrData,
                                     size: MediaQuery
@@ -90,12 +87,12 @@ class _QRScreen extends State<QRScreen> {
                                             .size
                                             .width,
                                     foregroundColor: Color(0xEE111111),
-                                ) : Container(),
+                                )
+                                        : Container(),
                             );
                         },
                     );
-                }
-                else {
+                } else {
                     return Container();
                 }
             },
@@ -121,8 +118,7 @@ class _QRScreen extends State<QRScreen> {
                                 _writeFile(projectData.data.join("\t"));
                             },
                         );
-                    }
-                    else {
+                    } else {
                         return Container();
                     }
                 },
@@ -140,8 +136,7 @@ class _QRScreen extends State<QRScreen> {
                                 });
                             },
                         );
-                    }
-                    else {
+                    } else {
                         return Container();
                     }
                 },
@@ -157,6 +152,4 @@ class _QRScreen extends State<QRScreen> {
             child: projectWidget(),
         );
     }
-    
 }
-

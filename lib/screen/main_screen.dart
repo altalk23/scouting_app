@@ -12,7 +12,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreen extends State<MainScreen> {
-    
     @override
     Widget build(BuildContext context) {
         return CustomScaffold(

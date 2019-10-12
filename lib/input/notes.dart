@@ -9,17 +9,14 @@ class Notes extends StatelessWidget {
     final ValueChanged<String> onChanged;
     final TextEditingController controller;
     
-    
     @override
     Widget build(BuildContext context) {
         return Column(
             children: <Widget>[
-                
                 CustomLabel(
                     label,
                     fontSize: Constant.mediumFont,
                 ),
-                
                 TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,

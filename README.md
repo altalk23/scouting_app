@@ -2,8 +2,6 @@
 
 Scouting app of ARC6014.
 
-######(need to fix this again)
-
 ## What do these things do
 
 #### That Big QR Code

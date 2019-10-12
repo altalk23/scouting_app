@@ -1,4 +1,4 @@
 class Text {
-    Text(this.text);
-    final List<List<String>> text;
+  Text(this.text);
+  final List<List<String>> text;
 }

@@ -10,7 +10,6 @@ class CrossingLine extends StatelessWidget {
     final bool value;
     final VoidCallback onChanged;
     
-    
     @override
     Widget build(BuildContext context) {
         return Row(

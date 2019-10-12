@@ -5,7 +5,6 @@ import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/constant.dart';
 
 class HabClimbTime extends StatelessWidget {
-    
     HabClimbTime({this.label, this.counterList, this.onPressed});
     
     final String label;
