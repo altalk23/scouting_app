@@ -176,47 +176,49 @@ class _Hatch extends State<Hatch> {
             hatchData[0] = Duration(milliseconds: int.parse(hatchData[0])).toString();
             
             showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                        return SimpleDialog(
-                                backgroundColor: Color(0x00000000),
-                                title: new CustomLabel(
-                                    dialogLabel,
-                                    fontSize: Constant.mediumFont,
+                context: context,
+                builder: (BuildContext context) {
+                    return SimpleDialog(
+                        backgroundColor: Color(0x00000000),
+                        title: new CustomLabel(
+                            dialogLabel,
+                            fontSize: Constant.largeFont,
+                        ),
+                        children: <Widget>[
+                            Container(
+                                padding: const EdgeInsets.all(Constant.padding),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                            HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(),
+                                            HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor(),
+                                        ],
+                                    ),
                                 ),
-                                children: <Widget>[
-                                    Container(
-                                        padding: const EdgeInsets.all(Constant.padding),
-                                        decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                begin: Alignment.bottomLeft,
-                                                end: Alignment.topRight,
-                                                colors: [
-                                                    HSVColor.fromAHSV(1, 313, 0.40, 0.91).toColor(),
-                                                    HSVColor.fromAHSV(1, 313, 0.25, 0.96).toColor(),
-                                                ],
-                                            ),
-                                        ),
-                                        child: SizedBox(
-                                            width: 400,
-                                            height: 375,
-                                            child: GridView.count(
-                                                crossAxisCount: 8,
-                                                children: List.generate(56, (index) {
-                                                    if (placement[index] != null) {
-                                                        return _buttonPressed(index);
-                                                    } else {
-                                                        return SizedBox(
-                                                            width: 1.0,
-                                                            height: 1.0,
-                                                        );
-                                                    }
-                                                }),
-                                            ),
-                                        ),
-                                    )
-                                ]);
-                    });
+                                child: SizedBox(
+                                    width: 400,
+                                    height: 375,
+                                    child: GridView.count(
+                                        crossAxisCount: 8,
+                                        children: List.generate(56, (index) {
+                                            if (placement[index] != null) {
+                                                return _buttonPressed(index);
+                                            } else {
+                                                return SizedBox(
+                                                    width: 1.0,
+                                                    height: 1.0,
+                                                );
+                                            }
+                                        }),
+                                    ),
+                                ),
+                            )
+                        ],
+                    );
+                },
+            );
         }
     }
     
