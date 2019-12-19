@@ -1,11 +1,16 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:scouting_app/new/custom.dart';
+import 'package:scouting_app/new/localization.dart';
 
 class Input {
-    Map<String, String> textBox;
-    Map<String, Color> colorSelector;
-    Map<String, String> textSelector;
-    
+    HashMap<String, String> textBox;
+    HashMap<String, Color> colorSelector;
+    HashMap<String, String> textSelector;
+    HashMap<String, Duration> oneUseStopwatch;
+    HashMap<String, String> gridButton;
+    HashMap<String, bool> checkbox;
 }
 
 extension WidgetBuilding on List<InputData> {
@@ -28,8 +33,14 @@ extension WidgetBuilding on List<InputData> {
                         padding: EdgeInsets.all(8),
                         child: DropdownButton<String>(
                             onChanged: (value) {
+                                input.textSelector.putIfAbsent(data.id, () => value);
                             },
-                            items: <DropdownMenuItem<String>>[],
+                            items: data.selection.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                    value: value.lang(Language.en),
+                                    child: Text(value.lang(Language.en)),
+                                );
+                            }),
                         ),
                     ));
                     break;

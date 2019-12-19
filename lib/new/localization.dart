@@ -1,4 +1,6 @@
-Map<String, Map<String, String>> local = {
+import 'dart:collection';
+
+HashMap<String, HashMap<String, String>> local = HashMap.from({
     'Start the timer': {
         'tr': 'Sayacı başlat',
     },
@@ -8,7 +10,7 @@ Map<String, Map<String, String>> local = {
     'Team Number': {
         'tr': 'Takım numarası',
     },
-};
+});
 
 extension NumberParsing on String {
     String lang(String language) {
