@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class InputDataType {
-    static const String textBox = "Text Box";
-    static const String colorSelector = "Color Selector";
-    static const String textSelector = "Text Selector";
-    static const String oneUseStopwatch = "One Use Stopwatch";
-    static const String checkbox = "Checkbox";
-    static const String gridButton = "Grid Button";
+    static const String textBox = 'Text Box';
+    static const String colorSelector = 'Color Selector';
+    static const String textSelector = 'Text Selector';
+    static const String oneUseStopwatch = 'One Use Stopwatch';
+    static const String checkbox = 'Checkbox';
+    static const String gridButton = 'Grid Button';
 }
 
 class InputData {
@@ -28,11 +28,11 @@ class InputData {
 
 List<InputData> deepspace2019 = [
     InputData(
-        id: "Team Number",
+        id: 'Team Number',
         type: InputDataType.textBox,
     ),
     InputData(
-        id: "Driver Station Color",
+        id: 'Driver Station Color',
         type: InputDataType.colorSelector,
         colorSelection: [
             Colors.red,
@@ -40,74 +40,114 @@ List<InputData> deepspace2019 = [
         ],
     ),
     InputData(
-        id: "Driver Station Alignment",
+        id: 'Driver Station Alignment',
         type: InputDataType.textSelector,
         selection: [
-            
+            'Left', 
+            'Middle', 
+            'Right',
         ],
     ),
     InputData(
-        id: "Cargo Placement",
+        id: 'Cargo Placement',
         type: InputDataType.gridButton,
         selection: [
-        
+            'Take cargo',
+            'Place cargo',
         ],
         grid: [
-            []
+            [111, 000, 211, 000, 000, 212, 000, 311],
+            [121, 000, 221, 000, 000, 222, 000, 321],
+            [131, 000, 231, 000, 000, 232, 000, 331],
+            [000, 000, 000, 241, 242, 000, 000, 000],
+            [132, 000, 000, 000, 000, 000, 000, 332],
+            [122, 000, 000, 000, 000, 000, 000, 322],
+            [112, 000, 000, 000, 000, 000, 000, 312],
         ],
     ),
     InputData(
-        id: "Hab Climb Time",
+        id: 'Hatch Placement',
+        type: InputDataType.gridButton,
+        selection: [
+            'Take hatch',
+            'Place hatch',
+        ],
+        grid: [
+            [111, 000, 211, 000, 000, 212, 000, 311],
+            [121, 000, 221, 000, 000, 222, 000, 321],
+            [131, 000, 231, 000, 000, 232, 000, 331],
+            [000, 000, 000, 241, 242, 000, 000, 000],
+            [132, 000, 000, 000, 000, 000, 000, 332],
+            [122, 000, 000, 000, 000, 000, 000, 322],
+            [112, 000, 000, 000, 000, 000, 000, 312],
+        ],
+    ),
+    InputData(
+        id: 'Hab Climb Time',
         type: InputDataType.oneUseStopwatch,
         selection: [
-        
+            'Start the counter', 
+            'End the counter', 
+            '%counter',
         ],
     ),
     InputData(
-        id: "Hab Start Level",
+        id: 'Hab Start Level',
         type: InputDataType.textSelector,
         selection: [
-        
+            '0', 
+            '1',
+            '2',
+            '3',
         ],
     ),
     InputData(
-        id: "Hab End Level",
+        id: 'Hab End Level',
         type: InputDataType.textSelector,
         selection: [
-        
+            '0',
+            '1',
+            '2',
+            '3',
         ],
     ),
     InputData(
-        id: "Robot Count",
+        id: 'Robot Count',
         type: InputDataType.textSelector,
         selection: [
-        
+            '1',
+            '2',
+            '3',
         ],
     ),
     InputData(
-        id: "Robot Type",
+        id: 'Robot Type',
         type: InputDataType.textSelector,
         selection: [
-        
+            'Teleop', 
+            'Autonomous',
+            'Mixed',
         ],
     ),
     InputData(
-        id: "Autonomous Starts With",
+        id: 'Autonomous Starts With',
         type: InputDataType.textSelector,
         selection: [
-        
+            'Cargo', 
+            'Hatch', 
+            'Mixed'
         ],
     ),
     InputData(
-        id: "Crossing The Line",
+        id: 'Crossing The Line',
         type: InputDataType.checkbox,
     ),
     InputData(
-        id: "Defense Notes",
+        id: 'Defense Notes',
         type: InputDataType.textBox,
     ),
     InputData(
-        id: "Notes",
+        id: 'Notes',
         type: InputDataType.textBox,
     ),
 ];
