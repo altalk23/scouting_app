@@ -14,12 +14,10 @@ Future get _localFile async {
     return File("$path/history.txt");
 }
 
-Future<String> _readFile() async {
+Future<String> readFile() async {
     try {
         final file = await _localFile;
         fileContent = await file.readAsString();
-        //List<String> data = new List<String>();
-        //if (fileContent != "") data = fileContent.split("\t");
         return fileContent;
     } catch (e) {
         print(e);
@@ -27,8 +25,8 @@ Future<String> _readFile() async {
     }
 }
 
-Future _writeFile(String text) async {
+Future writeFile(String text) async {
     final file = await _localFile;
     await file.writeAsString("$text");
-    //history = _readFile();
+
 }

@@ -5,6 +5,9 @@ Map<String, Map<String, String>> local = {
     'End the timer': {
         'tr': 'Sayacı bitir',
     },
+    'Team Number': {
+        'tr': 'Takım numarası',
+    },
 };
 
 extension NumberParsing on String {
