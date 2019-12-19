@@ -14,7 +14,7 @@ description: Scouting app of ARC6014.
 version: 0.1.0
 
 environment:
-    sdk: ">=2.1.0 <3.0.0"
+    sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
     flutter:
@@ -43,3 +43,6 @@ flutter:
             fonts:
                 -   asset: lib/fonts/Nunito-Bold.ttf
     uses-material-design: true
+
+module:
+    androidX: true

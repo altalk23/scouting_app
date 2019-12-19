@@ -16,6 +16,8 @@ import 'package:scouting_app/input/stopwatch.dart';
 import 'package:scouting_app/input/team_number.dart';
 import 'package:scouting_app/languagelooplist.dart';
 import 'package:scouting_app/loop_list.dart';
+import 'package:scouting_app/screen/main_screen.dart';
+import 'package:scouting_app/widget/custom_label.dart';
 import 'package:scouting_app/widget/custom_scaffold.dart';
 import 'package:scouting_app/constant.dart';
 
@@ -103,7 +105,7 @@ class _InputScreen extends State<InputScreen> {
     void initState() {
         super.initState();
         history = _readFile();
-        labelList = getInput("tr");
+        labelList = getInput(language);
         _reset();
     }
     
@@ -112,7 +114,7 @@ class _InputScreen extends State<InputScreen> {
         // TODO: implement build
         return CustomScaffold(
             actions: <Widget>[
-                IconButton(
+                /*IconButton(
                     icon: Icon(Icons.print),
                     onPressed: () {
                         mainMap.forEach((key, value) {
@@ -124,6 +126,33 @@ class _InputScreen extends State<InputScreen> {
                     icon: Icon(Icons.remove),
                     onPressed: () {
                         _writeFile('');
+                    },
+                ),*/
+                IconButton(
+                    icon: Icon(Icons.help),
+                    onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                                return SimpleDialog(
+                                    backgroundColor: Color(0x00000000),
+                                    title: CustomLabel(
+                                        labelList["help"][0],
+                                        fontSize: Constant.mediumFont,
+                                    ),
+                                    children: <Widget>[
+                                        Text(
+                                            labelList["input_help"][0],
+                                            softWrap: true,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: Constant.helpFont,
+                                            ),
+                                        )
+                                    ],
+                                );
+                            },
+                        );
                     },
                 ),
             ],

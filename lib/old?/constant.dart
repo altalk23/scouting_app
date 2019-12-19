@@ -1,4 +1,5 @@
 class Constant {
+    static const double helpFont = 16;
     static const double smallFont = 20;
     static const double titleFont = 24;
     static const double mediumFont = 28;
