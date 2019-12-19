@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/new/custom.dart';
 import 'package:scouting_app/new/decoration.dart';
+import 'package:scouting_app/new/input.dart';
 
 class MainScreen extends StatefulWidget {
     @override
@@ -13,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
             body: Container(
                 decoration: scaffoldDecoration(context),
                 child: ListView(
-                
+                    children: deepspace2019.build(context),
                 ),
             ),
         );
