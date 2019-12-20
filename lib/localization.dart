@@ -1,18 +1,20 @@
 import 'dart:collection';
 
-HashMap<String, HashMap<String, String>> local = HashMap.from({
-    'Start the timer': {
+String a = "te";
+
+HashMap<String, HashMap<String, String>> local = HashMap<String, HashMap<String, String>>.from({
+    'Start the timer': HashMap<String, String>.from({
         'tr': 'Sayacı başlat',
-    },
-    'End the timer': {
+    }),
+    'End the timer': HashMap<String, String>.from({
         'tr': 'Sayacı bitir',
-    },
-    'Team Number': {
+    }),
+    'Team Number': HashMap<String, String>.from({
         'tr': 'Takım numarası',
-    },
+    }),
 });
 
-extension NumberParsing on String {
+extension LangParsing on String {
     String lang(String language) {
         if (language == Language.en) return this;
         return local[this][language];

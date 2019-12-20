@@ -1,5 +1,7 @@
+import 'package:scouting_app/localization.dart';
 import 'package:flutter/material.dart';
-import 'package:scouting_app/new/style.dart';
+import 'package:scouting_app/screen/main.dart';
+import 'package:scouting_app/style.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +11,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: mainTheme(),
-            //home: MainScreen(),
+            home: MainScreen(),
         );
     }
 }
@@ -43,7 +45,6 @@ ThemeData mainTheme({
         accentColor: accentColor,
         fontFamily: fontFamily,
         cardTheme: cardTheme,
-        canvasColor: Colors.transparent,
     );
 }
 

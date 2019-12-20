@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app/new/style.dart';
+import 'package:scouting_app/style.dart';
 
 BoxDecoration scaffoldDecoration(BuildContext context) {
     return BoxDecoration(
