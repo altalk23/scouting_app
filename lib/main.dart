@@ -1,4 +1,3 @@
-import 'package:scouting_app/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:scouting_app/screen/main.dart';
 import 'package:scouting_app/style.dart';
