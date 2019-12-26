@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/custom.dart';
 import 'package:scouting_app/decoration.dart';
 import 'package:scouting_app/input.dart';
+import 'package:scouting_app/labeled_widget.dart';
 import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/name.dart';
 
@@ -33,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
                         
                         switch (data.type) {
                             case InputDataType.textBox:
-                                result = Padding(
-                                    padding: EdgeInsets.all(16),
+                                result = LabeledWidget(
+                                    text: Text(data.id,),
                                     child: TextField(
                                         keyboardType: TextInputType.text,
                                         onChanged: (value) {
@@ -44,8 +45,8 @@ class _MainScreenState extends State<MainScreen> {
                                 );
                                 break;
                             case InputDataType.colorSelector:
-                                result = Padding(
-                                    padding: EdgeInsets.all(16),
+                                result = LabeledWidget(
+                                    text: Text(data.id,),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.colorSelector[data.id],
@@ -67,8 +68,8 @@ class _MainScreenState extends State<MainScreen> {
                                 );
                                 break;
                             case InputDataType.textSelector:
-                                result = Padding(
-                                    padding: EdgeInsets.all(16),
+                                result = LabeledWidget(
+                                    text: Text(data.id,),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.textSelector[data.id],
@@ -89,8 +90,8 @@ class _MainScreenState extends State<MainScreen> {
                                 break;
                             case InputDataType.oneUseStopwatch:
                                 int _index = 0;
-                                result = Padding(
-                                    padding: EdgeInsets.all(16),
+                                result = LabeledWidget(
+                                    text: Text(data.id,),
                                     child: RaisedButton(
                                         onPressed: () {
                                             _index++;
@@ -101,14 +102,16 @@ class _MainScreenState extends State<MainScreen> {
                             case InputDataType.gridButton:
                                 break;
                             case InputDataType.checkbox:
-                                bool _value;
                                 result = Padding(
                                     padding: EdgeInsets.all(16),
-                                    child: Checkbox(
-                                        value: _value,
+                                    child: CheckboxListTile(
+                                        title: Text(
+                                            data.id,
+                                        ),
+                                        value: input.checkbox[data.id] ?? false,
                                         onChanged: (bool value) {
                                             setState(() {
-                                                _value = value;
+                                                input.checkbox[data.id] = value;
                                             });
                                         },
                                     ),
