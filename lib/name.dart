@@ -16,3 +16,14 @@ extension FromColorNaming on String {
         return Colors.transparent;
     }
 }
+
+extension ToPlaceNaming on int {
+    String place() {
+        String result = '';
+        result += ['Left', 'Middle', 'Right'][(this / 100).floor() - 1];
+        result += ' ';
+        result += ((this / 10).floor() % 10).toString();
+        result += ['a', 'b'][(this % 10) - 1];
+        return result;
+    }
+}
