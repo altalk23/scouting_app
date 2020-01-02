@@ -46,5 +46,56 @@ class Input {
           "stopwatches: ${stopwatches.toString()}\n\n\n";
     }
     
+    String toFileString() {
+        String result = '';
+        textBox.forEach((key, value) {
+            result += key + '\n*  ' + value + '\n';
+        });
+        colorSelector.forEach((key, value) {
+            result += key + '\n* ' + value + '\n';
+        });
+        textSelector.forEach((key, value) {
+            result += key + '\n* ' + value + '\n';
+        });
+        oneUseStopwatch.forEach((key, value) {
+            result += key + '\n* ' + value.toString() + '\n';
+        });
+        result += 'Grid Location';
+        gridButton.forEach((key, value) {
+            result += '\n* ' + key;
+            value.forEach((element) {
+                result += '\n**  ' + element.toString();
+            });
+            result += '\n';
+        });
+        result += 'Grid Duration';
+        gridButtonDuration.forEach((key, value) {
+            result += '\n* ' + key;
+            value.forEach((element) {
+                result += '\n**  ' + element.toString();
+            });
+            result += '\n';
+        });
+        result += 'Grid Start';
+        gridButtonStart.forEach((key, value) {
+            result += '\n* ' + key;
+            value.forEach((element) {
+                result += '\n**  ' + element.toString();
+            });
+            result += '\n';
+        });
+        result += 'Grid End';
+        gridButtonEnd.forEach((key, value) {
+            result += '\n* ' + key;
+            value.forEach((element) {
+                result += '\n**  ' + element.toString();
+            });
+            result += '\n';
+        });
+        checkbox.forEach((key, value) {
+            result += key + '\n* ' + value.toString() + '\n';
+        });
+        return result;
+    }
     
 }

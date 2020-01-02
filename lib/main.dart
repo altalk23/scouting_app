@@ -27,6 +27,8 @@ ThemeData mainTheme({
     backgroundColor ??= Color(0xffe5def8);
     primarySwatch ??= swatch();
     accentColor ??= Color(0xff9808DB);
+    highlightColor ??= Color(0x66bbbbbb);
+    splashColor ??= Color(0x88dddddd);
     cardTheme ??= CardTheme(
         margin: EdgeInsets.all(12),
         elevation: 2,

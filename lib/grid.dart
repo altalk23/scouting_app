@@ -5,6 +5,7 @@ import 'package:scouting_app/name.dart';
 
 
 void gridMenu(BuildContext context, InputData data, Input input) {
+    print('asd');
     showDialog(
       context: context,
       builder: (BuildContext context) {

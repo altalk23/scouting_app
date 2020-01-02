@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/custom.dart';
 import 'package:scouting_app/decoration.dart';
+import 'package:scouting_app/file.dart';
 import 'package:scouting_app/grid.dart';
 import 'package:scouting_app/input.dart';
 import 'package:scouting_app/labeled_widget.dart';
@@ -13,21 +14,16 @@ class InputScreen extends StatefulWidget {
     _InputScreenState createState() => _InputScreenState();
 }
 
+Input input = Input();
+
 class _InputScreenState extends State<InputScreen> {
-    Input input = Input();
+    
     
     @override
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                actions: <Widget>[
-                    IconButton(
-                        icon: Icon(Icons.print),
-                        onPressed: () {
-                            print(input);
-                        },
-                    )
-                ],
+                title: Text('Input Screen'),
             ),
             body: Container(
                 decoration: scaffoldDecoration(context),
@@ -54,6 +50,10 @@ class _InputScreenState extends State<InputScreen> {
                                             else if (input.indexes[id] == 2) {
                                                 setState(() {
                                                     input.stopwatches[id].stop();
+                                                });
+                                                writeInput(input);
+                                                setState(() {
+                                                    input = Input();
                                                 });
                                             }
                                         },
@@ -90,7 +90,6 @@ class _InputScreenState extends State<InputScreen> {
                                             });
                                         },
                                         items: data.colorSelection.map<DropdownMenuItem<String>>((Color value) {
-                                            print(value);
                                             return DropdownMenuItem<String>(
                                               value: value.name(),
                                               child: Text(value.name())
@@ -168,11 +167,13 @@ class _InputScreenState extends State<InputScreen> {
                                                     setState(() {
                                                         input.indexes[data.id]++;
                                                     });
-                                                    if (input.indexes[data.id] == 1) {
+                                                    if (input.indexes[data.id] % 2 == 1) {
                                                         input.stopwatches[data.id].start();
                                                     }
-                                                    else if (input.indexes[data.id] == 2) {
+                                                    else if (input.indexes[data.id] % 2 == 0) {
                                                         setState(() {
+                                                            gridMenu(context, data, input);
+                                                            
                                                             input.stopwatches[data.id].stop();
                                                             input.gridButtonDuration[data.id].add(
                                                                 input.stopwatches[data.id].elapsed,
@@ -184,7 +185,6 @@ class _InputScreenState extends State<InputScreen> {
                                                                 input.stopwatches[data.id].elapsed +
                                                                   input.stopwatches['Stopwatch'].elapsed,
                                                             );
-                                                            gridMenu(context, data, input);
                                                         });
                                                     }
                                                 },

@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   qr_flutter: ^2.0.0
+  path_provider: any
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
