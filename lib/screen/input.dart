@@ -7,6 +7,7 @@ import 'package:scouting_app/input.dart';
 import 'package:scouting_app/labeled_widget.dart';
 import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/name.dart';
+import 'package:scouting_app/screen/main.dart';
 
 
 class InputScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _InputScreenState extends State<InputScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('Input Screen'),
+                title: Text('Input Screen'.lang(lang)),
             ),
             body: Container(
                 decoration: scaffoldDecoration(context),
@@ -37,26 +38,32 @@ class _InputScreenState extends State<InputScreen> {
                             input.stopwatches[id] ??= Stopwatch();
                             return Padding(
                                 padding: EdgeInsets.all(16),
-                                child: LabeledWidget(
-                                    text: Text(['Start the counter', 'End the counter'][input.indexes['Stopwatch'] % 2]),
-                                    child: RaisedButton(
-                                        onPressed: () {
-                                            setState(() {
-                                                input.indexes[id]++;
-                                            });
-                                            if (input.indexes[id] == 1) {
-                                                input.stopwatches[id].start();
-                                            }
-                                            else if (input.indexes[id] == 2) {
+                                child: Card(
+                                    child: Container(
+                                        decoration: cardDecoration(context),
+                                        child: ListTile(
+                                            title: Text([
+                                                'Start the counter'.lang(lang),
+                                                'End the counter'.lang(lang),
+                                            ][input.indexes['Stopwatch'] % 2]),
+                                            onTap: () {
                                                 setState(() {
-                                                    input.stopwatches[id].stop();
+                                                    input.indexes[id]++;
                                                 });
-                                                writeInput(input);
-                                                setState(() {
-                                                    input = Input();
-                                                });
-                                            }
-                                        },
+                                                if (input.indexes[id] == 1) {
+                                                    input.stopwatches[id].start();
+                                                }
+                                                else if (input.indexes[id] == 2) {
+                                                    setState(() {
+                                                        input.stopwatches[id].stop();
+                                                    });
+                                                    writeInput(input);
+                                                    setState(() {
+                                                        input = Input();
+                                                    });
+                                                }
+                                            },
+                                        ),
                                     ),
                                 ),
                             );
@@ -67,7 +74,7 @@ class _InputScreenState extends State<InputScreen> {
                         switch (data.type) {
                             case InputDataType.textBox:
                                 result = LabeledWidget(
-                                    text: Text(data.id,),
+                                    text: Text(data.id.lang(lang)),
                                     child: TextField(
                                         keyboardType: TextInputType.text,
                                         onChanged: (value) {
@@ -79,7 +86,7 @@ class _InputScreenState extends State<InputScreen> {
                                 break;
                             case InputDataType.colorSelector:
                                 result = LabeledWidget(
-                                    text: Text(data.id,),
+                                    text: Text(data.id.lang(lang)),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.colorSelector[data.id],
@@ -92,7 +99,7 @@ class _InputScreenState extends State<InputScreen> {
                                         items: data.colorSelection.map<DropdownMenuItem<String>>((Color value) {
                                             return DropdownMenuItem<String>(
                                               value: value.name(),
-                                              child: Text(value.name())
+                                              child: Text(value.name().lang(lang))
                                             );
                                         }).toList(),
                                     ),
@@ -100,7 +107,7 @@ class _InputScreenState extends State<InputScreen> {
                                 break;
                             case InputDataType.textSelector:
                                 result = LabeledWidget(
-                                    text: Text(data.id,),
+                                    text: Text(data.id.lang(lang)),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.textSelector[data.id],
@@ -112,8 +119,8 @@ class _InputScreenState extends State<InputScreen> {
                                         },
                                         items: data.selection.map<DropdownMenuItem<String>>((String value) {
                                             return DropdownMenuItem<String>(
-                                                value: value.lang(Language.en),
-                                                child: Text(value.lang(Language.en)),
+                                                value: value,
+                                                child: Text(value.lang(lang)),
                                             );
                                         }).toList(),
                                     ),
@@ -123,7 +130,7 @@ class _InputScreenState extends State<InputScreen> {
                                 input.indexes[data.id] ??= 0;
                                 input.stopwatches[data.id] ??= Stopwatch();
                                 result = LabeledWidget(
-                                    text: Text(data.id,),
+                                    text: Text(data.id.lang(lang)),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
@@ -138,13 +145,17 @@ class _InputScreenState extends State<InputScreen> {
                                                     else if (input.indexes[data.id] == 2) {
                                                         setState(() {
                                                             input.stopwatches[data.id].stop();
-                                                            input.oneUseStopwatch.putIfAbsent(data.id, () => input.stopwatches[data.id].elapsed);
+                                                            input.oneUseStopwatch.putIfAbsent(
+                                                              data.id, () => input.stopwatches[data.id].elapsed
+                                                            );
                                                         });
                                                     }
                                                 } : null,
                                             ),
                                             Text(
-                                              data.selection[input.indexes[data.id]].replaceFirst('%counter', input.stopwatches[data.id].elapsed.toString())
+                                                data.selection[input.indexes[data.id]]
+                                                  .lang(lang)
+                                                  .replaceFirst('%counter', input.stopwatches[data.id].elapsed.toString()),
                                             ),
                                         ],
                                     ),
@@ -158,7 +169,7 @@ class _InputScreenState extends State<InputScreen> {
                                 input.gridButtonStart[data.id] ??= List<Duration>();
                                 input.gridButtonEnd[data.id] ??= List<Duration>();
                                 result = LabeledWidget(
-                                    text: Text(data.id,),
+                                    text: Text(data.id.lang(lang)),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
@@ -190,7 +201,7 @@ class _InputScreenState extends State<InputScreen> {
                                                 },
                                             ),
                                             Text(
-                                                data.selection[input.indexes[data.id] % 2],
+                                                data.selection[input.indexes[data.id] % 2].lang(lang),
                                             ),
                                         ],
                                     ),
@@ -201,7 +212,7 @@ class _InputScreenState extends State<InputScreen> {
                                     padding: EdgeInsets.all(16),
                                     child: CheckboxListTile(
                                         title: Text(
-                                            data.id,
+                                            data.id.lang(lang),
                                         ),
                                         value: input.checkbox[data.id] ?? false,
                                         onChanged: (bool value) {

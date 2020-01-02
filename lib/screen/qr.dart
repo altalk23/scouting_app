@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:scouting_app/decoration.dart';
+import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/file.dart';
+import 'package:scouting_app/screen/main.dart';
+import 'package:scouting_app/style.dart';
 
 class QRScreen extends StatefulWidget {
     @override
@@ -10,13 +13,12 @@ class QRScreen extends StatefulWidget {
 
 class _QRScreenState extends State<QRScreen> {
     int selected = 0;
-    List<String> data = ['asdfgh'];
     
     @override
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('QR Screen'),
+                title: Text('QR Screen'.lang(lang)),
             ),
             body: Container(
                 decoration: scaffoldDecoration(context),
@@ -27,7 +29,6 @@ class _QRScreenState extends State<QRScreen> {
                             if (data.hasData) {
                                 List<String> result2;
                                 result2 = data.data.split('/              /\n');
-                                print(result2);
                                 return ListView.builder(
                                     itemCount: result2.length,
                                     itemBuilder: (context, index) {
@@ -42,11 +43,7 @@ class _QRScreenState extends State<QRScreen> {
                                             else {
                                                 result = AspectRatio(
                                                     aspectRatio: 1,
-                                                    child: Center(
-                                                        child: Container(
-                                                            child: Text('Select one'),
-                                                        ),
-                                                    ),
+                                                    child: Placeholder(),
                                                 );
                                             }
                                         }
@@ -59,7 +56,10 @@ class _QRScreenState extends State<QRScreen> {
                                                         child: Container(
                                                             decoration: cardDecoration(context),
                                                             child: ListTile(
-                                                                title: Text('Team #' + element.substring(2)),
+                                                                title: Text(
+                                                                    'Team'.lang(lang) + ' #' + element.substring(2),
+                                                                    style: mediumTextStyle(context),
+                                                                ),
                                                                 onTap: () {
                                                                     setState(() {
                                                                         selected = index;

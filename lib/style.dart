@@ -16,24 +16,9 @@ MaterialColor swatch() => MaterialColor(
     },
 );
 
-TextStyle iconTextStyle(context) {
-    return TextStyle(
-      fontSize: 72,
-      fontWeight: FontWeight.w800
-    );
-}
-
 TextStyle mediumTextStyle(context) {
     return TextStyle(
         fontSize: 28,
-    );
-}
-
-TextStyle smallIconTextStyle(context) {
-    return TextStyle(
-      fontSize: 44,
-      fontWeight: FontWeight.w800,
-      color: Colors.white,
     );
 }
 
@@ -50,9 +35,10 @@ TextStyle smallTextStyle(context) {
     );
 }
 
-TextStyle mediumListStyle(context) {
+TextStyle cardStyle(context) {
     return TextStyle(
+        fontFamily: 'Raleway',
         fontSize: 28,
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w500,
     );
 }
