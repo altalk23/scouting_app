@@ -38,7 +38,7 @@ ThemeData mainTheme({
             ),
         ),
     );
-    fontFamily ??= 'Latin Modern Roman 10';
+    fontFamily ??= 'Raleway';
     
     return ThemeData(
         backgroundColor: backgroundColor,

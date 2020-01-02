@@ -18,7 +18,10 @@ class _QRScreenState extends State<QRScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('QR Screen'.lang(lang)),
+                title: Text(
+                    'QR Screen'.lang(lang),
+                    style: titleTextStyle(context),
+                ),
             ),
             body: Container(
                 decoration: scaffoldDecoration(context),

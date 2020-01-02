@@ -8,6 +8,7 @@ import 'package:scouting_app/labeled_widget.dart';
 import 'package:scouting_app/localization.dart';
 import 'package:scouting_app/name.dart';
 import 'package:scouting_app/screen/main.dart';
+import 'package:scouting_app/style.dart';
 
 
 class InputScreen extends StatefulWidget {
@@ -24,7 +25,10 @@ class _InputScreenState extends State<InputScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('Input Screen'.lang(lang)),
+                title: Text(
+                    'Input Screen'.lang(lang),
+                    style: titleTextStyle(context),
+                ),
             ),
             body: Container(
                 decoration: scaffoldDecoration(context),
@@ -42,10 +46,13 @@ class _InputScreenState extends State<InputScreen> {
                                     child: Container(
                                         decoration: cardDecoration(context),
                                         child: ListTile(
-                                            title: Text([
-                                                'Start the counter'.lang(lang),
-                                                'End the counter'.lang(lang),
-                                            ][input.indexes['Stopwatch'] % 2]),
+                                            title: Text(
+                                                [
+                                                    'Start the counter'.lang(lang),
+                                                    'End the counter'.lang(lang),
+                                                ][input.indexes['Stopwatch'] % 2],
+                                                style: mediumTextStyle(context),
+                                            ),
                                             onTap: () {
                                                 setState(() {
                                                     input.indexes[id]++;
@@ -74,8 +81,12 @@ class _InputScreenState extends State<InputScreen> {
                         switch (data.type) {
                             case InputDataType.textBox:
                                 result = LabeledWidget(
-                                    text: Text(data.id.lang(lang)),
+                                    text: Text(
+                                        data.id.lang(lang),
+                                        style: subTextStyle(context),
+                                    ),
                                     child: TextField(
+                                        style: textBoxTextStyle(context),
                                         keyboardType: TextInputType.text,
                                         onChanged: (value) {
                                             input.textBox.putIfAbsent(data.id, () => value);
@@ -86,7 +97,10 @@ class _InputScreenState extends State<InputScreen> {
                                 break;
                             case InputDataType.colorSelector:
                                 result = LabeledWidget(
-                                    text: Text(data.id.lang(lang)),
+                                    text: Text(
+                                        data.id.lang(lang),
+                                        style: subTextStyle(context),
+                                    ),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.colorSelector[data.id],
@@ -98,8 +112,11 @@ class _InputScreenState extends State<InputScreen> {
                                         },
                                         items: data.colorSelection.map<DropdownMenuItem<String>>((Color value) {
                                             return DropdownMenuItem<String>(
-                                              value: value.name(),
-                                              child: Text(value.name().lang(lang))
+                                                value: value.name(),
+                                                child: Text(
+                                                    value.name().lang(lang),
+                                                    style: smallTextStyle(context),
+                                                ),
                                             );
                                         }).toList(),
                                     ),
@@ -107,7 +124,10 @@ class _InputScreenState extends State<InputScreen> {
                                 break;
                             case InputDataType.textSelector:
                                 result = LabeledWidget(
-                                    text: Text(data.id.lang(lang)),
+                                    text: Text(
+                                        data.id.lang(lang),
+                                        style: subTextStyle(context),
+                                    ),
                                     child: DropdownButton<String>(
                                         isExpanded: true,
                                         value: input.textSelector[data.id],
@@ -120,7 +140,10 @@ class _InputScreenState extends State<InputScreen> {
                                         items: data.selection.map<DropdownMenuItem<String>>((String value) {
                                             return DropdownMenuItem<String>(
                                                 value: value,
-                                                child: Text(value.lang(lang)),
+                                                child: Text(
+                                                    value.lang(lang),
+                                                    style: smallTextStyle(context),
+                                                ),
                                             );
                                         }).toList(),
                                     ),
@@ -130,7 +153,10 @@ class _InputScreenState extends State<InputScreen> {
                                 input.indexes[data.id] ??= 0;
                                 input.stopwatches[data.id] ??= Stopwatch();
                                 result = LabeledWidget(
-                                    text: Text(data.id.lang(lang)),
+                                    text: Text(
+                                        data.id.lang(lang),
+                                        style: subTextStyle(context),
+                                    ),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
@@ -156,6 +182,7 @@ class _InputScreenState extends State<InputScreen> {
                                                 data.selection[input.indexes[data.id]]
                                                   .lang(lang)
                                                   .replaceFirst('%counter', input.stopwatches[data.id].elapsed.toString()),
+                                                style: smallTextStyle(context),
                                             ),
                                         ],
                                     ),
@@ -169,7 +196,10 @@ class _InputScreenState extends State<InputScreen> {
                                 input.gridButtonStart[data.id] ??= List<Duration>();
                                 input.gridButtonEnd[data.id] ??= List<Duration>();
                                 result = LabeledWidget(
-                                    text: Text(data.id.lang(lang)),
+                                    text: Text(
+                                        data.id.lang(lang),
+                                        style: subTextStyle(context),
+                                    ),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
@@ -202,6 +232,7 @@ class _InputScreenState extends State<InputScreen> {
                                             ),
                                             Text(
                                                 data.selection[input.indexes[data.id] % 2].lang(lang),
+                                                style: smallTextStyle(context),
                                             ),
                                         ],
                                     ),
@@ -213,6 +244,7 @@ class _InputScreenState extends State<InputScreen> {
                                     child: CheckboxListTile(
                                         title: Text(
                                             data.id.lang(lang),
+                                            style: subTextStyle(context),
                                         ),
                                         value: input.checkbox[data.id] ?? false,
                                         onChanged: (bool value) {
@@ -226,7 +258,6 @@ class _InputScreenState extends State<InputScreen> {
                         }
                         return result;
                     },
-                
                 ),
             ),
         );

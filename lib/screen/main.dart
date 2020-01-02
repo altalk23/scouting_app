@@ -17,7 +17,10 @@ class _MainScreenState extends State<MainScreen> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('Main Screen'.lang(lang)),
+                title: Text(
+                    'Main Screen'.lang(lang),
+                    style: titleTextStyle(context),
+                ),
                 actions: <Widget>[
                     IconButton(
                       icon: Icon(Icons.translate),
@@ -26,12 +29,16 @@ class _MainScreenState extends State<MainScreen> {
                               context: context,
                               builder: (context) {
                                   return SimpleDialog(
+                                      backgroundColor: Color(0x00000000),
                                       children: <Widget>[
                                           Card(
                                               child: Container(
                                                   decoration: cardDecoration(context),
                                                   child: ListTile(
-                                                      title: Text('English'.lang(lang)),
+                                                      title: Text(
+                                                          'English'.lang(lang),
+                                                          style: mediumTextStyle(context),
+                                                      ),
                                                       onTap: () {
                                                           setState(() {
                                                               lang = 'en';
@@ -45,7 +52,10 @@ class _MainScreenState extends State<MainScreen> {
                                               child: Container(
                                                   decoration: cardDecoration(context),
                                                   child: ListTile(
-                                                      title: Text('Turkish'.lang(lang)),
+                                                      title: Text(
+                                                          'Turkish'.lang(lang),
+                                                          style: mediumTextStyle(context),
+                                                      ),
                                                       onTap: () {
                                                           setState(() {
                                                               lang = 'tr';

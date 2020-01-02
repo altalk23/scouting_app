@@ -16,29 +16,52 @@ MaterialColor swatch() => MaterialColor(
     },
 );
 
+TextStyle titleTextStyle(context) {
+    return TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+    );
+}
+
+
 TextStyle mediumTextStyle(context) {
     return TextStyle(
-        fontSize: 28,
+        fontSize: 22,
+        fontWeight: FontWeight.w400,
     );
 }
 
 TextStyle largeTextStyle(context) {
     return TextStyle(
-        fontSize: 36,
-        fontWeight: FontWeight.w800,
+        fontSize: 32,
+        fontWeight: FontWeight.w600,
     );
 }
 
-TextStyle smallTextStyle(context) {
+TextStyle subTextStyle(context) {
     return TextStyle(
-        fontSize: 20,
+        fontSize: 19,
+        fontWeight: FontWeight.w600
     );
 }
 
 TextStyle cardStyle(context) {
     return TextStyle(
-        fontFamily: 'Raleway',
         fontSize: 28,
         fontWeight: FontWeight.w500,
+    );
+}
+
+TextStyle textBoxTextStyle(context) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400
+    );
+}
+
+TextStyle smallTextStyle(context) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400
     );
 }
